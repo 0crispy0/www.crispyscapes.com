@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crispy Scapes | Photography by Chris Wiewiora</title>
+  <meta name="description" content="Landscape photography by Chris Wiewiora, based in Kiama on the NSW South Coast, Australia. Capturing the wild beauty of Australia and beyond." />
+  <meta name="author" content="Chris Wiewiora" />
+  <meta property="og:title" content="Crispy Scapes | Photography by Chris Wiewiora" />
+  <meta property="og:description" content="Landscape photography from Australia's NSW South Coast and beyond." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset & Base */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:       #0a0a0a;
+      --dark:        #111111;
+      --dark-mid:    #1a1a1a;
+      --dark-light:  #222222;
+      --mid:         #444444;
+      --muted:       #888888;
+      --light-muted: #aaaaaa;
+      --light:       #cccccc;
+      --white:       #ffffff;
+      --accent:      #c8a96e;
+      --accent-dark: #a07840;
+      --font-head:   'Poppins', sans-serif;
+      --font-body:   'Roboto', sans-serif;
+      --nav-h:       70px;
+      --transition:  0.35s ease;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--black);
+      color: var(--light);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+    a   { color: inherit; text-decoration: none; }
+    ::selection { background: var(--accent); color: var(--black); }
+
+    /* Scroll animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible          { opacity: 1; transform: none; }
+    .reveal-delay-1          { transition-delay: 0.1s; }
+    .reveal-delay-2          { transition-delay: 0.2s; }
+    .reveal-delay-3          { transition-delay: 0.3s; }
+    .reveal-delay-4          { transition-delay: 0.4s; }
+
+    /* Navigation */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(10,10,10,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+    }
+    .nav-brand img {
+      height: 50px;
+      width: auto;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-head);
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light-muted);
+      position: relative;
+      padding-bottom: 3px;
+      transition: color var(--transition);
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover             { color: var(--white); }
+    .nav-links a:hover::after      { width: 100%; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+      z-index: 1100;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 1.5px;
+      background: var(--white);
+      transition: transform var(--transition), opacity var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(10,10,10,0.98);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light-muted);
+      transition: color var(--transition);
+    }
+    .nav-drawer a:hover { color: var(--white); }
+
+    /* Hero */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: url('images/cathedral-cave-sunrise.jpg') center/cover no-repeat;
+      background-color: var(--black);
+    }
+    .hero-video iframe {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 100vw; height: 56.25vw;
+      min-height: 100vh; min-width: 177.78vh;
+      transform: translate(-50%, -50%);
+      border: 0;
+      pointer-events: none;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.25) 0%,
+        rgba(0,0,0,0.35) 50%,
+        rgba(0,0,0,0.75) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 1.5rem;
+      animation: heroFadeIn 1.4s ease both;
+      animation-delay: 0.3s;
+    }
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .hero-logo {
+      display: none;
+    }
+    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.85rem 2.2rem;
+      border: 1px solid rgba(255,255,255,0.35);
+      color: var(--white);
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: color var(--transition), border-color var(--transition);
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--white);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+      z-index: 0;
+    }
+    .btn span { position: relative; z-index: 1; }
+    .btn:hover { color: var(--black); border-color: var(--white); }
+    .btn:hover::before { transform: scaleX(1); }
+
+    .btn-accent { background: var(--accent); border-color: var(--accent); color: var(--black); }
+    .btn-accent::before { background: var(--accent-dark); }
+    .btn-accent:hover { color: var(--black); border-color: var(--accent-dark); }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      animation: scrollBob 2.2s ease-in-out infinite;
+    }
+    .scroll-indicator span {
+      font-family: var(--font-head);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+    .scroll-arrow {
+      width: 18px; height: 18px;
+      border-right: 1px solid rgba(255,255,255,0.45);
+      border-bottom: 1px solid rgba(255,255,255,0.45);
+      transform: rotate(45deg);
+      margin-top: 2px;
+    }
+    @keyframes scrollBob {
+      0%,100% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
+      50%      { transform: translateX(-50%) translateY(8px); opacity: 1; }
+    }
+
+    /* Sections */
+    section { padding: 6rem 0; }
+    .section-inner { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
+    .section-heading {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .section-rule { width: 48px; height: 2px; background: var(--accent); margin-bottom: 3rem; }
+
+    /* Portfolio */
+    #portfolio { background: var(--black); }
+
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.5rem; }
+    .filter-btn {
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.2rem;
+      background: transparent;
+      border: 1px solid var(--mid);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--black);
+    }
+
+    /* Masonry */
+    .masonry-grid { columns: 4 240px; column-gap: 6px; }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 6px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--dark-mid);
+    }
+    .gallery-item img {
+      width: 100%; height: auto;
+      display: block;
+      transition: transform 0.55s ease, filter 0.55s ease;
+      filter: brightness(0.92);
+    }
+    .gallery-item:hover img { transform: scale(1.04); filter: brightness(0.6); }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.2rem 1rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    .gallery-title {
+      font-family: var(--font-head);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: 0.04em;
+      line-height: 1.3;
+    }
+    .gallery-cat {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 3px;
+    }
+    .gallery-item.hidden { display: none; }
+
+    /* Lightbox */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    #lightbox.open { opacity: 1; pointer-events: all; }
+
+    .lb-inner {
+      position: relative;
+      max-width: 92vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #lb-img {
+      max-width: 90vw;
+      max-height: 80vh;
+      object-fit: contain;
+      display: block;
+      transition: opacity 0.25s ease;
+    }
+    #lb-img.fading { opacity: 0; }
+
+    .lb-caption { margin-top: 1rem; text-align: center; }
+    .lb-caption-title {
+      font-family: var(--font-head);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: 0.06em;
+    }
+    .lb-caption-cat {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 3px;
+    }
+
+    .lb-close {
+      position: fixed;
+      top: 1.5rem; right: 1.8rem;
+      width: 40px; height: 40px;
+      cursor: pointer;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color var(--transition);
+    }
+    .lb-close:hover { border-color: var(--white); }
+    .lb-close::before, .lb-close::after {
+      content: '';
+      position: absolute;
+      width: 16px; height: 1px;
+      background: var(--white);
+    }
+    .lb-close::before { transform: rotate(45deg); }
+    .lb-close::after  { transform: rotate(-45deg); }
+
+    .lb-prev, .lb-next {
+      position: fixed;
+      top: 50%; transform: translateY(-50%);
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .lb-prev:hover, .lb-next:hover {
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.4);
+    }
+    .lb-prev { left: 1.2rem; }
+    .lb-next { right: 1.2rem; }
+    .lb-prev::before, .lb-next::before {
+      content: '';
+      display: block;
+      width: 10px; height: 10px;
+      border-right: 1.5px solid var(--white);
+      border-top: 1.5px solid var(--white);
+    }
+    .lb-prev::before { transform: rotate(-135deg) translateX(-2px); }
+    .lb-next::before { transform: rotate(45deg) translateX(-2px); }
+
+    .lb-counter {
+      position: fixed;
+      bottom: 1.5rem; left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    /* Video */
+    #video { background: var(--dark); }
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      background: var(--black);
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+    .video-desc {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      color: var(--light-muted);
+      font-style: italic;
+    }
+
+    /* About */
+    #about { background: var(--dark-mid); position: relative; overflow: hidden; }
+    #about::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(200,169,110,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--light-muted);
+      margin-bottom: 1.2rem;
+    }
+    .about-detail {
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .about-detail::before {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+    .about-visual { display: flex; align-items: center; justify-content: center; }
+    .about-logo-large {
+      width: 240px; height: 240px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 16px 60px rgba(0,0,0,0.7);
+      opacity: 0.9;
+      transition: opacity var(--transition), transform var(--transition);
+    }
+    .about-logo-large:hover { opacity: 1; transform: scale(1.02); }
+
+    /* Contact */
+    #contact { background: var(--black); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-item { display: flex; flex-direction: column; gap: 0.25rem; margin-bottom: 1.8rem; }
+    .contact-label {
+      font-family: var(--font-head);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .contact-value { font-size: 1rem; color: var(--light); transition: color var(--transition); }
+    .contact-value:hover { color: var(--accent); }
+
+    .social-links { display: flex; flex-direction: column; gap: 1rem; }
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-head);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color var(--transition);
+    }
+    .social-link::before {
+      content: '';
+      display: inline-block;
+      width: 32px; height: 1px;
+      background: currentColor;
+      transition: width var(--transition);
+    }
+    .social-link:hover { color: var(--accent); }
+    .social-link:hover::before { width: 48px; }
+
+    /* Blog */
+    #blog { background: var(--dark); }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .blog-card {
+      background: var(--dark-mid);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem;
+      transition: border-color var(--transition), transform var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width 0.4s ease;
+    }
+    .blog-card:hover { border-color: rgba(255,255,255,0.14); transform: translateY(-3px); }
+    .blog-card:hover::after { width: 100%; }
+    .blog-date {
+      font-family: var(--font-head);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .blog-card-title {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+    }
+    .blog-card-text { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+    /* Footer */
+    footer {
+      background: var(--dark-mid);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 3.5rem 0 2rem;
+    }
+    .footer-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 2rem;
+    }
+    .footer-brand {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .footer-brand small {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .footer-copy { font-size: 0.75rem; letter-spacing: 0.08em; color: var(--muted); text-align: center; }
+    .footer-social { display: flex; justify-content: flex-end; gap: 1.5rem; }
+    .footer-social a {
+      font-family: var(--font-head);
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color var(--transition);
+    }
+    .footer-social a:hover { color: var(--accent); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .masonry-grid           { columns: 3 200px; }
+      .about-grid,
+      .contact-grid           { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-visual           { display: none; }
+      .footer-inner           { grid-template-columns: 1fr; text-align: center; gap: 1rem; }
+      .footer-social          { justify-content: center; }
+    }
+    @media (max-width: 768px) {
+      :root                   { --nav-h: 60px; }
+      section                 { padding: 4.5rem 0; }
+      .masonry-grid           { columns: 2 160px; }
+      .nav-links              { display: none; }
+      .hamburger              { display: flex; }
+      .hero-logo              { max-width: 320px; }
+      .contact-grid           { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    @media (max-width: 480px) {
+      .masonry-grid           { columns: 1; }
+      .hero-tagline           { letter-spacing: 0.18em; font-size: 0.68rem; }
+      .btn                    { padding: 0.75rem 1.6rem; font-size: 0.68rem; }
+      .lb-prev                { left: 0.4rem; }
+      .lb-next                { right: 0.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <a href="#hero" class="nav-brand"><img src="Logo/CrispyScapes logo without text.png" alt="Crispy Scapes" /></a>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#video">Video</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#blog">Blog</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <div class="nav-drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <a href="#hero"      class="drawer-link">Home</a>
+    <a href="#portfolio" class="drawer-link">Portfolio</a>
+    <a href="#video"     class="drawer-link">Video</a>
+    <a href="#about"     class="drawer-link">About</a>
+    <a href="#contact"   class="drawer-link">Contact</a>
+    <a href="#blog"      class="drawer-link">Blog</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero" aria-label="Hero">
+    <div class="hero-video" id="heroVideoContainer"></div>
+    <div class="hero-overlay"></div>
+    <div class="scroll-indicator" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio" aria-label="Portfolio gallery">
+    <div class="section-inner">
+      <h2 class="section-heading reveal">Portfolio</h2>
+      <div class="section-rule reveal reveal-delay-1"></div>
+
+      <div class="filter-bar reveal reveal-delay-2" role="group" aria-label="Filter by category">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="favourites">Favourites</button>
+        <button class="filter-btn" data-filter="nsw">NSW</button>
+        <button class="filter-btn" data-filter="tas">Tasmania</button>
+        <button class="filter-btn" data-filter="vic">Victoria</button>
+        <button class="filter-btn" data-filter="europe">Europe</button>
+        <button class="filter-btn" data-filter="nz">New Zealand</button>
+        <button class="filter-btn" data-filter="other">Other States</button>
+      </div>
+
+      <div class="masonry-grid" id="gallery" role="list">
+
+        <div class="gallery-item reveal" data-categories="favourites nsw" data-title="Cathedral Cave Sunrise" data-src="images/cathedral-cave-sunrise.jpg" role="listitem" tabindex="0" aria-label="Cathedral Cave Sunrise">
+          <img src="images/cathedral-cave-sunrise.jpg" alt="Cathedral Cave Sunrise" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Cathedral Cave Sunrise</span><span class="gallery-cat">Favourites &middot; NSW</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-1" data-categories="favourites nsw" data-title="Bombo Quarry Sunset" data-src="images/bombo-quarry-sunset.jpg" role="listitem" tabindex="0" aria-label="Bombo Quarry Sunset">
+          <img src="images/bombo-quarry-sunset.jpg" alt="Bombo Quarry Sunset" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Bombo Quarry Sunset</span><span class="gallery-cat">Favourites &middot; NSW</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-2" data-categories="favourites tas" data-title="Mt Anne Glow" data-src="images/mt-anne-glow.jpg" role="listitem" tabindex="0" aria-label="Mt Anne Glow">
+          <img src="images/mt-anne-glow.jpg" alt="Mt Anne Glow" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Mt Anne Glow</span><span class="gallery-cat">Favourites &middot; Tasmania</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-3" data-categories="favourites tas" data-title="Mt Anne Sunrise" data-src="images/mt-anne-sunrise.jpg" role="listitem" tabindex="0" aria-label="Mt Anne Sunrise">
+          <img src="images/mt-anne-sunrise.jpg" alt="Mt Anne Sunrise" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Mt Anne Sunrise</span><span class="gallery-cat">Favourites &middot; Tasmania</span></div>
+        </div>
+
+        <div class="gallery-item reveal" data-categories="favourites europe" data-title="Incalescent" data-src="images/incalescent.jpg" role="listitem" tabindex="0" aria-label="Incalescent">
+          <img src="images/incalescent.jpg" alt="Incalescent" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Incalescent</span><span class="gallery-cat">Favourites &middot; Europe</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-1" data-categories="favourites europe" data-title="Lusanna" data-src="images/lusanna.jpg" role="listitem" tabindex="0" aria-label="Lusanna">
+          <img src="images/lusanna.jpg" alt="Lusanna" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Lusanna</span><span class="gallery-cat">Favourites &middot; Europe</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-2" data-categories="favourites nsw" data-title="Seamans Hut" data-src="images/seamans-hut.jpg" role="listitem" tabindex="0" aria-label="Seamans Hut">
+          <img src="images/seamans-hut.jpg" alt="Seamans Hut" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Seamans Hut</span><span class="gallery-cat">Favourites &middot; NSW</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-3" data-categories="favourites tas" data-title="Twisted Lakes Sunrise" data-src="images/twisted-lakes-sunrise.jpg" role="listitem" tabindex="0" aria-label="Twisted Lakes Sunrise">
+          <img src="images/twisted-lakes-sunrise.jpg" alt="Twisted Lakes Sunrise" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Twisted Lakes Sunrise</span><span class="gallery-cat">Favourites &middot; Tasmania</span></div>
+        </div>
+
+        <div class="gallery-item reveal" data-categories="nsw" data-title="Helensburgh Tunnel" data-src="images/nsw-helensburgh-tunnel.jpg" role="listitem" tabindex="0" aria-label="Helensburgh Tunnel">
+          <img src="images/nsw-helensburgh-tunnel.jpg" alt="Helensburgh Tunnel" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Helensburgh Tunnel</span><span class="gallery-cat">NSW</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-1" data-categories="nsw" data-title="Kiama Coast" data-src="images/nsw-kiama.jpg" role="listitem" tabindex="0" aria-label="Kiama Coast">
+          <img src="images/nsw-kiama.jpg" alt="Kiama Coast" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Kiama Coast</span><span class="gallery-cat">NSW</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-2" data-categories="nsw" data-title="Minnamurra Headland Sunrise" data-src="images/nsw-minnamurra.jpg" role="listitem" tabindex="0" aria-label="Minnamurra Headland Sunrise">
+          <img src="images/nsw-minnamurra.jpg" alt="Minnamurra Headland Sunrise" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Minnamurra Headland Sunrise</span><span class="gallery-cat">NSW</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-3" data-categories="nsw" data-title="Sea Cliff Bridge" data-src="images/nsw-sea-cliff-bridge.jpg" role="listitem" tabindex="0" aria-label="Sea Cliff Bridge">
+          <img src="images/nsw-sea-cliff-bridge.jpg" alt="Sea Cliff Bridge" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Sea Cliff Bridge</span><span class="gallery-cat">NSW</span></div>
+        </div>
+
+        <div class="gallery-item reveal" data-categories="nsw" data-title="Tor" data-src="images/nsw-tor.jpg" role="listitem" tabindex="0" aria-label="Tor">
+          <img src="images/nsw-tor.jpg" alt="Tor" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Tor</span><span class="gallery-cat">NSW</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-1" data-categories="tas" data-title="Barn Bluff" data-src="images/tas-barn-bluff.jpg" role="listitem" tabindex="0" aria-label="Barn Bluff">
+          <img src="images/tas-barn-bluff.jpg" alt="Barn Bluff" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Barn Bluff</span><span class="gallery-cat">Tasmania</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-2" data-categories="tas" data-title="Lake Oberon Nightscape" data-src="images/tas-lake-oberon-night.jpg" role="listitem" tabindex="0" aria-label="Lake Oberon Nightscape">
+          <img src="images/tas-lake-oberon-night.jpg" alt="Lake Oberon Nightscape" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Lake Oberon Nightscape</span><span class="gallery-cat">Tasmania</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-3" data-categories="tas" data-title="Lake Oberon Sunrise" data-src="images/tas-lake-oberon-sunrise.jpg" role="listitem" tabindex="0" aria-label="Lake Oberon Sunrise">
+          <img src="images/tas-lake-oberon-sunrise.jpg" alt="Lake Oberon Sunrise" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Lake Oberon Sunrise</span><span class="gallery-cat">Tasmania</span></div>
+        </div>
+
+        <div class="gallery-item reveal" data-categories="tas" data-title="Sleepy Bay, Freycinet" data-src="images/tas-sleepy-bay.jpg" role="listitem" tabindex="0" aria-label="Sleepy Bay, Freycinet">
+          <img src="images/tas-sleepy-bay.jpg" alt="Sleepy Bay, Freycinet" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Sleepy Bay, Freycinet</span><span class="gallery-cat">Tasmania</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-1" data-categories="vic" data-title="Hopetoun Falls" data-src="images/vic-hopetoun-falls.jpg" role="listitem" tabindex="0" aria-label="Hopetoun Falls">
+          <img src="images/vic-hopetoun-falls.jpg" alt="Hopetoun Falls" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Hopetoun Falls</span><span class="gallery-cat">Victoria</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-2" data-categories="vic" data-title="Craigs Hut" data-src="images/vic-craigs-hut.jpg" role="listitem" tabindex="0" aria-label="Craigs Hut">
+          <img src="images/vic-craigs-hut.jpg" alt="Craigs Hut" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Craigs Hut</span><span class="gallery-cat">Victoria</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-3" data-categories="vic" data-title="Mt Buffalo Sunset" data-src="images/vic-mt-buffalo-sunset.jpg" role="listitem" tabindex="0" aria-label="Mt Buffalo Sunset">
+          <img src="images/vic-mt-buffalo-sunset.jpg" alt="Mt Buffalo Sunset" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Mt Buffalo Sunset</span><span class="gallery-cat">Victoria</span></div>
+        </div>
+
+        <div class="gallery-item reveal" data-categories="europe" data-title="Wetterhorn Creek Sunrise" data-src="images/europe-wetterhorn.jpg" role="listitem" tabindex="0" aria-label="Wetterhorn Creek Sunrise">
+          <img src="images/europe-wetterhorn.jpg" alt="Wetterhorn Creek Sunrise" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Wetterhorn Creek Sunrise</span><span class="gallery-cat">Europe</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-1" data-categories="europe" data-title="Old Man of Storr, Isle of Skye" data-src="images/europe-old-man-storr.jpg" role="listitem" tabindex="0" aria-label="Old Man of Storr, Isle of Skye">
+          <img src="images/europe-old-man-storr.jpg" alt="Old Man of Storr, Isle of Skye" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Old Man of Storr, Isle of Skye</span><span class="gallery-cat">Europe</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-2" data-categories="europe" data-title="Ice Cave Glow" data-src="images/europe-ice-cave.jpg" role="listitem" tabindex="0" aria-label="Ice Cave Glow">
+          <img src="images/europe-ice-cave.jpg" alt="Ice Cave Glow" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Ice Cave Glow</span><span class="gallery-cat">Europe</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-3" data-categories="europe" data-title="Quirang" data-src="images/europe-quirang.jpg" role="listitem" tabindex="0" aria-label="Quirang">
+          <img src="images/europe-quirang.jpg" alt="Quirang" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Quirang</span><span class="gallery-cat">Europe</span></div>
+        </div>
+
+        <div class="gallery-item reveal" data-categories="nz" data-title="Mt Cook" data-src="images/nz-mt-cook.jpg" role="listitem" tabindex="0" aria-label="Mt Cook">
+          <img src="images/nz-mt-cook.jpg" alt="Mt Cook" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Mt Cook</span><span class="gallery-cat">New Zealand</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-1" data-categories="nz" data-title="Fiordland" data-src="images/nz-fiordland.jpg" role="listitem" tabindex="0" aria-label="Fiordland">
+          <img src="images/nz-fiordland.jpg" alt="Fiordland" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Fiordland</span><span class="gallery-cat">New Zealand</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-2" data-categories="nz" data-title="Queenstown" data-src="images/nz-queenstown.jpg" role="listitem" tabindex="0" aria-label="Queenstown">
+          <img src="images/nz-queenstown.jpg" alt="Queenstown" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Queenstown</span><span class="gallery-cat">New Zealand</span></div>
+        </div>
+
+        <div class="gallery-item reveal reveal-delay-3" data-categories="other" data-title="Bungle Bungle, WA" data-src="images/other-bungle-bungle.jpg" role="listitem" tabindex="0" aria-label="Bungle Bungle, WA">
+          <img src="images/other-bungle-bungle.jpg" alt="Bungle Bungle, WA" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Bungle Bungle, WA</span><span class="gallery-cat">Other States</span></div>
+        </div>
+
+        <div class="gallery-item reveal" data-categories="other" data-title="Broome, WA" data-src="images/other-broome.jpg" role="listitem" tabindex="0" aria-label="Broome, WA">
+          <img src="images/other-broome.jpg" alt="Broome, WA" loading="lazy" />
+          <div class="gallery-overlay"><span class="gallery-title">Broome, WA</span><span class="gallery-cat">Other States</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo lightbox">
+    <button class="lb-close" id="lbClose" aria-label="Close lightbox"></button>
+    <button class="lb-prev"  id="lbPrev"  aria-label="Previous photo"></button>
+    <button class="lb-next"  id="lbNext"  aria-label="Next photo"></button>
+    <div class="lb-inner">
+      <img id="lb-img" src="" alt="" />
+      <div class="lb-caption">
+        <p class="lb-caption-title" id="lbTitle"></p>
+        <p class="lb-caption-cat"   id="lbCat"></p>
+      </div>
+    </div>
+    <div class="lb-counter" id="lbCounter" aria-live="polite"></div>
+  </div>
+
+  <!-- VIDEOGRAPHY -->
+  <section id="video" aria-label="Videography">
+    <div class="section-inner">
+      <h2 class="section-heading reveal">Videography</h2>
+      <div class="section-rule reveal reveal-delay-1"></div>
+      <div class="reveal reveal-delay-2">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/zOI-i0CGrLQ"
+            title="Crispy Scapes — Landscape Videography"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <p class="video-desc">Capturing the beauty of Australia's landscapes in motion.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" aria-label="About Chris Wiewiora">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-text">
+          <h2 class="section-heading reveal">About</h2>
+          <div class="section-rule reveal reveal-delay-1"></div>
+          <p class="reveal reveal-delay-2">
+            Chris is a passionate South Coast landscape photographer who lives in the small coastal
+            town of Kiama, which consists of beautiful coastlines and landscapes. He specialises in
+            capturing natural landscapes, but also experiments with many other forms of photography.
+          </p>
+          <p class="about-detail reveal reveal-delay-3">Based in Kiama, NSW South Coast, Australia</p>
+        </div>
+        <div class="about-visual reveal reveal-delay-2">
+          <img src="Logo/Square crop logo.jpg" alt="Crispy Scapes" class="about-logo-large" width="240" height="240" loading="lazy" style="border-radius: 10px;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" aria-label="Contact">
+    <div class="section-inner">
+      <h2 class="section-heading reveal">Get in Touch</h2>
+      <div class="section-rule reveal reveal-delay-1"></div>
+      <div class="contact-grid">
+        <div class="reveal reveal-delay-2">
+          <div class="contact-item">
+            <span class="contact-label">Email</span>
+            <a href="mailto:cwiewiora_04@hotmail.com" class="contact-value">cwiewiora_04@hotmail.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Phone</span>
+            <a href="tel:+61431344798" class="contact-value">+61 431 344 798</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Location</span>
+            <span class="contact-value" style="cursor:default;">Kiama, NSW 2533, Australia</span>
+          </div>
+        </div>
+        <div class="reveal reveal-delay-3">
+          <div class="contact-item">
+            <span class="contact-label">Follow Along</span>
+          </div>
+          <div class="social-links">
+            <a href="https://www.instagram.com/crispy_scapes/" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
+            <a href="http://www.youtube.com/channel/UCAt33G6NOyTp7pJW9eZUW2Q" target="_blank" rel="noopener noreferrer" class="social-link">YouTube</a>
+            <a href="https://www.facebook.com/Crispy.Scapes" target="_blank" rel="noopener noreferrer" class="social-link">Facebook</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog" aria-label="Blog">
+    <div class="section-inner">
+      <h2 class="section-heading reveal">Blog</h2>
+      <div class="section-rule reveal reveal-delay-1"></div>
+      <div class="blog-grid">
+        <div class="blog-card reveal reveal-delay-1">
+          <p class="blog-date">Coming soon</p>
+          <h3 class="blog-card-title">Chasing Golden Hour on the NSW South Coast</h3>
+          <p class="blog-card-text">Stories from behind the lens &mdash; the early mornings, the cold winds, and the moments that make it all worthwhile.</p>
+        </div>
+        <div class="blog-card reveal reveal-delay-2">
+          <p class="blog-date">Coming soon</p>
+          <h3 class="blog-card-title">Six Weeks Walking Tasmania's Overland Track</h3>
+          <p class="blog-card-text">A journey through wild alpine wilderness, from Cradle Mountain to Lake St Clair &mdash; with a camera on every summit.</p>
+        </div>
+        <div class="blog-card reveal reveal-delay-3">
+          <p class="blog-date">Coming soon</p>
+          <h3 class="blog-card-title">Isle of Skye: Scotland's Most Dramatic Landscape</h3>
+          <p class="blog-card-text">From the Old Man of Storr to the Quiraing &mdash; why the Scottish Highlands belong on every landscape photographer's bucket list.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        Crispy Scapes
+        <small>Photography by Chris Wiewiora</small>
+      </div>
+      <p class="footer-copy">&copy; 2026 Crispy Scapes. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/crispy_scapes/"                        target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="http://www.youtube.com/channel/UCAt33G6NOyTp7pJW9eZUW2Q"         target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="https://www.facebook.com/Crispy.Scapes"                          target="_blank" rel="noopener noreferrer">Facebook</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    'use strict';
+
+    /* YouTube background video — only loads on a real server (not file://) */
+    (function () {
+      if (window.location.protocol === 'file:') return; /* skip locally — fallback image shows instead */
+
+      var container = document.getElementById('heroVideoContainer');
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/zOI-i0CGrLQ?autoplay=1&mute=1&loop=1&playlist=zOI-i0CGrLQ&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0&iv_load_policy=3';
+      iframe.allow = 'autoplay; encrypted-media';
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('loading', 'eager');
+      container.appendChild(iframe);
+    })();
+
+    /* Navbar scroll */
+    (function () {
+      var navbar = document.getElementById('navbar');
+      function onScroll() {
+        navbar.classList.toggle('scrolled', window.scrollY > 60);
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    /* Hamburger / drawer */
+    (function () {
+      var btn    = document.getElementById('hamburger');
+      var drawer = document.getElementById('navDrawer');
+
+      function close() {
+        btn.classList.remove('open');
+        drawer.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+
+      btn.addEventListener('click', function () {
+        var open = drawer.classList.toggle('open');
+        btn.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+
+      drawer.querySelectorAll('.drawer-link').forEach(function (l) {
+        l.addEventListener('click', close);
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') close();
+      });
+    })();
+
+    /* Scroll reveal */
+    (function () {
+      if (!window.IntersectionObserver) {
+        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); });
+    })();
+
+    /* Gallery filter */
+    (function () {
+      var btns  = document.querySelectorAll('.filter-btn');
+      var items = document.querySelectorAll('.gallery-item');
+
+      btns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var filter = btn.getAttribute('data-filter');
+          btns.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          items.forEach(function (item) {
+            var cats = item.getAttribute('data-categories').split(' ');
+            item.classList.toggle('hidden', filter !== 'all' && cats.indexOf(filter) === -1);
+          });
+        });
+      });
+    })();
+
+    /* Lightbox */
+    (function () {
+      var lb        = document.getElementById('lightbox');
+      var lbImg     = document.getElementById('lb-img');
+      var lbTitle   = document.getElementById('lbTitle');
+      var lbCat     = document.getElementById('lbCat');
+      var lbCounter = document.getElementById('lbCounter');
+      var lbClose   = document.getElementById('lbClose');
+      var lbPrev    = document.getElementById('lbPrev');
+      var lbNext    = document.getElementById('lbNext');
+
+      var visible = [];
+      var idx     = 0;
+
+      function getVisible() {
+        return Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'));
+      }
+
+      function show(i) {
+        var item  = visible[i];
+        var src   = item.getAttribute('data-src');
+        var title = item.getAttribute('data-title');
+        var cats  = item.getAttribute('data-categories').replace(/ /g, ' · ').toUpperCase();
+
+        lbImg.classList.add('fading');
+        var preload    = new Image();
+        preload.onload = function () {
+          lbImg.src            = src;
+          lbImg.alt            = title;
+          lbTitle.textContent  = title;
+          lbCat.textContent    = cats;
+          lbCounter.textContent = (i + 1) + ' / ' + visible.length;
+          requestAnimationFrame(function () { lbImg.classList.remove('fading'); });
+        };
+        preload.src = src;
+        idx = i;
+      }
+
+      function open(item) {
+        visible = getVisible();
+        idx     = visible.indexOf(item);
+        show(idx);
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        lbClose.focus();
+      }
+
+      function close() {
+        lb.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      function prev() { show((idx - 1 + visible.length) % visible.length); }
+      function next() { show((idx + 1) % visible.length); }
+
+      document.querySelectorAll('.gallery-item').forEach(function (item) {
+        item.addEventListener('click', function () { open(item); });
+        item.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(item); }
+        });
+      });
+
+      lbClose.addEventListener('click', close);
+      lbPrev.addEventListener('click',  prev);
+      lbNext.addEventListener('click',  next);
+      lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+
+      document.addEventListener('keydown', function (e) {
+        if (!lb.classList.contains('open')) return;
+        if (e.key === 'Escape')     close();
+        if (e.key === 'ArrowLeft')  prev();
+        if (e.key === 'ArrowRight') next();
+      });
+
+      /* Swipe */
+      var tx = 0;
+      lb.addEventListener('touchstart', function (e) { tx = e.changedTouches[0].screenX; }, { passive: true });
+      lb.addEventListener('touchend',   function (e) {
+        var d = tx - e.changedTouches[0].screenX;
+        if (Math.abs(d) > 50) { if (d > 0) next(); else prev(); }
+      }, { passive: true });
+    })();
+
+    /* Smooth scroll for anchor links */
+    (function () {
+      document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          var target = document.querySelector(a.getAttribute('href'));
+          if (!target) return;
+          e.preventDefault();
+          var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 70;
+          window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - navH, behavior: 'smooth' });
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
