@@ -476,6 +476,21 @@
 
     /* Video */
     #video { background: var(--dark); }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .video-card {
+      background: var(--dark-mid);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
     .video-wrapper {
       position: relative;
       padding-bottom: 56.25%;
@@ -489,11 +504,18 @@
       width: 100%; height: 100%;
       border: none;
     }
-    .video-desc {
-      margin-top: 1.5rem;
-      font-size: 1rem;
-      color: var(--light-muted);
-      font-style: italic;
+    .video-card-title {
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--light);
+      padding: 1rem 1.2rem;
+      text-align: center;
+    }
+    @media (max-width: 768px) {
+      .video-grid { grid-template-columns: 1fr; }
     }
 
     /* About */
@@ -590,18 +612,45 @@
     #blog { background: var(--dark); }
     .blog-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
     }
+    @media (max-width: 1024px) {
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .blog-grid { grid-template-columns: 1fr; }
+    }
     .blog-card {
-      background: var(--dark-mid);
-      border: 1px solid rgba(255,255,255,0.06);
-      padding: 2rem;
-      transition: border-color var(--transition), transform var(--transition);
+      display: block;
       position: relative;
       overflow: hidden;
+      border-radius: 4px;
+      background: var(--dark-mid);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+      text-decoration: none;
+      color: inherit;
     }
-    .blog-card::after {
+    .blog-card:hover {
+      border-color: rgba(255,255,255,0.16);
+      transform: translateY(-4px);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.45);
+    }
+    .blog-card-thumb {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.55s ease, filter 0.55s ease;
+      filter: brightness(0.88);
+    }
+    .blog-card:hover .blog-card-thumb { transform: scale(1.04); filter: brightness(0.7); }
+    .blog-card-body {
+      padding: 1.4rem 1.5rem 1.6rem;
+      position: relative;
+    }
+    .blog-card-body::after {
       content: '';
       position: absolute;
       bottom: 0; left: 0;
@@ -609,25 +658,24 @@
       background: var(--accent);
       transition: width 0.4s ease;
     }
-    .blog-card:hover { border-color: rgba(255,255,255,0.14); transform: translateY(-3px); }
-    .blog-card:hover::after { width: 100%; }
+    .blog-card:hover .blog-card-body::after { width: 100%; }
     .blog-date {
       font-family: var(--font-head);
       font-size: 0.65rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.6rem;
     }
     .blog-card-title {
       font-family: var(--font-head);
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 500;
       color: var(--white);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.65rem;
       line-height: 1.4;
     }
-    .blog-card-text { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+    .blog-card-text { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
 
     /* Footer */
     footer {
@@ -925,17 +973,109 @@
     <div class="section-inner">
       <h2 class="section-heading reveal">Videography</h2>
       <div class="section-rule reveal reveal-delay-1"></div>
-      <div class="reveal reveal-delay-2">
-        <div class="video-wrapper">
-          <iframe
-            src="https://www.youtube.com/embed/zOI-i0CGrLQ"
-            title="Crispy Scapes — Landscape Videography"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            loading="lazy"
-          ></iframe>
+      <div class="video-grid reveal reveal-delay-2">
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/zOI-i0CGrLQ" title="Showreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Showreel</h3>
         </div>
-        <p class="video-desc">Capturing the beauty of Australia's landscapes in motion.</p>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/yKh_yMbwEyY" title="Lofoten Islands &amp; Dolomites" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Lofoten Islands &amp; Dolomites</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/ckTAWPozbM8" title="New Zealand" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">New Zealand</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/jjugcGTJTk0" title="Tasmania (feat. Pumba)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Tasmania (feat. Pumba)</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/AebH3G9KTOg" title="Australian Alps" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Australian Alps</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/mNx1SErSjNQ" title="Blue Mountains" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Blue Mountains</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/Vxh8KON4ci4" title="Yorke Peninsula" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Yorke Peninsula</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/yFYe-XiSJB4?start=90" title="Moreton Island" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Moreton Island</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/lCECgEG_LPk" title="Western Faces" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Western Faces</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/sCR6UrYEDO8" title="Hanging Rock" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Hanging Rock</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/6VLSGgHTWr8" title="Penrose" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Penrose</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/ZbFJnE3L_pc" title="Radiant Kiama" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Radiant Kiama</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/tWxfJYycIZQ" title="Kiama" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Kiama</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/wBpNqXH8nH8" title="Bombo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Bombo</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/jcDmk18o6O0" title="Wollongong" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Wollongong</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/VBsnPVcpy4g" title="Sea Cliff Bridge" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Sea Cliff Bridge</h3>
+        </div>
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/Ni7P30WxjMM" title="Oilies" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <h3 class="video-card-title">Oilies</h3>
+        </div>
       </div>
     </div>
   </section>
@@ -1001,21 +1141,52 @@
       <h2 class="section-heading reveal">Blog</h2>
       <div class="section-rule reveal reveal-delay-1"></div>
       <div class="blog-grid">
-        <div class="blog-card reveal reveal-delay-1">
-          <p class="blog-date">Coming soon</p>
-          <h3 class="blog-card-title">Chasing Golden Hour on the NSW South Coast</h3>
-          <p class="blog-card-text">Stories from behind the lens &mdash; the early mornings, the cold winds, and the moments that make it all worthwhile.</p>
-        </div>
-        <div class="blog-card reveal reveal-delay-2">
-          <p class="blog-date">Coming soon</p>
-          <h3 class="blog-card-title">Six Weeks Walking Tasmania's Overland Track</h3>
-          <p class="blog-card-text">A journey through wild alpine wilderness, from Cradle Mountain to Lake St Clair &mdash; with a camera on every summit.</p>
-        </div>
-        <div class="blog-card reveal reveal-delay-3">
-          <p class="blog-date">Coming soon</p>
-          <h3 class="blog-card-title">Isle of Skye: Scotland's Most Dramatic Landscape</h3>
-          <p class="blog-card-text">From the Old Man of Storr to the Quiraing &mdash; why the Scottish Highlands belong on every landscape photographer's bucket list.</p>
-        </div>
+
+        <a href="blog/ul-hiking.html" class="blog-card reveal reveal-delay-1">
+          <img class="blog-card-thumb" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1460869759112-FP9Y1SOAXUZSRZI4MK8O/_DSC2135+copy.jpg?format=500w" alt="Ultralight Hiking for Photographers" loading="lazy" />
+          <div class="blog-card-body">
+            <p class="blog-date">17 April 2016</p>
+            <h3 class="blog-card-title">Ultralight Hiking for Photographers Part 1</h3>
+            <p class="blog-card-text">Hiking and photography is the perfect combination, making it possible to get to remote and unique locations. Tips on getting your base weight under 10kg including camera gear.</p>
+          </div>
+        </a>
+
+        <a href="blog/16-35mm.html" class="blog-card reveal reveal-delay-2">
+          <img class="blog-card-thumb" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1435397530749-PYHZIRXWUT05QLG2X0HT/image-asset.jpeg?format=500w" alt="Sony Vario-Tessar 16-35mm" loading="lazy" />
+          <div class="blog-card-body">
+            <p class="blog-date">27 June 2015</p>
+            <h3 class="blog-card-title">Sony Vario-Tessar T* FE 16-35mm f/4 ZA OSS</h3>
+            <p class="blog-card-text">A performance review of the Sony Zeiss 16-35mm f/4 FE &mdash; the only pre-production model in Australia. Corner sharpness, distortion, CA and more analysed in detail.</p>
+          </div>
+        </a>
+
+        <a href="blog/telemark-tour.html" class="blog-card reveal reveal-delay-3">
+          <img class="blog-card-thumb" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408100795869-5D6KVXXK6ZGB43FOW3RA/Camping+at+2100m+next+to+Mt+Kosciuszko.?format=500w" alt="Telemark Tour Kosciuszko" loading="lazy" />
+          <div class="blog-card-body">
+            <p class="blog-date">1 August 2014</p>
+            <h3 class="blog-card-title">Telemark Tour &mdash; Kosciuszko National Park 2014</h3>
+            <p class="blog-card-text">Eight days exploring the beautiful and punishing Kosciuszko National Park in mid-winter &mdash; cornices, whiteouts, pemmican and the majestic Western Faces.</p>
+          </div>
+        </a>
+
+        <a href="blog/nz-escapade.html" class="blog-card reveal reveal-delay-1">
+          <img class="blog-card-thumb" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1413715552972-N6A4S4RU7JVVRDKKIC7E/Fiordland.jpg?format=500w" alt="New Zealand Escapade" loading="lazy" />
+          <div class="blog-card-body">
+            <p class="blog-date">29 March 2014</p>
+            <h3 class="blog-card-title">New Zealand Escapade</h3>
+            <p class="blog-card-text">A summary of an adventure to the South Island of New Zealand &mdash; Queenstown, Wanaka, Fiordland, the Routeburn Track and camping at Sefton Bivouac.</p>
+          </div>
+        </a>
+
+        <a href="blog/a7r.html" class="blog-card reveal reveal-delay-2">
+          <img class="blog-card-thumb" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1390042975798-QR9MYPQYQFX3D2ZTQJRV/image-asset.jpeg?format=500w" alt="Sony A7R Review" loading="lazy" />
+          <div class="blog-card-body">
+            <p class="blog-date">16 January 2014</p>
+            <h3 class="blog-card-title">Sony A7R Review</h3>
+            <p class="blog-card-text">An in-depth review of the Sony A7R &mdash; 36MP full-frame mirrorless, shutter vibration analysis, lens options and why it replaced a Nikon D800E for landscape photography.</p>
+          </div>
+        </a>
+
       </div>
     </div>
   </section>

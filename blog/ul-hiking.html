@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ultralight Hiking for Photographers Part 1 | Crispy Scapes</title>
+  <meta name="description" content="Tips and gear recommendations for getting your hiking base weight under 10kg while carrying camera gear." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:       #0a0a0a;
+      --dark:        #111111;
+      --dark-mid:    #1a1a1a;
+      --dark-light:  #222222;
+      --mid:         #444444;
+      --muted:       #888888;
+      --light-muted: #aaaaaa;
+      --light:       #cccccc;
+      --white:       #ffffff;
+      --accent:      #c8a96e;
+      --accent-dark: #a07840;
+      --font-head:   'Poppins', sans-serif;
+      --font-body:   'Roboto', sans-serif;
+      --nav-h:       70px;
+      --transition:  0.35s ease;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--black);
+      color: var(--light);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+    a   { color: inherit; text-decoration: none; }
+    ::selection { background: var(--accent); color: var(--black); }
+
+    /* Navigation */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      background: rgba(10,10,10,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .nav-brand { display: flex; align-items: center; }
+    .nav-brand img { height: 50px; width: auto; }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-head);
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light-muted);
+      position: relative;
+      padding-bottom: 3px;
+      transition: color var(--transition);
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover             { color: var(--white); }
+    .nav-links a:hover::after      { width: 100%; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+      z-index: 1100;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 1.5px;
+      background: var(--white);
+      transition: transform var(--transition), opacity var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(10,10,10,0.98);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light-muted);
+      transition: color var(--transition);
+    }
+    .nav-drawer a:hover { color: var(--white); }
+
+    /* Hero */
+    .post-hero {
+      position: relative;
+      height: 70vh;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 4rem;
+      overflow: hidden;
+      margin-top: var(--nav-h);
+    }
+    .post-hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1460869759112-FP9Y1SOAXUZSRZI4MK8O/_DSC2135+copy.jpg?format=1500w');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.55);
+    }
+    .post-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 70%, rgba(10,10,10,0.98) 100%);
+    }
+    .post-hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+      max-width: 860px;
+    }
+    .post-meta {
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .post-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+    }
+
+    /* Article */
+    .post-body {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .post-body p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--light-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .post-body h2 {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--white);
+      margin: 2.5rem 0 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .post-body h3 {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin: 2rem 0 0.75rem;
+      letter-spacing: 0.04em;
+    }
+
+    .post-body ul, .post-body ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--light-muted);
+      font-size: 1.05rem;
+      line-height: 1.9;
+    }
+
+    .post-body li { margin-bottom: 0.4rem; }
+
+    .post-img {
+      width: 100%;
+      border-radius: 4px;
+      margin: 2rem 0;
+      display: block;
+    }
+
+    .post-img-caption {
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-align: center;
+      margin-top: -1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 3rem;
+      transition: color var(--transition);
+    }
+    .back-link::before {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 1px;
+      background: currentColor;
+      transition: width var(--transition);
+    }
+    .back-link:hover { color: var(--white); }
+    .back-link:hover::before { width: 40px; }
+
+    /* Footer */
+    footer {
+      background: var(--dark-mid);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2.5rem 0;
+    }
+    .footer-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-brand {
+      font-family: var(--font-head);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .footer-copy { font-size: 0.75rem; letter-spacing: 0.08em; color: var(--muted); }
+
+    @media (max-width: 768px) {
+      :root { --nav-h: 60px; }
+      .nav-links  { display: none; }
+      .hamburger  { display: flex; }
+      .post-hero  { height: 55vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <a href="../index.html" class="nav-brand"><img src="../Logo/CrispyScapes logo without text.png" alt="Crispy Scapes" /></a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.html#portfolio">Portfolio</a></li>
+      <li><a href="../index.html#video">Video</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+      <li><a href="../index.html#blog">Blog</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <div class="nav-drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <a href="../index.html" class="drawer-link">Home</a>
+    <a href="../index.html#portfolio" class="drawer-link">Portfolio</a>
+    <a href="../index.html#video"     class="drawer-link">Video</a>
+    <a href="../index.html#about"     class="drawer-link">About</a>
+    <a href="../index.html#contact"   class="drawer-link">Contact</a>
+    <a href="../index.html#blog"      class="drawer-link">Blog</a>
+  </div>
+
+  <!-- HERO -->
+  <header class="post-hero">
+    <div class="post-hero-bg"></div>
+    <div class="post-hero-overlay"></div>
+    <div class="post-hero-content">
+      <p class="post-meta">17 April 2016 &nbsp;&middot;&nbsp; Gear &amp; Tips</p>
+      <h1 class="post-title">Ultralight Hiking for Photographers Part 1</h1>
+    </div>
+  </header>
+
+  <!-- ARTICLE -->
+  <article class="post-body">
+
+    <p>Hiking and photography is the perfect combination, making it possible to get to remote and unique locations and capturing them for others to enjoy. But it's also very easy to end up lugging around a massive pack, with all that heavy photography gear we have to bring. Luckily nowadays with new materials, smart designs, and knowledge, it's possible to carry that camera gear and still have a light pack, without having to compromise on safety or comfort. In this multi part blog post I will go through some of my tips and tricks, as well as recommended gear to getting a base weight under 10kg inc. camera gear.</p>
+
+    <p>Of course there is nothing wrong with carrying 20kg+ loads, people have done it for years but lightening your load will allow you to trek further and on more tricky terrain, as well as conserving your energy for when you get to your campsite and need to go out and capture images. You don't need to be a sherpa!</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1472270795858-U5HUG83W0JTQQU5RJW8K/Capture.PNG?format=1500w" alt="Gear list spreadsheet" loading="lazy" />
+
+    <h2>Climate</h2>
+
+    <p>So one of the first things to consider before a trip, is what the climate is like. It is important to do your research prior to a trip and find out what the average temps, wind speed and rain will be like. This will allow you to tailor your gear for the climate and not take unnecessary items. If you aren't familiar with a location's climate, try speak with a local or look at the BOM's climate data. Knowing what gear to use when can be tricky and comes down to experience. Especially if you are familiar with a location. But generally if it's an alpine environment close to winter, I will still take my winter tent because of high winds being likely or when camping in exposed locations, such as in the Southwest National Park in Tasmania, where high winds are frequent.</p>
+
+    <p>I like to split my gear into two lists; summer (three season) and winter (four season). Then I slightly customise each for specific trips. Below is my gear list broken down into these two categories, as well as my excel doc you can use as a template. It's very handy to have a gear breakdown like this to easily see what items are adding the most to your pack weight and knowing your pack weight prior to a trip.</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1472270795860-CSQB48MP3AQ5C4EWLX97/2.PNG?format=1500w" alt="Gear list breakdown" loading="lazy" />
+
+    <h2>Material Tech</h2>
+
+    <p>One of the best ways to reduce weight is making the most of the latest innovations in materials. This will let you save weight and generally not sacrifice on durability and strength but unfortunately if you are on a tight budget, I'd stick to the classic materials, as low production, modern materials can be very expensive.</p>
+
+    <h3>Dyneema</h3>
+    <p>One of the most popular UL material is Dyneema Composite Fabric (formerly Cuben Fiber). Which is an incredibly strong and durable fiber. It has great tear, puncture and abrasion performance, as well as being waterproof, allowing for light packs, tents, dry bags, guylines to be made.</p>
+
+    <h3>Titanium &amp; Carbon Fiber</h3>
+    <p>Another great material with amazing strength (1400 MPa) is titanium. It's great for tent stakes and cooking gear, generally around half the weight of equivalent aluminium gear. Especially for winter stakes, as it won't stick to snow as much as aluminum, making it a lot easier to remove the next morning. Also carbon fiber is great for trekking poles, stakes and three season tent poles with unidirectional CF, allowing it to flex.</p>
+
+    <h3>Merino, Synthetics &amp; Gore-tex</h3>
+    <p>Merino, synthetics and waterproof membranes continue to improve. In part 2 I will go into more detail about the pros and cons of both merino and synthetics. Nuyarn Merino is the latest and greatest. While it still uses merino wool, it's a new way of making it. With 35% more loft, 35% stretchier, dries 5x faster, 35% warmer, 47% stronger and 120% tougher seams (according to AgResearch). Although there are still a limited amount of manufactures using it and the current ones available are expensive. It's very easy to make a waterproof fabric but to also make it durable and breathable is challenging. Gore-tex continues to lead but it's worth keeping an eye on eVent and softshell layers as they continue to improve.</p>
+
+    <h3>950+ Down</h3>
+    <p>950+ goose down has only recently arose and will provide the best warmth for the weight on the market. The higher the loft value, the more insulation it will provide for the same weight.</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1460870209545-OEHM8Q1ULZA7KQRPT75T/Big+Agnus.jpg?format=1500w" alt="Big Agnes tent" loading="lazy" />
+
+    <h2>Big Three</h2>
+
+    <p>Your tent, backpack and sleeping system is the easiest and best place to start saving significant weight. As you can get major weight savings but it is also the most expensive items. UL gear doesn't have to be expensive but these items will generally be very pricey if you want major weight savings, unless you make it yourself or sacrifice durability.</p>
+
+    <h3>Tent</h3>
+
+    <p>It's best to own two tents for three season and four season use. It's hard to make a tent that will take high winds and snow loading without being generally twice as heavy as a 3 season tent, although the Hyperlite Mountain Gear Ultamid 2 does a good job. To pack more efficiently, it's worth carrying the poles separately, so you pack them in between other gear or inside your tripod legs. I always like to use a two man tent, even when going solo, as if the weather is bad, it's worth the extra weight to have that space but you can save even more weight by using a one man tent.</p>
+
+    <p>An easy mod to do to tents is replace the stock guylines and pegs, as these usually aren't very good. I like to use Z-Line Dyneema 1.5mm cord (200lbs), 15cm Ti or CF stakes for my 3 season tent and Z-Line Slick Dyneema 2.2mm (650lb) and Ti snow stakes (deadman style) for my 4 season tent. Another mod for 3 season tents is carbon fiber Fibraplex poles, which are around half the weight of standard DAC aluminium poles but it's not cheap.</p>
+
+    <p>For winter use I'd recommend sticking with a tunnel or pyramid tent design unless you leave your tent for long periods of time (snow loading) and set it up on rocks frequently (freestanding). Dome tents don't handle strong winds as well as a tunnel tent in my opinion, so they generally will weigh more for the same wind resistance because they will need more poles for the same usable internal space.</p>
+
+    <ul>
+      <li><strong>Best Value:</strong> Tarptent StratoSpire 2 &amp; Dyneema tarp from HMG or Zpacks</li>
+      <li><strong>Bombproof:</strong> Hilleberg Nammatj 2</li>
+      <li><strong>Lightest:</strong> Hyperlite Mountain Gear Ultamid 2 (4 Season) / Zpacks Duplex (3 Season)</li>
+    </ul>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1460869759112-FP9Y1SOAXUZSRZI4MK8O/_DSC2135+copy.jpg?format=1500w" alt="Camp in the alpine" loading="lazy" />
+
+    <h3>Backpack</h3>
+
+    <p>Prior to finding your ideal pack, it's necessary to have a general idea what load you expect to carry. As the pack needs to be designed to distribute this load to your hips properly. Having a gear list will help get an estimate for your pack weight.</p>
+
+    <p>Make sure you get a large enough capacity, so you don't have to have gear dangling off your bag, which will get caught on things and are prone to damage. I've used photography specific backpacks, such as the F-stop Tilopa but they compromise on proper load distribution in my opinion with the back entry and foam padding, as well as they are very heavy. You can also slightly reduce your current pack's weight by trimming straps to the length you need and removing items you never use (top hood, external carry loops).</p>
+
+    <p>Dry bag style packs made out of Dyneema are the best in my opinion, simple and effective design and it includes your first layer of waterproofing. If your pack isn't watertight, I'd recommend using trash bags. I don't like using pack covers as they get caught on bushes too easily and blow off in the wind.</p>
+
+    <ul>
+      <li><strong>Best Value:</strong> Osprey Exos 58 (20kg Max Load)</li>
+      <li><strong>Durable &amp; Light:</strong> Hyperlite Mountain Gear Windrider 150D (20kg Max Load)</li>
+      <li><strong>Lightest:</strong> Zpacks Arc Blast (16kg Max Load)</li>
+    </ul>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1460877280221-02YAYL6IDD9JADK5IY9O/_DSC9682+copy+4.jpg?format=1500w" alt="Hiking with camera pack" loading="lazy" />
+
+    <h3>Sleeping System</h3>
+
+    <p>As with the tent, I think it's ideal to have two sleeping bags, one for summer and one for winter temperatures. It's a big investment to purchase two but it's worthwhile in the end.</p>
+
+    <p>As mentioned in material tech, 950 down is the best option for weight-efficient warmth, however there are relatively few options available with this material for now and you will find the almost-as-good 900 down much more widely available and the weight difference is very minor. Downtek coatings help to make down more resistant to absorbing moisture but it's still not perfect, so you need to be super careful to not get it wet, as it will lose its loft and intern not provide you with insulation.</p>
+
+    <p>The new style of sleeping bag is the quilt, with a very versatile design, some allowing you to unzip them flat and a significant weight reduction. The main weight reduction is from eliminating the hood and not fully wrapping the down around you. In my opinion easily the best and most popular mattress is the Thermarest Neo Air Xlite for 3 season use and Xtherm for 4 season use.</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1460876116149-9WJCQX2DLCQ41J8WWWQL/Sleep+System.jpg?format=1500w" alt="Sleeping system laid out" loading="lazy" />
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1460876124903-MDQAL34DS2BATHPEY4C7/DSC07896+copy.jpg?format=1500w" alt="Camp setup" loading="lazy" />
+
+    <ul>
+      <li><strong>Summer Bags:</strong> Enlightened Revelation 30, Katabatic Gear Palisade 30, Zpacks 30 &amp; Feathered Friends Flicker UL Quilt 30</li>
+      <li><strong>Summer Mattress:</strong> Thermarest Neo Air Xlite</li>
+      <li><strong>Aus Winter Bag:</strong> Feathered Friends Lark UL 10</li>
+      <li><strong>Aus Winter Mattress:</strong> Thermarest Neo Air Xtherm</li>
+    </ul>
+
+    <h2>Next</h2>
+
+    <p>I hope you found this first part beneficial and there are plenty more topics still to cover, such as cooking, H2O, clothing, shoes, photography gear, ditty bag, navigation, alpine touring gear, and much more.</p>
+
+    <a href="../index.html#blog" class="back-link">Back to Blog</a>
+
+  </article>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">Crispy Scapes</div>
+      <p class="footer-copy">&copy; 2026 Crispy Scapes. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    'use strict';
+    (function () {
+      var btn    = document.getElementById('hamburger');
+      var drawer = document.getElementById('navDrawer');
+      function close() {
+        btn.classList.remove('open');
+        drawer.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+      btn.addEventListener('click', function () {
+        var open = drawer.classList.toggle('open');
+        btn.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      drawer.querySelectorAll('.drawer-link').forEach(function (l) { l.addEventListener('click', close); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    })();
+  </script>
+
+</body>
+</html>

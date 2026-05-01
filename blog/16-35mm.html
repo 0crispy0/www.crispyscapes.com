@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sony Vario-Tessar T* FE 16-35mm f/4 ZA OSS | Crispy Scapes</title>
+  <meta name="description" content="A detailed lens performance review of the Sony Zeiss 16-35mm f/4 FE — the only pre-production model in Australia." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:       #0a0a0a;
+      --dark:        #111111;
+      --dark-mid:    #1a1a1a;
+      --mid:         #444444;
+      --muted:       #888888;
+      --light-muted: #aaaaaa;
+      --light:       #cccccc;
+      --white:       #ffffff;
+      --accent:      #c8a96e;
+      --accent-dark: #a07840;
+      --font-head:   'Poppins', sans-serif;
+      --font-body:   'Roboto', sans-serif;
+      --nav-h:       70px;
+      --transition:  0.35s ease;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--black);
+      color: var(--light);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a   { color: inherit; text-decoration: none; }
+    ::selection { background: var(--accent); color: var(--black); }
+
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      background: rgba(10,10,10,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .nav-brand { display: flex; align-items: center; }
+    .nav-brand img { height: 50px; width: auto; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-head);
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light-muted);
+      position: relative;
+      padding-bottom: 3px;
+      transition: color var(--transition);
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+      z-index: 1100;
+    }
+    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--white); transition: transform var(--transition), opacity var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(10,10,10,0.98);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a { font-family: var(--font-head); font-size: 1.5rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light-muted); transition: color var(--transition); }
+    .nav-drawer a:hover { color: var(--white); }
+
+    .post-hero {
+      position: relative;
+      height: 70vh;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 4rem;
+      overflow: hidden;
+      margin-top: var(--nav-h);
+    }
+    .post-hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1435397530749-PYHZIRXWUT05QLG2X0HT/image-asset.jpeg?format=1500w');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.5);
+    }
+    .post-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 70%, rgba(10,10,10,0.98) 100%);
+    }
+    .post-hero-content { position: relative; z-index: 2; text-align: center; padding: 0 2rem; max-width: 860px; }
+    .post-meta { font-family: var(--font-head); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .post-title { font-family: var(--font-head); font-size: clamp(1.8rem, 4.5vw, 3.2rem); font-weight: 600; color: var(--white); line-height: 1.2; letter-spacing: 0.02em; }
+
+    .post-body { max-width: 780px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+    .post-body p { font-size: 1.05rem; line-height: 1.9; color: var(--light-muted); margin-bottom: 1.5rem; }
+    .post-body h2 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 600; color: var(--white); margin: 2.5rem 0 1rem; letter-spacing: 0.02em; }
+    .post-body h3 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 500; color: var(--accent); margin: 2rem 0 0.75rem; letter-spacing: 0.04em; }
+    .post-body ul, .post-body ol { padding-left: 1.5rem; margin-bottom: 1.5rem; color: var(--light-muted); font-size: 1.05rem; line-height: 1.9; }
+    .post-body li { margin-bottom: 0.4rem; }
+    .post-img { width: 100%; border-radius: 4px; margin: 2rem 0; display: block; }
+
+    .img-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin: 2rem 0; }
+    .img-row img { border-radius: 4px; width: 100%; height: 200px; object-fit: cover; }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 3rem;
+      transition: color var(--transition);
+    }
+    .back-link::before { content: ''; display: inline-block; width: 24px; height: 1px; background: currentColor; transition: width var(--transition); }
+    .back-link:hover { color: var(--white); }
+    .back-link:hover::before { width: 40px; }
+
+    .blockquote {
+      border-left: 2px solid var(--accent);
+      padding: 0.5rem 0 0.5rem 1.5rem;
+      margin: 2rem 0;
+      color: var(--light-muted);
+      font-style: italic;
+    }
+
+    footer { background: var(--dark-mid); border-top: 1px solid rgba(255,255,255,0.06); padding: 2.5rem 0; }
+    .footer-inner { max-width: 1300px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-brand { font-family: var(--font-head); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); }
+    .footer-copy { font-size: 0.75rem; letter-spacing: 0.08em; color: var(--muted); }
+
+    @media (max-width: 768px) {
+      :root { --nav-h: 60px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .post-hero { height: 55vh; }
+      .img-row { grid-template-columns: 1fr; }
+      .img-row img { height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <a href="../index.html" class="nav-brand"><img src="../Logo/CrispyScapes logo without text.png" alt="Crispy Scapes" /></a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.html#portfolio">Portfolio</a></li>
+      <li><a href="../index.html#video">Video</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+      <li><a href="../index.html#blog">Blog</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <a href="../index.html" class="drawer-link">Home</a>
+    <a href="../index.html#portfolio" class="drawer-link">Portfolio</a>
+    <a href="../index.html#video"     class="drawer-link">Video</a>
+    <a href="../index.html#about"     class="drawer-link">About</a>
+    <a href="../index.html#contact"   class="drawer-link">Contact</a>
+    <a href="../index.html#blog"      class="drawer-link">Blog</a>
+  </div>
+
+  <header class="post-hero">
+    <div class="post-hero-bg"></div>
+    <div class="post-hero-overlay"></div>
+    <div class="post-hero-content">
+      <p class="post-meta">27 June 2015 &nbsp;&middot;&nbsp; Gear Review</p>
+      <h1 class="post-title">Sony Vario-Tessar T* FE 16-35mm f/4 ZA OSS</h1>
+    </div>
+  </header>
+
+  <article class="post-body">
+
+    <p>I wrote this quick review on November 11th 2014 for the Focus group website but due to exams, I didn't have time to reformat it and post it here. It's a bit late but I thought it's still worth sharing. My current opinion is, this lens pretty much doesn't come off the a7R — I just love how compact and versatile the lens is.</p>
+
+    <blockquote class="blockquote">
+      <p>"Focus Sponsor Sony Australia lent the Focus group the only pre-production model of the Sony Zeiss 16-35mm f/4 FE in Australia. Images with this lens were captured by John Armytage using his A7R and the raw files were sent to gear nerd Chris Wiewiora for analysis. This is what Chris found from his lens performance review."</p>
+    </blockquote>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1435397530749-PYHZIRXWUT05QLG2X0HT/image-asset.jpeg?format=1500w" alt="Sony 16-35mm f/4 FE lens" loading="lazy" />
+
+    <p>John Armytage asked me to review the unreleased Sony/Zeiss (Zony) 16-35mm f/4 FE that he has been using. Although it is tricky to make a proper assessment from just viewing a few brick wall RAW files, I can get a general idea of its performance.</p>
+
+    <p>This lens is designed for the Sony Full Frame E-Mount for cameras such as the Sony A7, A7r and A7s. The main specs that stand out are the 518g weight, compact size (for an ultra wide angle retrofocus lens design) and great build quality, with an all metal body (including the zoom and focus ring). My benchmark was the Canon EF 16-35mm f/4L, as it's the best performing 16-35mm released at the moment in my opinion.</p>
+
+    <h2>Optical Performance</h2>
+
+    <p>From the lovely brick wall shots John took, the corner performance is impressive, especially at the wide end. Its peak performance seems to be around the mid focal range but the wide end is surprisingly good comparatively. The corners at 35mm look okay but overall sharpness starts to suffer. Compared to the Nikon 16-35mm f/4, Nikon 17-35mm f/2.8, Canon 17-40mm f/4L and Canon 16-35mm f/2.8L — performance looks better.</p>
+
+    <p>Now compared to the Canon 16-35mm f/4 which is a superb lens, it's much harder to evaluate, as they are so similar. From the full res images I have seen taken with the Canon @ 16mm on the A7R, the Sony looks on par if not better. I haven't seen any images taken at other focal lengths, so I can't make that judgment but they have similar IQ characteristics throughout the focal range.</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1435399332355-S3LVITS520MYNX38RA2H/image-asset.jpeg?format=1500w" alt="Lens comparison test" loading="lazy" />
+
+    <h2>Distortion, CA and Vignetting</h2>
+
+    <p>The distortion looks reasonable at 16mm relative to the rest but although I couldn't see for myself, I have read that past 24mm there is a bit of pincushion distortion. I couldn't see any field curvature at 16mm and 24mm but there were hints of it around 35mm. Thankfully it has a reasonably decent sun star, with nice thin diffraction rays at f/22 seen in the image at the end of the review.</p>
+
+    <p>There is a bit of chromatic aberration but CA is an easy fix in ACR/Lightroom. Vignetting doesn't look bad but due to the small 72mm filter thread, you don't want to stack too many filters and I'd recommend using a wide angle adapter.</p>
+
+    <p>Here are some 100% crops with no sharpening applied except for ACR standard (25).</p>
+
+    <div class="img-row">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1435409252761-4RBCTKRV9IVLNDWBFN81/1.jpg?format=1500w" alt="Crop test 1" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1435409252947-LRRZV15729WDKZALSJST/2.jpg?format=1500w" alt="Crop test 2" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1435409256652-GQL1NOG72AFV70AJQVG2/3.jpg?format=1500w" alt="Crop test 3" loading="lazy" />
+    </div>
+
+    <p>Thank you Sony Australia for lending the focus group the only pre-production lens in Australia for testing.</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1435397046801-SFINX60P62YD7DZN5MG8/image-asset.jpeg?format=1500w" alt="Sun star test at f/22" loading="lazy" />
+
+    <h2>First Impressions</h2>
+
+    <p>Shortly after writing the review, I ordered my own copy and it arrived today. My first physical impression of the lens is how light and compact it is. It nearly feels like the lens is hollow but most of all how well built it is. The all metal body including focus and zoom ring blends perfectly with the A7 range of cameras but also increases the durability of the lens. I'm also impressed with the nice resistance in the focus run but especially the zoom ring. Hopefully this means the lens has quality seals for when the front element extends when zooming out towards 16mm.</p>
+
+    <div class="img-row">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1435398117351-AKEKPYIKTAUMX7NT3KOC/mobile01-7bd0e5708a11eb7c2d7a51bd7d7d6c4a.jpg?format=1500w" alt="Lens comparison 1" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1435398183600-QQ1HRI4FT3NVN45RXXQ1/38842eacf7073e92911c0c25b61e2244.jpg?format=1500w" alt="Lens comparison 2" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1435398184077-RP33LGVRDVL72B4LMOWG/zeiss_vs_canon_zpsf7954357.jpg?format=1500w" alt="Zeiss vs Canon comparison" loading="lazy" />
+    </div>
+
+    <p>Chris Wiewióra is an amateur landscape photographer, gear guru, and was Focus Rookie of the Year in 2012. Based in Kiama, NSW.</p>
+
+    <p>Full review also available at: <a href="http://focusphotographers.org/lens-review-sony-zeiss-16-35mm" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">focusphotographers.org</a></p>
+
+    <a href="../index.html#blog" class="back-link">Back to Blog</a>
+
+  </article>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">Crispy Scapes</div>
+      <p class="footer-copy">&copy; 2026 Crispy Scapes. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    'use strict';
+    (function () {
+      var btn    = document.getElementById('hamburger');
+      var drawer = document.getElementById('navDrawer');
+      function close() {
+        btn.classList.remove('open'); drawer.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false'); document.body.style.overflow = '';
+      }
+      btn.addEventListener('click', function () {
+        var open = drawer.classList.toggle('open');
+        btn.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      drawer.querySelectorAll('.drawer-link').forEach(function (l) { l.addEventListener('click', close); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    })();
+  </script>
+
+</body>
+</html>

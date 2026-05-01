@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Telemark Tour &mdash; Kosciuszko National Park 2014 | Crispy Scapes</title>
+  <meta name="description" content="Eight days exploring Kosciuszko National Park in mid-winter on telemark skis — cornices, whiteouts and the majestic Western Faces." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:       #0a0a0a;
+      --dark:        #111111;
+      --dark-mid:    #1a1a1a;
+      --mid:         #444444;
+      --muted:       #888888;
+      --light-muted: #aaaaaa;
+      --light:       #cccccc;
+      --white:       #ffffff;
+      --accent:      #c8a96e;
+      --font-head:   'Poppins', sans-serif;
+      --font-body:   'Roboto', sans-serif;
+      --nav-h:       70px;
+      --transition:  0.35s ease;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { background: var(--black); color: var(--light); font-family: var(--font-body); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+    img { display: block; max-width: 100%; height: auto; }
+    a   { color: inherit; text-decoration: none; }
+    ::selection { background: var(--accent); color: var(--black); }
+
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h); display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; background: rgba(10,10,10,0.97);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .nav-brand { display: flex; align-items: center; }
+    .nav-brand img { height: 50px; width: auto; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: var(--font-head); font-size: 0.74rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light-muted); position: relative; padding-bottom: 3px; transition: color var(--transition); }
+    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--accent); transition: width var(--transition); }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; z-index: 1100; }
+    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--white); transition: transform var(--transition), opacity var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .nav-drawer { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(10,10,10,0.98); flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a { font-family: var(--font-head); font-size: 1.5rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light-muted); transition: color var(--transition); }
+    .nav-drawer a:hover { color: var(--white); }
+
+    .post-hero { position: relative; height: 70vh; min-height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 4rem; overflow: hidden; margin-top: var(--nav-h); }
+    .post-hero-bg { position: absolute; inset: 0; background-image: url('https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408100795869-5D6KVXXK6ZGB43FOW3RA/Camping+at+2100m+next+to+Mt+Kosciuszko.?format=1500w'); background-size: cover; background-position: center; filter: brightness(0.5); }
+    .post-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 70%, rgba(10,10,10,0.98) 100%); }
+    .post-hero-content { position: relative; z-index: 2; text-align: center; padding: 0 2rem; max-width: 860px; }
+    .post-meta { font-family: var(--font-head); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .post-title { font-family: var(--font-head); font-size: clamp(1.8rem, 4.5vw, 3.2rem); font-weight: 600; color: var(--white); line-height: 1.2; letter-spacing: 0.02em; }
+
+    .post-body { max-width: 780px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+    .post-body p { font-size: 1.05rem; line-height: 1.9; color: var(--light-muted); margin-bottom: 1.5rem; }
+    .post-body h2 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 600; color: var(--white); margin: 2.5rem 0 1rem; letter-spacing: 0.02em; }
+    .post-body h3 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 500; color: var(--accent); margin: 2rem 0 0.75rem; letter-spacing: 0.04em; }
+    .post-body ul, .post-body ol { padding-left: 1.5rem; margin-bottom: 1.5rem; color: var(--light-muted); font-size: 1.05rem; line-height: 1.9; }
+    .post-body li { margin-bottom: 0.4rem; }
+    .post-img { width: 100%; border-radius: 4px; margin: 2rem 0; display: block; }
+
+    .img-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 2rem 0; }
+    .img-grid img { border-radius: 4px; width: 100%; height: 240px; object-fit: cover; }
+    .img-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin: 2rem 0; }
+    .img-grid-3 img { border-radius: 4px; width: 100%; height: 200px; object-fit: cover; }
+
+    .day-header { font-family: var(--font-head); font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); border-left: 2px solid var(--accent); padding-left: 1rem; margin: 3rem 0 1rem; }
+
+    .back-link { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-head); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-top: 3rem; transition: color var(--transition); }
+    .back-link::before { content: ''; display: inline-block; width: 24px; height: 1px; background: currentColor; transition: width var(--transition); }
+    .back-link:hover { color: var(--white); }
+    .back-link:hover::before { width: 40px; }
+
+    footer { background: var(--dark-mid); border-top: 1px solid rgba(255,255,255,0.06); padding: 2.5rem 0; }
+    .footer-inner { max-width: 1300px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-brand { font-family: var(--font-head); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); }
+    .footer-copy { font-size: 0.75rem; letter-spacing: 0.08em; color: var(--muted); }
+
+    @media (max-width: 768px) {
+      :root { --nav-h: 60px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .post-hero { height: 55vh; }
+      .img-grid, .img-grid-3 { grid-template-columns: 1fr; }
+      .img-grid img, .img-grid-3 img { height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <a href="../index.html" class="nav-brand"><img src="../Logo/CrispyScapes logo without text.png" alt="Crispy Scapes" /></a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.html#portfolio">Portfolio</a></li>
+      <li><a href="../index.html#video">Video</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+      <li><a href="../index.html#blog">Blog</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <a href="../index.html" class="drawer-link">Home</a>
+    <a href="../index.html#portfolio" class="drawer-link">Portfolio</a>
+    <a href="../index.html#video"     class="drawer-link">Video</a>
+    <a href="../index.html#about"     class="drawer-link">About</a>
+    <a href="../index.html#contact"   class="drawer-link">Contact</a>
+    <a href="../index.html#blog"      class="drawer-link">Blog</a>
+  </div>
+
+  <header class="post-hero">
+    <div class="post-hero-bg"></div>
+    <div class="post-hero-overlay"></div>
+    <div class="post-hero-content">
+      <p class="post-meta">1 August 2014 &nbsp;&middot;&nbsp; Adventure</p>
+      <h1 class="post-title">Telemark Tour &mdash; Kosciuszko National Park 2014</h1>
+    </div>
+  </header>
+
+  <article class="post-body">
+
+    <p>Eight days out exploring the beautiful and punishing Kosciuszko National Park during mid-winter, was an audacious plan but in the end it paid off!</p>
+
+    <p>Gav Owen and I planned this adventure for over two months (early May) and I put a lot of time, effort, money and training (until I tore my plantar fasciitis) into this trip.</p>
+
+    <p>Our main goal was to get to the Western Faces and shoot the jagged peaks entitled, Sentinel and Watsons Crags. We were blessed with such a great snow season but this also made the trip more challenging with some daunting encounters with cornices, avalanche prone slopes and crazy weather.</p>
+
+    <p>This is something I have dreamed about doing since I was a little adventurer. I remember always taking the essential survival gear (knife, compass, flint, etc), even on short day trips and taking it so seriously. It's something I've always loved doing and this trip is the pinnacle, especially as it combines my three favourite hobbies: photography, skiing and camping.</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408100795869-5D6KVXXK6ZGB43FOW3RA/Camping+at+2100m+next+to+Mt+Kosciuszko.?format=1500w" alt="Camping at 2100m next to Mt Kosciuszko" loading="lazy" />
+
+    <h2>Gear</h2>
+
+    <h3>Pemmican</h3>
+
+    <p>Our bodies require around 2400 Calories/day to have enough energy but because of our high exertion and cold climate we needed to consume about 6,000–7,000 Calories/day. For an eight day trip, this means a lot of food! But Gav introduced me to something called Pemmican, which is what the Native American Indians used to eat on long trips. It is a blend of Tallow and beef jerky (dehydrated beef). Tallow contains 3700Kj per 100g, while butter has around 3000Kj per 100g.</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1406204570407-53KXIAOUCZ8V0L59XWHB/image-asset.jpeg?format=1500w" alt="Making pemmican" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1406204662966-3QQDQ10R7VN59SJMIWUH/image-asset.jpeg?format=1500w" alt="Pemmican ready" loading="lazy" />
+    </div>
+
+    <p class="day-header">Day 1 &mdash; Saturday 12th July</p>
+
+    <p>I made my way over to Canberra the day before on a bus, while Gav slowly made his way over from Melbourne. We arrived at Dead Horse Gap car park at 2:30pm and amazingly the weather started to clear. So we got ready and began the uphill slog. We took the westerly ridge next to the main DHG track, because of the more even gradient.</p>
+
+    <p>We eventually stopped about midday between South Rams Head and the Dead Horse Gap car park to set up camp (4:15pm) before it got too dark. This was my first time setting up a tent in the snow and it was great fun! So grateful to have such great weather for the first day.</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1407056075381-PW8LNM8C9JZKQ9EROAE9/1.jpg?format=1500w" alt="Day 1 on the mountain" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1407056076132-DJ0Q22OAL3AO4Y2YUN9S/2.jpg?format=1500w" alt="Camp day 1" loading="lazy" />
+    </div>
+
+    <p class="day-header">Day 2 &mdash; Sunday 13th July</p>
+
+    <p>It was a super still night, with nearly zero wind but it got cold! The forecast for Thredbo was -6.3°C around sunset, so it would have gotten close to -10°C during the night. We woke up at 7am but it was so hard to get out of a warm sleeping bag and put cold clothes on!</p>
+
+    <p>I started to feel a bit drained between the Southerly Rams Head and North Rams Head slog. But after a quick refuel at North Rams Head, we decided to continue on. We continued onto the last peak before Kosciuszko at an elevation of 2,140m. We dug into a snowdrift next to a small rock cluster, to protect us from Westerly winds but it ended up being another beautifully still night.</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408197718004-EZAFAW8387X2U7I6C125/Skinning+up+DHG.jpg?format=1500w" alt="Skinning up Dead Horse Gap" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408197715921-WRUP531TJE4RTMMTU2AN/Lunch+Stop+%28next+to+Southerly+Rams+Head%29.jpg?format=1500w" alt="Lunch stop at Southerly Rams Head" loading="lazy" />
+    </div>
+
+    <p>After the sunset the clouds slowly dispersed and we sat in our tents watching a blood full moon rise, while eating dinner. It was pretty amazing! After dinner I went out for a quick night shoot with the full moon.</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408197717897-ZMF0VK1WKXBMAYHB2RT9/Skinning+up+to+Southerly+Rams+Head+and+Rams+Head.jpg?format=1500w" alt="Skinning up to Rams Head" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408197715728-55QLEFQCJGMV73ZA4QDH/Aries+Tor+Winter.jpg?format=1500w" alt="Aries Tor in winter" loading="lazy" />
+    </div>
+
+    <p class="day-header">Day 3 &mdash; Monday 14th July</p>
+
+    <p>We woke up at 6am and experienced such a beautiful sunrise. There were zero clouds but such a nice alpine glow and no wind! Gav and I were running around like headless chickens.</p>
+
+    <p>We left around 9am and made our way towards the Western Faces while the weather forecast looked good for the next two days. Our initial plan was to summit Mt. Townsend but the southerly face had a massive cornice to the east. So we decided to head up to Alice Rawson Peak from the east, following the ridge, traversing around Mueller's Peak.</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1407060379357-5IX9JA9DEKYDVZ3RB06E/Mt+Townsend.jpg?format=1500w" alt="Mt Townsend" loading="lazy" />
+
+    <p>The skin up to the top of ridge was tiring but we knew at the top we would see the majestic Western Faces finally. So we resisted our body's plea to stop and powered up to the top. Once we skinned over the crest, we were greeted with the beautiful vista, which we had been dreaming about for so long.</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408003301358-CT8AZVDFB4QLVQTIYZC8/WF+delight.jpg?format=1500w" alt="Western Faces delight" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1407059700862-ZKHMXCDU4RIRTF1L4NTX/image-asset.jpeg?format=1500w" alt="Views from the Western Faces" loading="lazy" />
+    </div>
+
+    <p class="day-header">Day 4 &mdash; Tuesday 15th July</p>
+
+    <p>I had a pretty restless sleep, with the winds changing to a westerly from a northerly around 1am and hitting the side of my tunnel tent pretty hard. We decided to bunker down for a day. So I spent the whole day in my tent for like fourteen hours.</p>
+
+    <div class="img-grid-3">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408006339759-DHIUTA3HYPHD5ENO1FLZ/Yay.jpg?format=1500w" alt="Tent bound" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408006341714-SZNL8UVSCBRXQ2H5JI7E/Bored.jpg?format=1500w" alt="Bored in the tent" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408006341537-GNJESVUT8XWKF3MD9LWY/Keep+calm+and+eat+pemmican.jpg?format=1500w" alt="Keep calm and eat pemmican" loading="lazy" />
+    </div>
+
+    <p class="day-header">Day 5 &mdash; Wednesday 16th July</p>
+
+    <p>The wind blasted all night until around 4am, when randomly it completely stopped. We departed around 7am for a pretty intense mental test. The visibility was horrid, with only about 3 meters visibility and at some points I could only see the tips of my skis.</p>
+
+    <p>Gav did a great job navigating us back to Seaman's Hut with a compass and GPS. Problem with a white out is, you are so reliant on a GPS, as there are no landmarks to take bearings from. Luckily we had three GPS devices. Unfortunately Gav fell off two gullies onto frozen creeks and one cornice. The cornice right after Mueller's Saddle was pretty hectic &mdash; I could just see the snow in front of me starting to curve downwards and the next second I saw Gav slide off a 5m high cornice.</p>
+
+    <p>We eventually made it to Seaman's Hut by 12pm and what a relief! Five hours for a retreat that would take us about 1–2 hours in good weather.</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408014910361-FDE3NLHH3D4E3PAMCJOE/Alpine+hut.jpg?format=1500w" alt="Alpine hut" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408014910145-CZ0HGIVVGL4TYRSXH5OB/Alpine+hut+2.jpg?format=1500w" alt="Inside the alpine hut" loading="lazy" />
+    </div>
+
+    <p class="day-header">Days 6 &amp; 7 &mdash; Thursday &amp; Friday</p>
+
+    <p>We woke up at 8am and had a relatively comfy sleep. We didn't get up to much, just killed time by reading, listening to audiobooks, figuring out mensa questions on Gav's phone. It was kinda like a massive meditation sesh. Around lunch on Friday, my toilet visit was way overdue — I'll just say that mid-blizzard hygiene is a serious test of character. My hands froze and I had to quickly boil some water and hold it for half an hour before they defrosted.</p>
+
+    <p>By 1pm the wind died down and we could actually see the sun between clouds. So Gav and I frantically started shoveling snow off the footsteps and clearing the ice off the windows. Around 4pm we started to get some golden light and we couldn't get the grins off our faces.</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408018818160-AN1YLREB03V8O25HDRBJ/Happy+Gav%2C+after+great+sunset+shoot..jpg?format=1500w" alt="Happy Gav after sunset" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408018644781-FVUWNF4UJGYP1C1WK30L/Seaman%27s+Sunset.jpg?format=1500w" alt="Seaman's Sunset" loading="lazy" />
+    </div>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408018703922-AD1VZ6E2LX2IFE7S5BGA/Seaman%27s+Hut.jpg?format=1500w" alt="Seaman's Hut" loading="lazy" />
+
+    <p class="day-header">Day 8 &mdash; Saturday 19th July</p>
+
+    <p>This was one of the coldest nights and the wind was howling. Snow blew through the main door, piled up about two meters high, and then even came through the second door onto my sleeping bag. So we had to dig ourselves out of the hut.</p>
+
+    <p>But incredibly around 10am the wind died down and the sun appeared through the clouds. It was incredible how quickly it cleared. We frantically started packing up and cleaning up the hut.</p>
+
+    <p>I initially tried skiing back with one ski but I lost my right ski. So eventually I just strapped the ski to my pack and walked. We kept a pretty solid pace all the way to the main range track, even overtaking other telemark skiers. I got to the bottom around 2pm and was so relieved!</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408018703564-4GKAP4GMQ69XT9EFF20L/Happy+days.jpg?format=1500w" alt="Happy days heading home" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408018704772-7IXXWW7EVQ17X1FK2HDC/Journey+home+%28with+one+ski%29.jpg?format=1500w" alt="Journey home with one ski" loading="lazy" />
+    </div>
+
+    <h2>The End!</h2>
+
+    <p>It was such an incredible experience and to do it all with such a great guy as Gav, was the icing on the cake. He has so much experience and always stayed calm and collected. Even in the tense situations we worked great as a team and after being stuck with him in a hut for four days, we never got irritated with each other. It's definitely a trip we will both remember forever.</p>
+
+    <p>Thank you for taking the time to read my winter experience and I hope it inspires you to go on your own adventures.</p>
+
+    <p><em>"Think outside, no box required"</em></p>
+
+    <h2>Gallery</h2>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408158003265-M1DG5YLSJFAODDW1J4NP/Kosi+Claw+Sunrise.jpg?format=1500w" alt="Kosi Claw Sunrise" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408019017607-H9TIK3XHWDP0Y94B5WL6/Kosi+Sunrise.jpg?format=1500w" alt="Kosi Sunrise" loading="lazy" />
+    </div>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408112735138-93ZVPLIW9UK41OUD4BWT/Kosi+Tent+Moon.jpg?format=1500w" alt="Kosi Tent Moon" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408112736488-3NCPBLIEI22B7IGHLD1G/Kosi+Moon+Ice.jpg?format=1500w" alt="Kosi Moon Ice" loading="lazy" />
+    </div>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408365270258-530OLILPOPI8SDM0FE6R/Western+Faces+2.jpg?format=1500w" alt="Western Faces" loading="lazy" />
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408020352144-NP9NG58O7Z8KSABSPXU2/Seamans+Hut.jpg?format=1500w" alt="Seamans Hut" loading="lazy" />
+
+    <a href="../index.html#blog" class="back-link">Back to Blog</a>
+
+  </article>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">Crispy Scapes</div>
+      <p class="footer-copy">&copy; 2026 Crispy Scapes. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    'use strict';
+    (function () {
+      var btn    = document.getElementById('hamburger');
+      var drawer = document.getElementById('navDrawer');
+      function close() {
+        btn.classList.remove('open'); drawer.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false'); document.body.style.overflow = '';
+      }
+      btn.addEventListener('click', function () {
+        var open = drawer.classList.toggle('open');
+        btn.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      drawer.querySelectorAll('.drawer-link').forEach(function (l) { l.addEventListener('click', close); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    })();
+  </script>
+
+</body>
+</html>

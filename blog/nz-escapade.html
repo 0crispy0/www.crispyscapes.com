@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Zealand Escapade | Crispy Scapes</title>
+  <meta name="description" content="An adventure through the South Island of New Zealand — Queenstown, Wanaka, Fiordland and the Routeburn Track." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:       #0a0a0a;
+      --dark:        #111111;
+      --dark-mid:    #1a1a1a;
+      --mid:         #444444;
+      --muted:       #888888;
+      --light-muted: #aaaaaa;
+      --light:       #cccccc;
+      --white:       #ffffff;
+      --accent:      #c8a96e;
+      --font-head:   'Poppins', sans-serif;
+      --font-body:   'Roboto', sans-serif;
+      --nav-h:       70px;
+      --transition:  0.35s ease;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { background: var(--black); color: var(--light); font-family: var(--font-body); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+    img { display: block; max-width: 100%; height: auto; }
+    a   { color: inherit; text-decoration: none; }
+    ::selection { background: var(--accent); color: var(--black); }
+
+    #navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; background: rgba(10,10,10,0.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+    .nav-brand { display: flex; align-items: center; }
+    .nav-brand img { height: 50px; width: auto; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: var(--font-head); font-size: 0.74rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light-muted); position: relative; padding-bottom: 3px; transition: color var(--transition); }
+    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--accent); transition: width var(--transition); }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; z-index: 1100; }
+    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--white); transition: transform var(--transition), opacity var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .nav-drawer { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(10,10,10,0.98); flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a { font-family: var(--font-head); font-size: 1.5rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light-muted); transition: color var(--transition); }
+    .nav-drawer a:hover { color: var(--white); }
+
+    .post-hero { position: relative; height: 70vh; min-height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 4rem; overflow: hidden; margin-top: var(--nav-h); }
+    .post-hero-bg { position: absolute; inset: 0; background-image: url('https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1413715552972-N6A4S4RU7JVVRDKKIC7E/Fiordland.jpg?format=1500w'); background-size: cover; background-position: center; filter: brightness(0.5); }
+    .post-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 70%, rgba(10,10,10,0.98) 100%); }
+    .post-hero-content { position: relative; z-index: 2; text-align: center; padding: 0 2rem; max-width: 860px; }
+    .post-meta { font-family: var(--font-head); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .post-title { font-family: var(--font-head); font-size: clamp(1.8rem, 4.5vw, 3.2rem); font-weight: 600; color: var(--white); line-height: 1.2; letter-spacing: 0.02em; }
+
+    .post-body { max-width: 780px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+    .post-body p { font-size: 1.05rem; line-height: 1.9; color: var(--light-muted); margin-bottom: 1.5rem; }
+    .post-body h2 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 600; color: var(--white); margin: 2.5rem 0 1rem; letter-spacing: 0.02em; }
+    .post-body h3 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 500; color: var(--accent); margin: 2rem 0 0.75rem; letter-spacing: 0.04em; }
+    .post-img { width: 100%; border-radius: 4px; margin: 2rem 0; display: block; }
+
+    .img-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 2rem 0; }
+    .img-grid img { border-radius: 4px; width: 100%; height: 240px; object-fit: cover; }
+    .img-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin: 2rem 0; }
+    .img-grid-3 img { border-radius: 4px; width: 100%; height: 200px; object-fit: cover; }
+
+    .back-link { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-head); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-top: 3rem; transition: color var(--transition); }
+    .back-link::before { content: ''; display: inline-block; width: 24px; height: 1px; background: currentColor; transition: width var(--transition); }
+    .back-link:hover { color: var(--white); }
+    .back-link:hover::before { width: 40px; }
+
+    footer { background: var(--dark-mid); border-top: 1px solid rgba(255,255,255,0.06); padding: 2.5rem 0; }
+    .footer-inner { max-width: 1300px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-brand { font-family: var(--font-head); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); }
+    .footer-copy { font-size: 0.75rem; letter-spacing: 0.08em; color: var(--muted); }
+
+    @media (max-width: 768px) {
+      :root { --nav-h: 60px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .post-hero { height: 55vh; }
+      .img-grid, .img-grid-3 { grid-template-columns: 1fr; }
+      .img-grid img, .img-grid-3 img { height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <a href="../index.html" class="nav-brand"><img src="../Logo/CrispyScapes logo without text.png" alt="Crispy Scapes" /></a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.html#portfolio">Portfolio</a></li>
+      <li><a href="../index.html#video">Video</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+      <li><a href="../index.html#blog">Blog</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <a href="../index.html" class="drawer-link">Home</a>
+    <a href="../index.html#portfolio" class="drawer-link">Portfolio</a>
+    <a href="../index.html#video"     class="drawer-link">Video</a>
+    <a href="../index.html#about"     class="drawer-link">About</a>
+    <a href="../index.html#contact"   class="drawer-link">Contact</a>
+    <a href="../index.html#blog"      class="drawer-link">Blog</a>
+  </div>
+
+  <header class="post-hero">
+    <div class="post-hero-bg"></div>
+    <div class="post-hero-overlay"></div>
+    <div class="post-hero-content">
+      <p class="post-meta">29 March 2014 &nbsp;&middot;&nbsp; Travel</p>
+      <h1 class="post-title">New Zealand Escapade</h1>
+    </div>
+  </header>
+
+  <article class="post-body">
+
+    <p>This is a summary of my recent adventure to the South Island of New Zealand during February 2014. New Zealand is one of my favourite places to travel to and this recent trip has definitely been one of my all-time favourites.</p>
+
+    <h2>Queenstown</h2>
+
+    <h3>Coronet Peak</h3>
+
+    <p>The adventure all started in Queenstown with an early morning flight from Sydney airport. On arrival there was a slight drizzle but in turn there were thick rain clouds, which I love! In the afternoon, thirty minutes prior to the sunset, I decided I had to go shoot the sunset. So I jumped in the car and raced to the top of Coronet Peak, just in time for the beautiful light show below!</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396071266409-WYBFMCNSBF6K3HKRMM5G/image-asset.jpeg?format=1500w" alt="Coronet Peak at sunset" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396071384121-42Z31WFGZ30ABO3Z3P0I/image-asset.jpeg?format=1500w" alt="Queenstown from above" loading="lazy" />
+    </div>
+
+    <h3>Ben Lomond Track</h3>
+
+    <p>The next day we caught the skyline Gondola to the top of Bob's Peak. From there it was a four hour walk in the hot sun to the top of Ben Lomond but the views were pretty stunning. For about twenty minutes the track went through beech forests but after that there was a view looking over Lake Wakatipu the whole time.</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396071459036-6WW7DET0QCCYGG5CGJ5Z/1024px+Queenstown+Pano.jpg?format=1500w" alt="Queenstown panorama" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396071582420-YND6VCTH2U3J7233XP4P/Ben+Lomond.JPG?format=1500w" alt="Ben Lomond summit" loading="lazy" />
+    </div>
+
+    <h3>Glenorchy</h3>
+
+    <p>For the majority of the trip we had accommodation in Queenstown, so I had to try and find good places close by to shoot the sunset when I wasn't camping. Thanks to a fellow photographer, I found the location of this stunning old jetty on Lake Wakatipu. When I arrived I was greeted by two young German photographers and a lot of sandflies!</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396071681353-HBABIHYJ5TDGHBB70EG3/V4+Jetty.jpg?format=1500w" alt="Glenorchy jetty" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396071688946-1UG32BGE4WFZ5KE12IFG/jetty.jpg?format=1500w" alt="Jetty at Lake Wakatipu" loading="lazy" />
+    </div>
+
+    <h2>Wanaka</h2>
+
+    <h3>Roys Peak</h3>
+
+    <p>We ventured up to the top of Roys Peak in the afternoon and luckily it was a bit stormy. But unfortunately once I got to the top, mist started to roll in and the sun wasn't beaming through any more. After eating dinner on the top of Roys Peak, with merino sheep cautiously grazing around me, we trekked back down with the full moon illuminating the path.</p>
+
+    <div class="img-grid-3">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396072004528-9XFX4F53IISVG3BGB5JZ/Full+Moon.JPG?format=1500w" alt="Full moon at Roys Peak" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396072008556-K0I4M862UP3G8DDLT8HC/Under+the+moon.JPG?format=1500w" alt="Under the moon" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396072010874-ONT6N88V6HDRCUFYLGKO/V1+Roys+Peak+Pano.jpg?format=1500w" alt="Roys Peak panorama" loading="lazy" />
+    </div>
+
+    <h3>Treble Cone</h3>
+
+    <p>Now the adventure really began! It was a long trek with 1,800m of elevation gain (300m–2,100m) but the views up the top were incredible! To the South I could see Queenstown mountain ranges, to the west was Fiordland, north Mt Cook and out east was Wanaka. Shortly after setting up my tent sun rays started beaming through the clouds.</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396072168094-DPEHCSALCEGNXEPW06RT/Sunrise+West+Mts+2.jpg?format=1500w" alt="Sunrise from Treble Cone" loading="lazy" />
+
+    <p>Shortly after getting into my sleeping bag, I noticed a vibrant red glow in the eastern sky. It took me a bit to realise it was the moonrise creating the glow. So I got my camera out and setup the tripod inside my tent. A few minutes later the moon appeared over the horizon — such a magnificent moment to experience perched on the top of a 2,100m mountain looking out over Wanaka!</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396072181048-RRWDIYFNIJX3KBEVK1UY/Web+JPEG+768px.jpg?format=1500w" alt="Treble Cone views" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396072179372-13E5TSMSH7HXSO3AOXRU/Treble+Cone+Portrait.jpg?format=1500w" alt="Treble Cone portrait" loading="lazy" />
+    </div>
+
+    <h2>Fiordland</h2>
+
+    <h3>Routeburn Track</h3>
+
+    <p>It was a decent drive to get to the Routeburn Track, so we had to wake up around 6am. As we got to Glenorchy I was awoken to peaks covered in snow. The amazing thing was the day before I was shooting the peaks and there was no snow on them at all. We arrived at the start of the Routeburn Track (Glenorchy side) at 8:30am and began the adventure. The track started off in the most stunning rainforest I have ever been in. Full of red beech trees (<em>Nothofagus fusca</em>) and ground covered in moss.</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396072506279-SSR5ZIUXGVSIRZV50DRB/Routeburn+Pano.jpg?format=1500w" alt="Routeburn Track panorama" loading="lazy" />
+
+    <p>As we arrived at Routeburn Flats around 11am (our campground for the night), it started to pour down with rain. But this only added to the Fiordland mood and didn't phase me. I set up my tent after eating lunch and then left for Harris Saddle. It continued to rain till Routeburn Falls but after this point it turned into snow, which was great!</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1397350487215-UJQ12FPWSTTOKR46XF87/Routeburn+Falls.JPG?format=1500w" alt="Routeburn Falls" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1397350483474-0T2PB6KC7VBSDZ6UC13P/Beech+pano.JPG?format=1500w" alt="Beech forest panorama" loading="lazy" />
+    </div>
+
+    <p>The landscapes prior to getting to Harris Saddle were absolutely stunning! We arrived at Harris Saddle around 4pm — the highest elevation along the Routeburn Track and the halfway point. We cooked dinner to give us some energy for the long hike back and then I took a couple of selfies.</p>
+
+    <p>We had to power back down to Routeburn Flats, as we didn't want to hike through the rainforest at night. We made it back just as the sun set at 9:30pm. It was a long day of trekking (13 hours, plus breaks) but we managed to see the best half of the Routeburn Track in one day. It is easily one of the best hikes I have done so far in my life.</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396779049545-VZB1AFVD8I6PVZF65YHU/LoTR+Waterfall+2.JPG?format=1500w" alt="Routeburn waterfall" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1397350488318-6SCVQ8XN93OVXIHMRI66/Routeburn+Flats+Tent.JPG?format=1500w" alt="Routeburn Flats tent" loading="lazy" />
+    </div>
+
+    <h2>Aoraki</h2>
+
+    <h3>Sefton Bivouac</h3>
+
+    <p>Now this was an adventure I will remember! Firstly, even finding the track was a mission. The climb up was pretty steep but it was actually pretty fun. As I arrived at the top, I realised there was someone laying in the hut reading a magazine. It was actually a really down to earth man who lives in the village and has climbed to the top of pretty much all the mountains surrounding us — and most importantly he was a passionate photographer!</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1404213250144-WVC429MHUEGVY30MI70L/Sefton+Biv.PNG?format=1500w" alt="Sefton Bivouac" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1404213220873-567SLYJ07MVGR880RUJG/Mt+Cook.JPG?format=1500w" alt="Mt Cook" loading="lazy" />
+    </div>
+
+    <p>Sefton Bivouac hut was built in 1917 and is directly below the Footstool, which is a mountain on the main divide of the Southern Alps. Having 360-degree views was spectacular and more so, being surrounded by four glaciers was remarkable! Tawaewae Glacier was about 50m from my tent, as well as Hooker and Mueller Glacier on my left and right. All night I could hear chunks of ice breaking off the glaciers.</p>
+
+    <p>So after we shot the sunset I asked if he was going to stay up and shoot the milky way but he told me he hadn't done any night photography before and had no clue how to do it. So I gave him a night photography 101 lesson. After the astronomical sunset (10:30pm), we set up our tripods around the hut. It was awesome seeing his joy after he captured an image. Especially when we started to do some ghetto light painting with candles from the hut.</p>
+
+    <div class="img-grid">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396073038216-K8Q1N2K5MOG0NNU2UQ0V/Night+Hut.jpg?format=1500w" alt="Night hut with stars" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396073040172-JB5OL8P9VL28P9QWJ7TZ/Under+the+stars.JPG?format=1500w" alt="Under the stars" loading="lazy" />
+    </div>
+
+    <p>It was the most windless afternoon I've ever spent in the mountains but that changed very quickly at 12am. Around 4am I pulled apart my tripod and used it to support my tent as it was shaking so intensely. I got up at 6am for first light after getting about two hours of sleep. I quickly rolled up my tent without getting blown off the cliff — it was very challenging to take photos with the extreme wind!</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1403945964841-D1KF86P4RYAN00BQG63G/Sunrise+West+Mts+2.jpg?format=1500w" alt="Sunrise at Sefton Bivouac" loading="lazy" />
+
+    <h2>The End!</h2>
+
+    <p>What an adventure it was! I have so many fond memories from this trip and I cannot wait to return.</p>
+
+    <a href="../index.html#blog" class="back-link">Back to Blog</a>
+
+  </article>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">Crispy Scapes</div>
+      <p class="footer-copy">&copy; 2026 Crispy Scapes. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    'use strict';
+    (function () {
+      var btn    = document.getElementById('hamburger');
+      var drawer = document.getElementById('navDrawer');
+      function close() {
+        btn.classList.remove('open'); drawer.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false'); document.body.style.overflow = '';
+      }
+      btn.addEventListener('click', function () {
+        var open = drawer.classList.toggle('open');
+        btn.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      drawer.querySelectorAll('.drawer-link').forEach(function (l) { l.addEventListener('click', close); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    })();
+  </script>
+
+</body>
+</html>
