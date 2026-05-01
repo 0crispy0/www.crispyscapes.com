@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sony A7R Review | Crispy Scapes</title>
+  <meta name="description" content="An in-depth review of the Sony A7R — 36MP full-frame mirrorless, shutter vibration analysis, lens options and why it replaced a Nikon D800E for landscape photography." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:       #0a0a0a;
+      --dark:        #111111;
+      --dark-mid:    #1a1a1a;
+      --mid:         #444444;
+      --muted:       #888888;
+      --light-muted: #aaaaaa;
+      --light:       #cccccc;
+      --white:       #ffffff;
+      --accent:      #c8a96e;
+      --accent-dark: #a07840;
+      --font-head:   'Poppins', sans-serif;
+      --font-body:   'Roboto', sans-serif;
+      --nav-h:       70px;
+      --transition:  0.35s ease;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--black);
+      color: var(--light);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a   { color: inherit; text-decoration: none; }
+    ::selection { background: var(--accent); color: var(--black); }
+
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      background: rgba(10,10,10,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .nav-brand { display: flex; align-items: center; }
+    .nav-brand img { height: 50px; width: auto; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-head);
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light-muted);
+      position: relative;
+      padding-bottom: 3px;
+      transition: color var(--transition);
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+      z-index: 1100;
+    }
+    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--white); transition: transform var(--transition), opacity var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(10,10,10,0.98);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a { font-family: var(--font-head); font-size: 1.5rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light-muted); transition: color var(--transition); }
+    .nav-drawer a:hover { color: var(--white); }
+
+    .post-hero {
+      position: relative;
+      height: 70vh;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 4rem;
+      overflow: hidden;
+      margin-top: var(--nav-h);
+    }
+    .post-hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1403676369917-MXBNW9V0TRJ4NLM5UMSH/image-asset.jpeg?format=1500w');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.5);
+    }
+    .post-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 70%, rgba(10,10,10,0.98) 100%);
+    }
+    .post-hero-content { position: relative; z-index: 2; text-align: center; padding: 0 2rem; max-width: 860px; }
+    .post-meta { font-family: var(--font-head); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .post-title { font-family: var(--font-head); font-size: clamp(1.8rem, 4.5vw, 3.2rem); font-weight: 600; color: var(--white); line-height: 1.2; letter-spacing: 0.02em; }
+
+    .post-body { max-width: 780px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+    .post-body p { font-size: 1.05rem; line-height: 1.9; color: var(--light-muted); margin-bottom: 1.5rem; }
+    .post-body h2 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 600; color: var(--white); margin: 2.5rem 0 1rem; letter-spacing: 0.02em; }
+    .post-body h3 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 500; color: var(--accent); margin: 2rem 0 0.75rem; letter-spacing: 0.04em; }
+    .post-body ul, .post-body ol { padding-left: 1.5rem; margin-bottom: 1.5rem; color: var(--light-muted); font-size: 1.05rem; line-height: 1.9; }
+    .post-body li { margin-bottom: 0.4rem; }
+    .post-img { width: 100%; border-radius: 4px; margin: 2rem 0; display: block; }
+
+    .img-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 2rem 0; }
+    .img-row img { border-radius: 4px; width: 100%; height: 250px; object-fit: cover; }
+
+    .blockquote {
+      border-left: 2px solid var(--accent);
+      padding: 0.5rem 0 0.5rem 1.5rem;
+      margin: 2rem 0;
+      color: var(--light-muted);
+      font-style: italic;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 3rem;
+      transition: color var(--transition);
+    }
+    .back-link::before { content: ''; display: inline-block; width: 24px; height: 1px; background: currentColor; transition: width var(--transition); }
+    .back-link:hover { color: var(--white); }
+    .back-link:hover::before { width: 40px; }
+
+    footer { background: var(--dark-mid); border-top: 1px solid rgba(255,255,255,0.06); padding: 2.5rem 0; }
+    .footer-inner { max-width: 1300px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-brand { font-family: var(--font-head); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); }
+    .footer-copy { font-size: 0.75rem; letter-spacing: 0.08em; color: var(--muted); }
+
+    @media (max-width: 768px) {
+      :root { --nav-h: 60px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .post-hero { height: 55vh; }
+      .img-row { grid-template-columns: 1fr; }
+      .img-row img { height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <a href="../index.html" class="nav-brand"><img src="../Logo/CrispyScapes logo without text.png" alt="Crispy Scapes" /></a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.html#portfolio">Portfolio</a></li>
+      <li><a href="../index.html#video">Video</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+      <li><a href="../index.html#blog">Blog</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <a href="../index.html" class="drawer-link">Home</a>
+    <a href="../index.html#portfolio" class="drawer-link">Portfolio</a>
+    <a href="../index.html#video"     class="drawer-link">Video</a>
+    <a href="../index.html#about"     class="drawer-link">About</a>
+    <a href="../index.html#contact"   class="drawer-link">Contact</a>
+    <a href="../index.html#blog"      class="drawer-link">Blog</a>
+  </div>
+
+  <header class="post-hero">
+    <div class="post-hero-bg"></div>
+    <div class="post-hero-overlay"></div>
+    <div class="post-hero-content">
+      <p class="post-meta">16 January 2014</p>
+      <h1 class="post-title">Sony A7R Review</h1>
+    </div>
+  </header>
+
+  <article class="post-body">
+
+    <h2>A7R Overview</h2>
+
+    <ul>
+      <li>36.4MP Full Frame Exmor CMOS Sensor</li>
+      <li>No Optical Low-Pass Filter</li>
+      <li>Gapless On-Chip Lens Design</li>
+      <li>BIONZ X Image Processor</li>
+      <li>Direct Compatibility with E-mount Lenses</li>
+      <li>3.0" Tiltable TFT LCD with 1,229K-Dots</li>
+      <li>2.4M-Dot OLED Electronic Viewfinder</li>
+      <li>Full 1080/60p Video with Remote Capture</li>
+      <li>Built-In Wi-Fi and NFC</li>
+      <li>Multi-Interface Shoe</li>
+    </ul>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1389856963344-1IAH8UCRDGKWVTN6IGLM/A7R+with+Zeiss+24-70mm.jpg?format=1500w" alt="A7R with Zeiss 24-70mm" loading="lazy" />
+
+    <h2>My Opinion</h2>
+
+    <p>My A7R got delivered on the 29/11/2013, after having it pre-ordered a few days after the announcement and I'm very happy with my purchase. The quality from the 36mp sony sensor is superb (Same sensor as my old Nikon D800E). Handling and build quality is a pleasant surprise, as well as how easy it is to manual focus with all the MF aids, such as focus peaking and focus magnifier.</p>
+
+    <p>The EVF is great to use and being able to see the changes in exposure, as well as a level and live histogram overlay is very handy indeed. I also really like the look of the a7r, with a good balance between a retro and modern camera design.</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1389857184644-BYPQOJYL5Y90FAELGS15/sony_a7_back_2.jpg?format=1500w" alt="Sony A7R back" loading="lazy" />
+
+    <p>It has all the physical dials I want and plenty of custom buttons to allocate. It is very important to spend some time setting up all the custom and function buttons, as sony's menu is a bit cluttered and not organised very well. But luckily if the camera is setup right, it is possible to not need to access the menu.</p>
+
+    <h2>A Few Things That Bug Me</h2>
+
+    <p>Due to the lack of an electronic first curtain shutter, there is shutter induced vibration and this is evident from around 1/20th-1/125th shutter speeds. But luckily it only really affects telephoto lenses which I personally don't use too often. Sony could possibly alleviate the issue with a 2 second shutter lock-up, similar to mirror lock-up on most DSLRs or maybe a EFCS via a firmware update, as other camera manufactures have done but it might not be possible. I discuss this issue in more detail below.</p>
+
+    <p>The menu is a bit all over the place, not that Nikons menu system is much better but they at least have a "My Menu" section to have the main options in one spot. As I said above, it can be mostly bypassed with a good button setup but some options, such as formatting the card and airplane mode which I use, can't be assigned to a button and a my menu would solve this.</p>
+
+    <p>Only AVCHD or MP4, while MP4 only records at 1440x1080, so the not so popular AVCHD has to be used.</p>
+
+    <p>Not an A7R issue but the Metabones Mark III adapter has internal reflections, which is evident when using Canons TS-E lenses and fully shifting. Although there is a relatively easy solution to this by covering the internals of the metabones with adhesive black flock paper and this fixes the low contrast/flare on the outer edge of the frame. Update &mdash; The MkIV version has a larger opening and matte coating, which should mitigate this issue.</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1436321452757-CVUQF1DZBUNMD4E3IVW7/a7R+2.jpg?format=1500w" alt="Sony A7R" loading="lazy" />
+
+    <p>It seems sony is using lossy compression, instead of providing a lossless option. Sony hasn't confirmed this and there is a lot of debate whether it actually affects IQ significantly, if not at all.</p>
+
+    <p>The remote options for the A7R are scarce, with no intervalometer remote from sony currently available.</p>
+
+    <h2>My Remotes</h2>
+
+    <p>I personally use the new Triggertrap Mobile Kit MD3-S2 plus my smartphone (HTC One). It has all the remote modes I need and has the potential for future expansions via the app. The downside is that it will drain your phone's battery but on long trips I take a battery pack.</p>
+
+    <p>When I go on a hike and want to reduce my gear weight, I use the Sony time lapse app when doing stacked star trails and an IR remote for single exposures or just the 2 second timer.</p>
+
+    <div class="img-row">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396271525821-0SPOLFT1PFGG203Y4PJ2/Selfie+2.jpg?format=1500w" alt="Selfie on location" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1396271525071-HJYWYQHSAKG2OTDMYGZ8/Top+of+Ben+Lomond.JPG?format=1500w" alt="Top of Ben Lomond" loading="lazy" />
+    </div>
+
+    <h2>Shutter Induced Vibration in More Detail</h2>
+
+    <p>Here are my results for shutter vibration on the A7R. I used a 24mm and 58mm lens (@ f4, ISO 100) and a 0.9 ND to vary the exposure. The two images on the left are taken with the 24mm, the furthest to the left is 1/40th sec and the second from the left is 1/320th sec. The two images on the right at taken with a 58mm. The image second from the right is taken at 1/50th sec and furthest to the right is 1/320th sec. These are all 100% crops, aligned with vertical tiles in photoshop. Shutter speeds outside of 1/20th &ndash; 1/125th sec are not affected by shutter vibration, as the vibration is dampened very quickly (around 1/40th sec).</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1436321500866-REUJC8L0PONWD1SPJOUV/A7R+BTS.jpg?format=1500w" alt="A7R behind the scenes" loading="lazy" />
+
+    <p>As you can see there is negligible induced blur from vibrations with the 24mm lens, while the 58mm does show signs of softening from vibrations, it is still relatively minor, considering it is a 100% crop. If I was to test a focal length above 58mm, you would start to see more dramatic differences.</p>
+
+    <p>Is there a solution for telephoto lenses? Well tests have shown increasing the mass of the A7R stops the vibration. But it's not a solution for me as it defeats one of the main benefits of the camera, it's weight. Sony might be able to release a firmware update to allow a shutter delay, like a mirror delay on DSLRs but this might only slightly reduce the issue.</p>
+
+    <div class="blockquote">
+      <p>"We very much hope that Sony changes the firmware so as to allow an option to introduce a delay between the closing of the first curtain and the opening of the first curtain, to begin the exposure. It would appear that this delay would be very effective at diminishing the additional effect of the first motion of the first curtain to nearly nothing if it is only as long as 1/10th of a second, and would be a substantial improvement if it were even a delay of just 1/40th of a second, as evidence shows that this vibration is dampened very quickly." &mdash; Joseph Holmes</p>
+    </div>
+
+    <p>If you use telephotos frequently, it might be a bit harder to accept the shutter vibration fault but just stay out of the 1/20th &ndash; 1/125th second death zone, add mass to the camera or consider getting the A7 instead which has an EFCS.</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1403831157741-YB5SIEDNBMAXBV3QDZ26/image-asset.jpeg?format=1500w" alt="Landscape shot with A7R" loading="lazy" />
+
+    <h2>So Why Did I Sell My D800E?</h2>
+
+    <p>So prior to owning the A7R I had a Nikon D800E. I was always intrigued with mirrorless cameras but I had no idea I would switch over so early on. As only until the alpha 7 range, there weren't any professional oriented cameras, specifically for landscape togs. When I first started hearing rumours about the Sony A7R I was very interested but wasn't planning on purchasing it as I was happy with my D800E. But a few weeks before it was released and more specs were released, I fell inlove with it haha. So I decided to make the switch earlier than I thought I would and I'm glad I did!</p>
+
+    <div class="img-row">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1389861674434-AH6WLGOW9NALLOIL8KSK/A7R+vs+D800E.JPG?format=1500w" alt="A7R vs D800E size comparison" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1389861696214-DW8CYK2C29UV7IK2FI1P/A7R+vs+D800E+2.JPG?format=1500w" alt="A7R vs D800E comparison 2" loading="lazy" />
+    </div>
+
+    <h3>The Main Reasons Why I Decided to Switch</h3>
+
+    <p>The A7R is a D800E that went on a diet! It's significantly smaller and lighter than the D800E. About 1/3rd of the volume and half the weight, but uses the exact same sensor. As I do a lot of multi day hikes, this is important for me.</p>
+
+    <p>I can use any lens I like with an adapter. This is possible due to the lack of a mirror (hence the name mirrorless) and the small flange distance (distance from the sensor to mount). This is a massive advantage, as sonys 36mp EXMOR sensor requires superb optics to make the most of it. The best option in my opinion for the D800e was the Zeiss 21mm which I owned but I sold that once I purchased the A7R and now I own the Canon 24mm TS-E. It is such a superb landscape lens. One massive advantage of a tilt shift is being able to shift the lens 12mm left and right and capture two exposures. Then I combine these images in photoshop and have a 16mm equiv. 62mp image.</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1410176371931-69WSXKU0IXNWJ9EF8AC1/image-asset.jpeg?format=1500w" alt="Landscape panorama with A7R" loading="lazy" />
+
+    <p>I really like the layout of the buttons and there are so many custom buttons to assign. Having an exposure compensation dial is super handy, as it's a setting I am constantly adjusting.</p>
+
+    <p>I much prefer the look of the A7R. It's not a big deal for most people but I appreciate an aesthetically pleasing camera. I think it's beautiful!</p>
+
+    <p>I can recharge it via USB. Which is great, as I can connect it to my car or my 10,000mAh battery pack and charge it when I'm away from a power point.</p>
+
+    <p>It's competitively priced, so I could sell my used Nikon D800E and buy the A7R without losing any money.</p>
+
+    <p>There are applications on the camera! I just downloaded sony's timelapse app so I can do star trails and time-lapses. Sony is also releasing the API so other developers can make apps.</p>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1389867736861-17TBWVC9GYMR4T9QRVK8/Old+Setup.jpg?format=1500w" alt="Old gear setup" loading="lazy" />
+
+    <h2>My Setup</h2>
+
+    <p>At the moment I am using these lenses:</p>
+
+    <ul>
+      <li>Canon 24mm TS-E f/3.5 II (Metabones Smart Adapter MkII + RSA)</li>
+      <li>Voigtlander 58mm f/1.4 (Novoflex Adapter)</li>
+      <li>Nikon 70-200mm f/4 [sold &mdash; replacing with the tiny Voigtlander 90mm]</li>
+      <li>Rokinon 14mm f/2.8 (E-Mount)</li>
+    </ul>
+
+    <img class="post-img" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1389850845365-HB0Z594XSRAR8ZBOIGSQ/setup.jpg?format=1500w" alt="Current camera setup" loading="lazy" />
+
+    <div class="img-row">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1392285769072-SHRPTQIF7S6JMJUIT81O/New+Zealand+Photography+Gear.JPG?format=1500w" alt="Photography gear for New Zealand" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1403142154462-4JGEJPZ2931NBOA20D5E/image-asset.jpeg?format=1500w" alt="Landscape photography" loading="lazy" />
+    </div>
+
+    <h2>Summary</h2>
+
+    <p>Sony is really pushing the boundaries being the first to release such an affordable full frame mirrorless camera. Although for some shooters DSLRs are still prefered (for now) because of AF limitations but the A7R still benefits them, as it will push Nikon and Canon to release more competitive cameras. This is by no means a perfect camera but for a first gen FF mirrorless Sony's engineers did an awesome job squishing this beast into such a tiny body. As soon as you learn to live with the few faults, then you will love this camera.</p>
+
+    <div class="img-row">
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1435399386688-AOTOY6JQUTIQ26HH7A7R/a7R.jpg?format=1500w" alt="Sony A7R" loading="lazy" />
+      <img src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1435399390920-B0KFIBG2BSDMOMBJBR31/a7R+2.jpg?format=1500w" alt="Sony A7R angle 2" loading="lazy" />
+    </div>
+
+    <p>So overall it's an awesome camera and I am very happy with my switch.</p>
+
+    <p>Cheers,<br>Crispy</p>
+
+    <a href="../index.html#blog" class="back-link">Back to Blog</a>
+
+  </article>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-brand">Crispy Scapes</span>
+      <span class="footer-copy">&copy; 2026 Crispy Scapes. All rights reserved. Photography by Chris Wiewiora.</span>
+    </div>
+  </footer>
+
+  <script>
+    'use strict';
+    (function () {
+      var btn    = document.getElementById('hamburger');
+      var drawer = document.getElementById('navDrawer');
+      function close() {
+        btn.classList.remove('open'); drawer.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false'); document.body.style.overflow = '';
+      }
+      btn.addEventListener('click', function () {
+        var open = drawer.classList.toggle('open');
+        btn.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
+      });
+      drawer.querySelectorAll('.drawer-link').forEach(function (l) { l.addEventListener('click', close); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    })();
+  </script>
+
+</body>
+</html>

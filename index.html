@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crispy Scapes | Photography by Chris Wiewiora</title>
-  <meta name="description" content="Landscape photography by Chris Wiewiora, based in Kiama on the NSW South Coast, Australia. Capturing the wild beauty of Australia and beyond." />
+  <meta name="description" content="Landscape photography by Chris Wiewiora, based in Wollongong on the NSW South Coast, Australia. Capturing the wild beauty of Australia and beyond." />
   <meta name="author" content="Chris Wiewiora" />
   <meta property="og:title" content="Crispy Scapes | Photography by Chris Wiewiora" />
   <meta property="og:description" content="Landscape photography from Australia's NSW South Coast and beyond." />
@@ -173,7 +173,7 @@
       position: absolute;
       inset: 0;
       overflow: hidden;
-      background: url('images/cathedral-cave-sunrise.jpg') center/cover no-repeat;
+      background: url('images/showreel-poster.jpg') center/cover no-repeat;
       background-color: var(--black);
     }
     .hero-video iframe {
@@ -520,18 +520,13 @@
 
     /* About */
     #about { background: var(--dark-mid); position: relative; overflow: hidden; }
-    #about::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 70% 50%, rgba(200,169,110,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
+    .about-hero { margin-bottom: 3rem; border-radius: 6px; overflow: hidden; }
+    .about-hero-img { width: 100%; max-height: 450px; object-fit: cover; border-radius: 6px; }
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
-      align-items: center;
+      align-items: start;
     }
     .about-text p {
       font-size: 1.05rem;
@@ -539,32 +534,69 @@
       color: var(--light-muted);
       margin-bottom: 1.2rem;
     }
-    .about-detail {
+    .about-awards-heading {
       font-family: var(--font-head);
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      margin-bottom: 1.2rem;
     }
-    .about-detail::before {
-      content: '';
-      display: inline-block;
-      width: 24px; height: 1px;
-      background: var(--accent);
+    .awards-list {
+      list-style: none;
+      padding: 0;
     }
-    .about-visual { display: flex; align-items: center; justify-content: center; }
-    .about-logo-large {
-      width: 240px; height: 240px;
-      border-radius: 12px;
-      object-fit: cover;
-      box-shadow: 0 16px 60px rgba(0,0,0,0.7);
-      opacity: 0.9;
-      transition: opacity var(--transition), transform var(--transition);
+    .awards-list li {
+      font-size: 0.92rem;
+      color: var(--light-muted);
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      line-height: 1.5;
     }
-    .about-logo-large:hover { opacity: 1; transform: scale(1.02); }
+    .awards-list li:last-child { border-bottom: none; }
+    .about-magazines { margin-top: 3.5rem; }
+    .about-mag-heading {
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .magazine-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.2rem;
+    }
+    .mag-card {
+      background: var(--dark);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .mag-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.5); }
+    .mag-card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+    .mag-label {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--light-muted);
+      text-align: center;
+      padding: 0.7rem 0.5rem;
+    }
+    @media (max-width: 1024px) {
+      .magazine-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .magazine-grid { grid-template-columns: repeat(2, 1fr); }
+    }
 
     /* Contact */
     #contact { background: var(--black); }
@@ -584,6 +616,52 @@
     }
     .contact-value { font-size: 1rem; color: var(--light); transition: color var(--transition); }
     .contact-value:hover { color: var(--accent); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--light);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px;
+      outline: none;
+      transition: border-color var(--transition), background var(--transition);
+      box-sizing: border-box;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: var(--accent);
+      background: rgba(255,255,255,0.08);
+    }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+    }
+    .contact-form textarea { resize: vertical; min-height: 140px; }
+    .contact-form button {
+      align-self: flex-start;
+      padding: 0.8rem 2.4rem;
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--accent);
+      border: 2px solid var(--accent);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+    .contact-form button:hover {
+      background: transparent;
+      color: var(--accent);
+    }
 
     .social-links { display: flex; flex-direction: column; gap: 1rem; }
     .social-link {
@@ -640,12 +718,15 @@
     .blog-card-thumb {
       width: 100%;
       height: 200px;
-      object-fit: cover;
+      object-fit: contain;
       display: block;
+      padding: 2rem;
+      box-sizing: border-box;
+      background: rgba(255,255,255,0.03);
       transition: transform 0.55s ease, filter 0.55s ease;
       filter: brightness(0.88);
     }
-    .blog-card:hover .blog-card-thumb { transform: scale(1.04); filter: brightness(0.7); }
+    .blog-card:hover .blog-card-thumb { transform: scale(1.08); filter: brightness(1); }
     .blog-card-body {
       padding: 1.4rem 1.5rem 1.6rem;
       position: relative;
@@ -792,8 +873,7 @@
       <div class="section-rule reveal reveal-delay-1"></div>
 
       <div class="filter-bar reveal reveal-delay-2" role="group" aria-label="Filter by category">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="favourites">Favourites</button>
+        <button class="filter-btn active" data-filter="favourites">Favourites</button>
         <button class="filter-btn" data-filter="nsw">NSW</button>
         <button class="filter-btn" data-filter="tas">Tasmania</button>
         <button class="filter-btn" data-filter="vic">Victoria</button>
@@ -1083,19 +1163,62 @@
   <!-- ABOUT -->
   <section id="about" aria-label="About Chris Wiewiora">
     <div class="section-inner">
+      <div class="about-hero reveal">
+        <img src="images/about-hero.jpg" alt="Lake Oberon, Tasmania" class="about-hero-img" loading="lazy" />
+      </div>
       <div class="about-grid">
         <div class="about-text">
           <h2 class="section-heading reveal">About</h2>
           <div class="section-rule reveal reveal-delay-1"></div>
           <p class="reveal reveal-delay-2">
-            Chris is a passionate South Coast landscape photographer who lives in the small coastal
-            town of Kiama, which consists of beautiful coastlines and landscapes. He specialises in
-            capturing natural landscapes, but also experiments with many other forms of photography.
+            Chris is a landscape photographer based in Wollongong, on the South Coast of New South Wales, Australia.
+            His thirst for adventure, combined with his passion for capturing nature's artistry, leads him to explore
+            the remote corners of Australia and indeed the globe, in search of the perfect frame.
           </p>
-          <p class="about-detail reveal reveal-delay-3">Based in Kiama, NSW South Coast, Australia</p>
+          <p class="reveal reveal-delay-3">
+            He is driven to capture scenes experienced by very few people. By combining his many loves of hiking,
+            4WDing, alpine touring and photography, he aims to bring something unique to the photographic community.
+            When he is not out capturing new images, he works as a Civil Engineer.
+          </p>
         </div>
-        <div class="about-visual reveal reveal-delay-2">
-          <img src="Logo/Square crop logo.jpg" alt="Crispy Scapes" class="about-logo-large" width="240" height="240" loading="lazy" style="border-radius: 10px;" />
+        <div class="about-awards reveal reveal-delay-2">
+          <h3 class="about-awards-heading">Awards &amp; Publications</h3>
+          <ul class="awards-list">
+            <li>Cover &mdash; Australian Geographic</li>
+            <li>Cover &mdash; 2x Australian Photography</li>
+            <li>Featured &mdash; 2x Viajes National Geographic</li>
+            <li>2015 &mdash; 3rd place, Australian Photography Landscape Photographer of the Year</li>
+            <li>2014 &mdash; Better Photography Magazine Photograph of the Year, Silver (#38 in top 50)</li>
+            <li>2014 &mdash; EPSON International Pano Awards, Two Bronze Awards</li>
+            <li>2013 &mdash; Fujifilm X Landscape Photographer of the Year, #22 (800+ entrants)</li>
+            <li>2013 &mdash; Focus Awards, 3 Silver and 3 Bronze</li>
+            <li>2012 &mdash; Focus Awards, Rookie of the Year</li>
+          </ul>
+        </div>
+      </div>
+      <div class="about-magazines reveal">
+        <h3 class="about-mag-heading">Featured In</h3>
+        <div class="magazine-grid">
+          <div class="mag-card">
+            <img src="images/mag-aus-geographic.jpg" alt="Australian Geographic #132 Cover" loading="lazy" />
+            <span class="mag-label">Australian Geographic</span>
+          </div>
+          <div class="mag-card">
+            <img src="images/mag-aus-photo-jan17.jpg" alt="Australian Photography July 2017 Cover" loading="lazy" />
+            <span class="mag-label">Australian Photography</span>
+          </div>
+          <div class="mag-card">
+            <img src="images/mag-aus-photo-march.jpg" alt="Australian Photography March Cover" loading="lazy" />
+            <span class="mag-label">Australian Photography</span>
+          </div>
+          <div class="mag-card">
+            <img src="images/mag-nat-geo-extra.jpg" alt="Viajes National Geographic Extra 15" loading="lazy" />
+            <span class="mag-label">Viajes National Geographic</span>
+          </div>
+          <div class="mag-card">
+            <img src="images/mag-nat-geo-225.jpg" alt="Viajes National Geographic 225" loading="lazy" />
+            <span class="mag-label">Viajes National Geographic</span>
+          </div>
         </div>
       </div>
     </div>
@@ -1108,20 +1231,25 @@
       <div class="section-rule reveal reveal-delay-1"></div>
       <div class="contact-grid">
         <div class="reveal reveal-delay-2">
-          <div class="contact-item">
-            <span class="contact-label">Email</span>
-            <a href="mailto:cwiewiora_04@hotmail.com" class="contact-value">cwiewiora_04@hotmail.com</a>
-          </div>
-          <div class="contact-item">
-            <span class="contact-label">Phone</span>
-            <a href="tel:+61431344798" class="contact-value">+61 431 344 798</a>
-          </div>
-          <div class="contact-item">
-            <span class="contact-label">Location</span>
-            <span class="contact-value" style="cursor:default;">Kiama, NSW 2533, Australia</span>
-          </div>
+          <form class="contact-form" action="https://formsubmit.co/crispyscapes@outlook.com" method="POST">
+            <!-- Spam honeypot -->
+            <input type="text" name="_honey" style="display:none">
+            <!-- Disable captcha page -->
+            <input type="hidden" name="_captcha" value="false">
+            <!-- Stay on site after submit -->
+            <input type="hidden" name="_next" value="https://www.crispyscapes.com/#contact">
+            <input type="hidden" name="_subject" value="New message from crispyscapes.com">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <textarea name="message" placeholder="Message" required></textarea>
+            <button type="submit">Send Message</button>
+          </form>
         </div>
         <div class="reveal reveal-delay-3">
+          <div class="contact-item">
+            <span class="contact-label">Location</span>
+            <span class="contact-value" style="cursor:default;">Wollongong, NSW 2500, Australia</span>
+          </div>
           <div class="contact-item">
             <span class="contact-label">Follow Along</span>
           </div>
@@ -1143,7 +1271,7 @@
       <div class="blog-grid">
 
         <a href="blog/ul-hiking.html" class="blog-card reveal reveal-delay-1">
-          <img class="blog-card-thumb" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1460869759112-FP9Y1SOAXUZSRZI4MK8O/_DSC2135+copy.jpg?format=500w" alt="Ultralight Hiking for Photographers" loading="lazy" />
+          <img class="blog-card-thumb" src="blog/Logos/Hiking.png" alt="Ultralight Hiking for Photographers" loading="lazy" />
           <div class="blog-card-body">
             <p class="blog-date">17 April 2016</p>
             <h3 class="blog-card-title">Ultralight Hiking for Photographers Part 1</h3>
@@ -1152,7 +1280,7 @@
         </a>
 
         <a href="blog/16-35mm.html" class="blog-card reveal reveal-delay-2">
-          <img class="blog-card-thumb" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1435397530749-PYHZIRXWUT05QLG2X0HT/image-asset.jpeg?format=500w" alt="Sony Vario-Tessar 16-35mm" loading="lazy" />
+          <img class="blog-card-thumb" src="blog/Logos/Lens.png" alt="Sony Vario-Tessar 16-35mm" loading="lazy" />
           <div class="blog-card-body">
             <p class="blog-date">27 June 2015</p>
             <h3 class="blog-card-title">Sony Vario-Tessar T* FE 16-35mm f/4 ZA OSS</h3>
@@ -1161,7 +1289,7 @@
         </a>
 
         <a href="blog/telemark-tour.html" class="blog-card reveal reveal-delay-3">
-          <img class="blog-card-thumb" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1408100795869-5D6KVXXK6ZGB43FOW3RA/Camping+at+2100m+next+to+Mt+Kosciuszko.?format=500w" alt="Telemark Tour Kosciuszko" loading="lazy" />
+          <img class="blog-card-thumb" src="blog/Logos/Telemark skiing.png" alt="Telemark Tour Kosciuszko" loading="lazy" />
           <div class="blog-card-body">
             <p class="blog-date">1 August 2014</p>
             <h3 class="blog-card-title">Telemark Tour &mdash; Kosciuszko National Park 2014</h3>
@@ -1170,7 +1298,7 @@
         </a>
 
         <a href="blog/nz-escapade.html" class="blog-card reveal reveal-delay-1">
-          <img class="blog-card-thumb" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1413715552972-N6A4S4RU7JVVRDKKIC7E/Fiordland.jpg?format=500w" alt="New Zealand Escapade" loading="lazy" />
+          <img class="blog-card-thumb" src="blog/Logos/Mountains.png" alt="New Zealand Escapade" loading="lazy" />
           <div class="blog-card-body">
             <p class="blog-date">29 March 2014</p>
             <h3 class="blog-card-title">New Zealand Escapade</h3>
@@ -1179,7 +1307,7 @@
         </a>
 
         <a href="blog/a7r.html" class="blog-card reveal reveal-delay-2">
-          <img class="blog-card-thumb" src="https://images.squarespace-cdn.com/content/v1/52a27580e4b053f7651f29ec/1390042975798-QR9MYPQYQFX3D2ZTQJRV/image-asset.jpeg?format=500w" alt="Sony A7R Review" loading="lazy" />
+          <img class="blog-card-thumb" src="blog/Logos/Camera.png" alt="Sony A7R Review" loading="lazy" />
           <div class="blog-card-body">
             <p class="blog-date">16 January 2014</p>
             <h3 class="blog-card-title">Sony A7R Review</h3>
@@ -1223,11 +1351,13 @@
       container.appendChild(iframe);
     })();
 
-    /* Navbar scroll */
+    /* Navbar scroll — transparent over hero, solid after */
     (function () {
       var navbar = document.getElementById('navbar');
+      var hero   = document.getElementById('hero');
       function onScroll() {
-        navbar.classList.toggle('scrolled', window.scrollY > 60);
+        var threshold = hero ? hero.offsetHeight - navbar.offsetHeight : 60;
+        navbar.classList.toggle('scrolled', window.scrollY > threshold);
       }
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
@@ -1280,17 +1410,24 @@
       var btns  = document.querySelectorAll('.filter-btn');
       var items = document.querySelectorAll('.gallery-item');
 
+      function applyFilter(filter) {
+        items.forEach(function (item) {
+          var cats = item.getAttribute('data-categories').split(' ');
+          item.classList.toggle('hidden', cats.indexOf(filter) === -1);
+        });
+      }
+
       btns.forEach(function (btn) {
         btn.addEventListener('click', function () {
           var filter = btn.getAttribute('data-filter');
           btns.forEach(function (b) { b.classList.remove('active'); });
           btn.classList.add('active');
-          items.forEach(function (item) {
-            var cats = item.getAttribute('data-categories').split(' ');
-            item.classList.toggle('hidden', filter !== 'all' && cats.indexOf(filter) === -1);
-          });
+          applyFilter(filter);
         });
       });
+
+      /* Default to Favourites on load */
+      applyFilter('favourites');
     })();
 
     /* Lightbox */
