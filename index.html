@@ -49,17 +49,24 @@
     a   { color: inherit; text-decoration: none; }
     ::selection { background: var(--accent); color: var(--black); }
 
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+
     /* Scroll animations */
     .reveal {
       opacity: 0;
       transform: translateY(32px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .reveal.visible          { opacity: 1; transform: none; }
-    .reveal-delay-1          { transition-delay: 0.1s; }
-    .reveal-delay-2          { transition-delay: 0.2s; }
-    .reveal-delay-3          { transition-delay: 0.3s; }
-    .reveal-delay-4          { transition-delay: 0.4s; }
+    .reveal-delay-1          { transition-delay: 0.12s; }
+    .reveal-delay-2          { transition-delay: 0.24s; }
+    .reveal-delay-3          { transition-delay: 0.36s; }
+    .reveal-delay-4          { transition-delay: 0.48s; }
+
+    /* Section rule grows in from left */
+    .section-rule { transform-origin: left; transform: scaleX(0); }
+    .section-rule.visible { transform: scaleX(1); transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s; }
 
     /* Navigation */
     #navbar {
@@ -107,7 +114,7 @@
       bottom: 0; left: 0;
       width: 0; height: 1px;
       background: var(--accent);
-      transition: width var(--transition);
+      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .nav-links a:hover             { color: var(--white); }
     .nav-links a:hover::after      { width: 100%; }
@@ -309,8 +316,21 @@
       border: 1px solid var(--mid);
       color: var(--muted);
       cursor: pointer;
-      transition: all var(--transition);
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      overflow: hidden;
     }
+    .filter-btn::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      background: rgba(200,180,130,0.15);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease;
+    }
+    .filter-btn:active::after { width: 200px; height: 200px; }
     .filter-btn:hover, .filter-btn.active {
       background: var(--accent);
       border-color: var(--accent);
@@ -327,14 +347,36 @@
       overflow: hidden;
       cursor: pointer;
       background: var(--dark-mid);
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+    }
+    .gallery-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.5);
     }
     .gallery-item img {
       width: 100%; height: auto;
       display: block;
-      transition: transform 0.55s ease, filter 0.55s ease;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
       filter: brightness(0.92);
     }
-    .gallery-item:hover img { transform: scale(1.04); filter: brightness(0.6); }
+    ..gallery-item:hover img { transform: scale(1.05); filter: brightness(0.55); }
+
+    /* Cursor glow */
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      top: var(--mouse-y, 50%);
+      left: var(--mouse-x, 50%);
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(200,180,130,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .gallery-item:hover::before { opacity: 1; }
 
     .gallery-overlay {
       position: absolute;
@@ -559,7 +601,7 @@
     /* About */
     #about { background: var(--dark-mid); position: relative; overflow: hidden; }
     .about-hero { margin-bottom: 3rem; border-radius: 6px; overflow: hidden; }
-    .about-hero-img { width: 100%; max-height: 450px; object-fit: cover; border-radius: 6px; }
+    .about-hero-img { width: 100%; max-height: 450px; object-fit: cover; border-radius: 6px; will-change: transform; }
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -725,7 +767,7 @@
       display: inline-block;
       width: 32px; height: 1px;
       background: currentColor;
-      transition: width var(--transition);
+      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .social-link:hover { color: var(--accent); }
     .social-link:hover::before { width: 48px; }
@@ -767,7 +809,7 @@
       padding: 2rem;
       box-sizing: border-box;
       background: rgba(255,255,255,0.03);
-      transition: transform 0.55s ease, filter 0.55s ease;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
       filter: brightness(0.88);
     }
     .blog-card:hover .blog-card-thumb { transform: scale(1.08); filter: brightness(1); }
@@ -2004,6 +2046,43 @@
           var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 70;
           window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - navH, behavior: 'smooth' });
         });
+      });
+    })();
+
+    /* Parallax — hero video scrolls slower */
+    (function () {
+      var heroVideo = document.querySelector('.hero-video');
+      if (!heroVideo) return;
+      window.addEventListener('scroll', function () {
+        if (window.scrollY < window.innerHeight) {
+          heroVideo.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
+        }
+      }, { passive: true });
+    })();
+
+    /* Parallax — about hero image */
+    (function () {
+      var img = document.querySelector('.about-hero-img');
+      if (!img) return;
+      window.addEventListener('scroll', function () {
+        var rect = img.getBoundingClientRect();
+        if (rect.bottom > 0 && rect.top < window.innerHeight) {
+          var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+          img.style.transform = 'translateY(' + ((progress - 0.5) * 30) + 'px) scale(1.05)';
+        }
+      }, { passive: true });
+    })();
+
+    /* Cursor glow tracking on gallery */
+    (function () {
+      var gallery = document.getElementById('gallery');
+      if (!gallery) return;
+      gallery.addEventListener('mousemove', function (e) {
+        var item = e.target.closest('.gallery-item');
+        if (!item) return;
+        var rect = item.getBoundingClientRect();
+        item.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+        item.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
       });
     })();
 
