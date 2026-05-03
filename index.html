@@ -359,7 +359,7 @@
       transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
       filter: brightness(0.92);
     }
-    ..gallery-item:hover img { transform: scale(1.05); filter: brightness(0.55); }
+    .gallery-item:hover img { transform: scale(1.05); filter: brightness(0.55); }
 
     /* Cursor glow */
     .gallery-item::before {
@@ -524,14 +524,14 @@
       gap: 2rem;
     }
     .video-card {
-      background: var(--dark-mid);
+      background: transparent;
       border-radius: 6px;
       overflow: hidden;
-      transition: transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .video-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      transform: translateY(-3px);
     }
     .video-wrapper {
       position: relative;
@@ -539,6 +539,7 @@
       height: 0;
       overflow: hidden;
       background: var(--black);
+      border-radius: 6px;
       cursor: pointer;
     }
     .video-wrapper iframe {
@@ -552,19 +553,23 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       object-fit: cover;
+      transition: filter 0.4s ease;
+    }
+    .video-wrapper:hover .video-thumb {
+      filter: brightness(0.6);
     }
     .video-play {
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 64px; height: 64px;
-      background: rgba(255,255,255,0.15);
-      border: 2px solid rgba(255,255,255,0.4);
+      width: 56px; height: 56px;
+      background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(255,255,255,0.35);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.3s ease, border-color 0.3s ease;
+      transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
       pointer-events: none;
     }
     .video-play::after {
@@ -572,26 +577,31 @@
       display: block;
       width: 0; height: 0;
       border-style: solid;
-      border-width: 10px 0 10px 18px;
-      border-color: transparent transparent transparent rgba(255,255,255,0.7);
+      border-width: 9px 0 9px 16px;
+      border-color: transparent transparent transparent rgba(255,255,255,0.6);
       margin-left: 3px;
       transition: border-color 0.3s ease;
     }
     .video-wrapper:hover .video-play {
-      background: rgba(255,255,255,0.25);
-      border-color: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.5);
+      transform: translate(-50%, -50%) scale(1.08);
     }
     .video-wrapper:hover .video-play::after {
-      border-left-color: rgba(255,255,255,0.9);
+      border-left-color: rgba(255,255,255,0.85);
     }
     .video-card-title {
       font-family: var(--font-head);
-      font-size: 0.85rem;
+      font-size: 0.72rem;
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--light);
-      padding: 1rem 1.2rem;
+      color: rgba(255,255,255,0.85);
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2.5rem 1rem 0.8rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+      pointer-events: none;
       text-align: center;
     }
     @media (max-width: 768px) {
@@ -767,7 +777,7 @@
       display: inline-block;
       width: 32px; height: 1px;
       background: currentColor;
-      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: width var(--transition);
     }
     .social-link:hover { color: var(--accent); }
     .social-link:hover::before { width: 48px; }
@@ -809,7 +819,7 @@
       padding: 2rem;
       box-sizing: border-box;
       background: rgba(255,255,255,0.03);
-      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
+      transition: transform 0.55s ease, filter 0.55s ease;
       filter: brightness(0.88);
     }
     .blog-card:hover .blog-card-thumb { transform: scale(1.08); filter: brightness(1); }
@@ -1565,120 +1575,120 @@
           <div class="video-wrapper" data-id="zOI-i0CGrLQ">
             <img class="video-thumb" src="https://i.ytimg.com/vi/zOI-i0CGrLQ/hqdefault.jpg" alt="Showreel" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Showreel</h3>
           </div>
-          <h3 class="video-card-title">Showreel</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="yKh_yMbwEyY">
             <img class="video-thumb" src="https://i.ytimg.com/vi/yKh_yMbwEyY/hqdefault.jpg" alt="Lofoten Islands &amp; Dolomites" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Lofoten Islands &amp; Dolomites</h3>
           </div>
-          <h3 class="video-card-title">Lofoten Islands &amp; Dolomites</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="ckTAWPozbM8">
             <img class="video-thumb" src="https://i.ytimg.com/vi/ckTAWPozbM8/hqdefault.jpg" alt="New Zealand" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">New Zealand</h3>
           </div>
-          <h3 class="video-card-title">New Zealand</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="jjugcGTJTk0">
             <img class="video-thumb" src="https://i.ytimg.com/vi/jjugcGTJTk0/hqdefault.jpg" alt="Tasmania (feat. Pumba)" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Tasmania (feat. Pumba)</h3>
           </div>
-          <h3 class="video-card-title">Tasmania (feat. Pumba)</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="AebH3G9KTOg">
             <img class="video-thumb" src="https://i.ytimg.com/vi/AebH3G9KTOg/hqdefault.jpg" alt="Australian Alps" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Australian Alps</h3>
           </div>
-          <h3 class="video-card-title">Australian Alps</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="mNx1SErSjNQ">
             <img class="video-thumb" src="https://i.ytimg.com/vi/mNx1SErSjNQ/hqdefault.jpg" alt="Blue Mountains" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Blue Mountains</h3>
           </div>
-          <h3 class="video-card-title">Blue Mountains</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="Vxh8KON4ci4">
             <img class="video-thumb" src="https://i.ytimg.com/vi/Vxh8KON4ci4/hqdefault.jpg" alt="Yorke Peninsula" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Yorke Peninsula</h3>
           </div>
-          <h3 class="video-card-title">Yorke Peninsula</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="yFYe-XiSJB4" data-start="90">
             <img class="video-thumb" src="https://i.ytimg.com/vi/yFYe-XiSJB4/hqdefault.jpg" alt="Moreton Island" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Moreton Island</h3>
           </div>
-          <h3 class="video-card-title">Moreton Island</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="lCECgEG_LPk">
             <img class="video-thumb" src="https://i.ytimg.com/vi/lCECgEG_LPk/hqdefault.jpg" alt="Western Faces" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Western Faces</h3>
           </div>
-          <h3 class="video-card-title">Western Faces</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="sCR6UrYEDO8">
             <img class="video-thumb" src="https://i.ytimg.com/vi/sCR6UrYEDO8/hqdefault.jpg" alt="Hanging Rock" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Hanging Rock</h3>
           </div>
-          <h3 class="video-card-title">Hanging Rock</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="6VLSGgHTWr8">
             <img class="video-thumb" src="https://i.ytimg.com/vi/6VLSGgHTWr8/hqdefault.jpg" alt="Penrose" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Penrose</h3>
           </div>
-          <h3 class="video-card-title">Penrose</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="ZbFJnE3L_pc">
             <img class="video-thumb" src="https://i.ytimg.com/vi/ZbFJnE3L_pc/hqdefault.jpg" alt="Radiant Kiama" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Radiant Kiama</h3>
           </div>
-          <h3 class="video-card-title">Radiant Kiama</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="tWxfJYycIZQ">
             <img class="video-thumb" src="https://i.ytimg.com/vi/tWxfJYycIZQ/hqdefault.jpg" alt="Kiama" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Kiama</h3>
           </div>
-          <h3 class="video-card-title">Kiama</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="wBpNqXH8nH8">
             <img class="video-thumb" src="https://i.ytimg.com/vi/wBpNqXH8nH8/hqdefault.jpg" alt="Bombo" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Bombo</h3>
           </div>
-          <h3 class="video-card-title">Bombo</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="jcDmk18o6O0">
             <img class="video-thumb" src="https://i.ytimg.com/vi/jcDmk18o6O0/hqdefault.jpg" alt="Wollongong" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Wollongong</h3>
           </div>
-          <h3 class="video-card-title">Wollongong</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="VBsnPVcpy4g">
             <img class="video-thumb" src="https://i.ytimg.com/vi/VBsnPVcpy4g/hqdefault.jpg" alt="Sea Cliff Bridge" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Sea Cliff Bridge</h3>
           </div>
-          <h3 class="video-card-title">Sea Cliff Bridge</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="Ni7P30WxjMM">
             <img class="video-thumb" src="https://i.ytimg.com/vi/Ni7P30WxjMM/hqdefault.jpg" alt="Oilies" loading="lazy">
             <div class="video-play"></div>
+            <h3 class="video-card-title">Oilies</h3>
           </div>
-          <h3 class="video-card-title">Oilies</h3>
         </div>
       </div>
     </div>
