@@ -179,8 +179,8 @@
     .hero-video iframe {
       position: absolute;
       top: 50%; left: 50%;
-      width: 120vw; height: 67.5vw;
-      min-height: 120vh; min-width: 213.33vh;
+      width: 100vw; height: 56.25vw;
+      min-height: 100vh; min-width: 177.78vh;
       transform: translate(-50%, -50%);
       border: 0;
       pointer-events: none;
@@ -497,12 +497,50 @@
       height: 0;
       overflow: hidden;
       background: var(--black);
+      cursor: pointer;
     }
     .video-wrapper iframe {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
       border: none;
+    }
+    .video-thumb {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .video-play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 64px; height: 64px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease, border-color 0.3s ease;
+      pointer-events: none;
+    }
+    .video-play::after {
+      content: '';
+      display: block;
+      width: 0; height: 0;
+      border-style: solid;
+      border-width: 10px 0 10px 18px;
+      border-color: transparent transparent transparent rgba(255,255,255,0.7);
+      margin-left: 3px;
+      transition: border-color 0.3s ease;
+    }
+    .video-wrapper:hover .video-play {
+      background: rgba(255,255,255,0.25);
+      border-color: rgba(255,255,255,0.6);
+    }
+    .video-wrapper:hover .video-play::after {
+      border-left-color: rgba(255,255,255,0.9);
     }
     .video-card-title {
       font-family: var(--font-head);
@@ -657,6 +695,12 @@
       border-radius: 4px;
       cursor: pointer;
       transition: background var(--transition), color var(--transition);
+    }
+    .contact-success {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin-top: 1rem;
     }
     .contact-form button:hover {
       background: transparent;
@@ -1476,104 +1520,121 @@
       <div class="section-rule reveal reveal-delay-1"></div>
       <div class="video-grid reveal reveal-delay-2">
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/zOI-i0CGrLQ" title="Showreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="zOI-i0CGrLQ">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/zOI-i0CGrLQ/hqdefault.jpg" alt="Showreel" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Showreel</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/yKh_yMbwEyY" title="Lofoten Islands &amp; Dolomites" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="yKh_yMbwEyY">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/yKh_yMbwEyY/hqdefault.jpg" alt="Lofoten Islands &amp; Dolomites" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Lofoten Islands &amp; Dolomites</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/ckTAWPozbM8" title="New Zealand" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="ckTAWPozbM8">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/ckTAWPozbM8/hqdefault.jpg" alt="New Zealand" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">New Zealand</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/jjugcGTJTk0" title="Tasmania (feat. Pumba)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="jjugcGTJTk0">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/jjugcGTJTk0/hqdefault.jpg" alt="Tasmania (feat. Pumba)" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Tasmania (feat. Pumba)</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/AebH3G9KTOg" title="Australian Alps" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="AebH3G9KTOg">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/AebH3G9KTOg/hqdefault.jpg" alt="Australian Alps" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Australian Alps</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/mNx1SErSjNQ" title="Blue Mountains" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="mNx1SErSjNQ">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/mNx1SErSjNQ/hqdefault.jpg" alt="Blue Mountains" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Blue Mountains</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/Vxh8KON4ci4" title="Yorke Peninsula" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="Vxh8KON4ci4">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/Vxh8KON4ci4/hqdefault.jpg" alt="Yorke Peninsula" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Yorke Peninsula</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/yFYe-XiSJB4?start=90" title="Moreton Island" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="yFYe-XiSJB4" data-start="90">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/yFYe-XiSJB4/hqdefault.jpg" alt="Moreton Island" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Moreton Island</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/lCECgEG_LPk" title="Western Faces" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="lCECgEG_LPk">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/lCECgEG_LPk/hqdefault.jpg" alt="Western Faces" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Western Faces</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/sCR6UrYEDO8" title="Hanging Rock" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="sCR6UrYEDO8">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/sCR6UrYEDO8/hqdefault.jpg" alt="Hanging Rock" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Hanging Rock</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/6VLSGgHTWr8" title="Penrose" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="6VLSGgHTWr8">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/6VLSGgHTWr8/hqdefault.jpg" alt="Penrose" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Penrose</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/ZbFJnE3L_pc" title="Radiant Kiama" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="ZbFJnE3L_pc">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/ZbFJnE3L_pc/hqdefault.jpg" alt="Radiant Kiama" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Radiant Kiama</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/tWxfJYycIZQ" title="Kiama" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="tWxfJYycIZQ">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/tWxfJYycIZQ/hqdefault.jpg" alt="Kiama" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Kiama</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/wBpNqXH8nH8" title="Bombo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="wBpNqXH8nH8">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/wBpNqXH8nH8/hqdefault.jpg" alt="Bombo" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Bombo</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/jcDmk18o6O0" title="Wollongong" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="jcDmk18o6O0">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/jcDmk18o6O0/hqdefault.jpg" alt="Wollongong" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Wollongong</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/VBsnPVcpy4g" title="Sea Cliff Bridge" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="VBsnPVcpy4g">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/VBsnPVcpy4g/hqdefault.jpg" alt="Sea Cliff Bridge" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Sea Cliff Bridge</h3>
         </div>
         <div class="video-card">
-          <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/Ni7P30WxjMM" title="Oilies" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="video-wrapper" data-id="Ni7P30WxjMM">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/Ni7P30WxjMM/hqdefault.jpg" alt="Oilies" loading="lazy">
+            <div class="video-play"></div>
           </div>
           <h3 class="video-card-title">Oilies</h3>
         </div>
@@ -1652,19 +1713,18 @@
       <div class="section-rule reveal reveal-delay-1"></div>
       <div class="contact-grid">
         <div class="reveal reveal-delay-2">
-          <form class="contact-form" action="https://formsubmit.co/crispyscapes@outlook.com" method="POST">
+          <form class="contact-form" id="contactForm" action="https://formsubmit.co/crispyscapes@outlook.com" method="POST">
             <!-- Spam honeypot -->
             <input type="text" name="_honey" style="display:none">
             <!-- Disable captcha page -->
             <input type="hidden" name="_captcha" value="false">
-            <!-- Stay on site after submit -->
-            <input type="hidden" name="_next" value="https://www.crispyscapes.com/#contact">
             <input type="hidden" name="_subject" value="New message from crispyscapes.com">
             <input type="text" name="name" placeholder="Name" required>
             <input type="email" name="email" placeholder="Email" required>
             <textarea name="message" placeholder="Message" required></textarea>
-            <button type="submit">Send Message</button>
+            <button type="submit" id="contactBtn">Send Message</button>
           </form>
+          <p class="contact-success" id="contactSuccess" style="display:none;">Message sent — thanks for reaching out!</p>
         </div>
         <div class="reveal reveal-delay-3">
           <div class="contact-item">
@@ -1943,6 +2003,39 @@
           e.preventDefault();
           var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 70;
           window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - navH, behavior: 'smooth' });
+        });
+      });
+    })();
+
+    /* Contact form — submit via fetch, stay on page */
+    (function () {
+      var form = document.getElementById('contactForm');
+      var btn  = document.getElementById('contactBtn');
+      var msg  = document.getElementById('contactSuccess');
+      if (!form) return;
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+
+        fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        }).then(function (res) {
+          if (res.ok) {
+            form.style.display = 'none';
+            msg.style.display  = 'block';
+          } else {
+            btn.disabled = false;
+            btn.textContent = 'Send Message';
+            alert('Something went wrong — please try again.');
+          }
+        }).catch(function () {
+          btn.disabled = false;
+          btn.textContent = 'Send Message';
+          alert('Network error — please check your connection and try again.');
         });
       });
     })();
