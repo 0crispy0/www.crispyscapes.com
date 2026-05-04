@@ -569,7 +569,7 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      padding: 5rem 0 1.5rem;
+      padding: calc(var(--nav-h) + 0.8rem) 0 1rem;
       box-sizing: border-box;
     }
     .video-sticky-content .section-heading {
@@ -578,7 +578,7 @@
     }
     .video-sticky-content .section-rule {
       flex-shrink: 0;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       margin-left: 2rem;
     }
     .video-grid {
@@ -620,8 +620,6 @@
       border: none;
     }
     .video-thumb {
-      position: absolute;
-      top: 0; left: 0;
       width: 100%; height: 100%;
       object-fit: cover;
       transition: filter 0.4s ease;
