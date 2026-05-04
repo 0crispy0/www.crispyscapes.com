@@ -551,7 +551,7 @@
     .lb-print svg { width: 14px; height: 14px; stroke: currentColor; }
 
     /* Video */
-    #video { background: var(--dark); overflow: clip; }
+    #video { background: var(--dark); overflow: clip; padding: 0; }
     #video .section-inner { max-width: none; padding: 0; }
     .video-scroll-outer {
       position: relative;
@@ -2142,14 +2142,20 @@
       var grid = document.getElementById('videoGrid');
       if (!outer || !grid) return;
 
+      var videoHeading = document.querySelector('.video-heading-wrap .section-heading');
       window.addEventListener('scroll', function () {
         var rect = outer.getBoundingClientRect();
         if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
           var progress = -rect.top / (rect.height - window.innerHeight);
           var maxShift = grid.scrollWidth - window.innerWidth + 100;
           grid.style.transform = 'translateX(' + (-progress * maxShift) + 'px)';
+          if (videoHeading) {
+            var shift = (progress - 0.5) * 250;
+            videoHeading.style.transform = 'translateX(' + shift + 'px)';
+          }
         } else if (rect.top > 0) {
           grid.style.transform = 'translateX(0)';
+          if (videoHeading) videoHeading.style.transform = 'translateX(0)';
         }
       }, { passive: true });
     })();
