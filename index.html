@@ -525,22 +525,23 @@
     #video { background: var(--dark); }
     .video-scroll-outer {
       position: relative;
+      min-height: 300vh;
     }
     .video-scroll-sticky {
       position: sticky;
       top: 0;
       height: 100vh;
-      overflow: hidden;
       display: flex;
       align-items: center;
+      overflow: visible;
     }
     .video-grid {
       display: grid;
-      grid-template-columns: repeat(2, 320px);
-      grid-auto-flow: column;
+      grid-template-columns: repeat(9, 320px);
       grid-template-rows: repeat(2, auto);
       gap: 1.5rem;
       will-change: transform;
+      padding-left: 2rem;
     }
     .video-card {
       background: transparent;
@@ -2075,19 +2076,14 @@
       var grid = document.getElementById('videoGrid');
       if (!outer || !grid) return;
 
-      function setOuterHeight() {
-        var scrollWidth = grid.scrollWidth - window.innerWidth + 200;
-        outer.style.height = (scrollWidth + window.innerHeight) + 'px';
-      }
-      setOuterHeight();
-      window.addEventListener('resize', setOuterHeight);
-
       window.addEventListener('scroll', function () {
         var rect = outer.getBoundingClientRect();
         if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
           var progress = -rect.top / (rect.height - window.innerHeight);
-          var maxShift = grid.scrollWidth - window.innerWidth + 200;
+          var maxShift = grid.scrollWidth - window.innerWidth + 100;
           grid.style.transform = 'translateX(' + (-progress * maxShift) + 'px)';
+        } else if (rect.top > 0) {
+          grid.style.transform = 'translateX(0)';
         }
       }, { passive: true });
     })();
@@ -2147,7 +2143,7 @@
           var rect = h.getBoundingClientRect();
           if (rect.bottom > 0 && rect.top < window.innerHeight) {
             var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-            var shift = (progress - 0.5) * 60;
+            var shift = (progress - 0.5) * 150;
             h.style.transform = 'translateX(' + shift + 'px)';
           }
         });
