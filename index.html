@@ -540,10 +540,12 @@
       display: flex;
       align-items: center;
       overflow: visible;
+      padding: 2rem 0;
+      box-sizing: border-box;
     }
     .video-grid {
       display: grid;
-      grid-template-columns: repeat(9, 320px);
+      grid-template-columns: repeat(9, 42vw);
       grid-template-rows: repeat(2, auto);
       gap: 1.5rem;
       will-change: transform;
@@ -627,7 +629,7 @@
       text-align: center;
     }
     @media (max-width: 768px) {
-      .video-grid { grid-template-columns: repeat(2, 260px); }
+      .video-grid { grid-template-columns: repeat(9, 75vw); grid-template-rows: 1fr; }
     }
 
     /* About */
