@@ -122,7 +122,7 @@
     }
 
     .print-details {
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
     }
 
     .print-details h3 {
@@ -352,22 +352,35 @@
     <hr class="print-rule" />
 
     <p class="print-intro">
-      Every image in the gallery is available as a fine art print. Each print is produced to order using archival-quality pigment inks on premium fine art paper, ensuring colours remain vivid and true for generations.
+      Every image in the gallery is available as a fine art print. Each print is produced to order by a professional lab using archival-quality pigment inks, ensuring colours remain vivid and true for generations.
     </p>
 
     <div class="print-details">
-      <h3>What You Get</h3>
+      <h3>Print Types</h3>
       <ul>
-        <li>Printed on museum-grade fine art paper (Canson Infinity or Hahnem&uuml;hle)</li>
-        <li>Archival pigment inks rated 80+ years under glass</li>
-        <li>Signed and numbered by the photographer</li>
-        <li>Shipped flat in rigid, protective packaging</li>
-        <li>Framing options available on request</li>
+        <li>Fine art paper prints &mdash; museum-grade Hahnem&uuml;hle and cotton fibre papers</li>
+        <li>Mounted prints &mdash; paper print dry-mounted to a rigid backing board</li>
+        <li>Torn edge matted prints &mdash; hand-torn deckled edges with archival mat</li>
+        <li>Woodland block &mdash; print mounted on a natural timber block, ready to display</li>
+        <li>Trinity frame &mdash; a clean, modern float-frame presentation</li>
+        <li>Bagged prints &mdash; matted and sealed in a protective sleeve, ready to frame</li>
+      </ul>
+    </div>
+
+    <div class="print-details">
+      <h3>Paper Options</h3>
+      <ul>
+        <li>Satin &mdash; subtle lustre with rich colour and fine detail</li>
+        <li>Matte Art Paper &mdash; smooth, non-reflective fine art finish</li>
+        <li>Hahnem&uuml;hle Photo Rag 308 &mdash; 100% cotton, velvety matte texture</li>
+        <li>Hahnem&uuml;hle Bright White &mdash; bright base for vivid colour reproduction</li>
+        <li>Hahnem&uuml;hle Metallic Pearl &mdash; pearlescent sheen with striking depth</li>
+        <li>Cotton Fibre Velvet &mdash; warm-toned, tactile cotton rag</li>
       </ul>
     </div>
 
     <div class="print-note">
-      Pricing depends on print size, paper choice and framing. Fill out the enquiry below and I'll get back to you with a personalised quote, usually within 24&ndash;48 hours.
+      Pricing depends on print size, paper, print type and framing. Fill out the enquiry below and I'll get back to you with a personalised quote, usually within 24&ndash;48 hours. All prints are signed by the photographer.
     </div>
 
     <h3 class="print-form-heading">Print Enquiry</h3>
@@ -394,17 +407,51 @@
         </div>
       </div>
 
+      <div class="form-group">
+        <label class="form-label" for="printLocation">Location</label>
+        <input type="text" id="printLocation" name="location" placeholder="City, State, Country &mdash; for shipping quote" required />
+      </div>
+
       <div class="form-row">
         <div class="form-group">
           <label class="form-label" for="printSize">Print Size</label>
           <select id="printSize" name="size" required>
             <option value="" disabled selected>Select a size</option>
-            <option value="A4 (21 x 30 cm)">A4 &mdash; 21 &times; 30 cm</option>
-            <option value="A3 (30 x 42 cm)">A3 &mdash; 30 &times; 42 cm</option>
-            <option value="A2 (42 x 59 cm)">A2 &mdash; 42 &times; 59 cm</option>
-            <option value="A1 (59 x 84 cm)">A1 &mdash; 59 &times; 84 cm</option>
-            <option value="A0 (84 x 119 cm)">A0 &mdash; 84 &times; 119 cm</option>
+            <option value="A4 (21 x 30 cm / 8.3 x 11.7 in)">A4 &mdash; 21 &times; 30 cm (8.3 &times; 11.7&Prime;)</option>
+            <option value="A3 (30 x 42 cm / 11.7 x 16.5 in)">A3 &mdash; 30 &times; 42 cm (11.7 &times; 16.5&Prime;)</option>
+            <option value="A2 (42 x 59 cm / 16.5 x 23.4 in)">A2 &mdash; 42 &times; 59 cm (16.5 &times; 23.4&Prime;)</option>
+            <option value="A1 (59 x 84 cm / 23.4 x 33.1 in)">A1 &mdash; 59 &times; 84 cm (23.4 &times; 33.1&Prime;)</option>
+            <option value="A0 (84 x 119 cm / 33.1 x 46.8 in)">A0 &mdash; 84 &times; 119 cm (33.1 &times; 46.8&Prime;)</option>
             <option value="Custom">Custom &mdash; specify in comments</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="printType">Print Type</label>
+          <select id="printType" name="print_type">
+            <option value="" disabled selected>Select a type</option>
+            <option value="Fine art paper print">Fine art paper print</option>
+            <option value="Mounted print">Mounted print</option>
+            <option value="Torn edge matted print">Torn edge matted print</option>
+            <option value="Woodland block">Woodland block</option>
+            <option value="Trinity frame">Trinity frame</option>
+            <option value="Bagged print">Bagged print</option>
+            <option value="Not sure — need advice">Not sure &mdash; need advice</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="printPaper">Paper Type</label>
+          <select id="printPaper" name="paper">
+            <option value="" disabled selected>Select a paper</option>
+            <option value="Satin">Satin</option>
+            <option value="Matte Art Paper">Matte Art Paper</option>
+            <option value="Hahnemuhle Photo Rag 308">Hahnem&uuml;hle Photo Rag 308</option>
+            <option value="Hahnemuhle Bright White">Hahnem&uuml;hle Bright White</option>
+            <option value="Hahnemuhle Metallic Pearl">Hahnem&uuml;hle Metallic Pearl</option>
+            <option value="Cotton Fibre Velvet">Cotton Fibre Velvet</option>
+            <option value="Not sure — need advice">Not sure &mdash; need advice</option>
           </select>
         </div>
         <div class="form-group">
