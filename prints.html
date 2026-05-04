@@ -137,11 +137,10 @@
     .print-form textarea { resize: vertical; min-height: 100px; }
 
     /* Chip selectors */
-    .chip-grid {
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
-    }
+    .chip-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
     .chip {
+      position: relative;
       padding: 0.55rem 1.1rem;
       font-family: var(--font-body); font-size: 0.82rem; font-weight: 400;
       color: var(--light-muted);
@@ -164,18 +163,73 @@
       background: rgba(200,169,110,0.12);
     }
 
-    /* Size chips — tighter grid layout */
+    /* Chip tooltip / preview popover */
+    .chip-preview {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 280px;
+      background: var(--dark-mid);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+      z-index: 100;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .chip-preview::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 8px solid transparent;
+      border-top-color: var(--dark-mid);
+    }
+    .chip:hover .chip-preview { display: block; }
+
+    .chip-preview img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+    .chip-preview-body {
+      padding: 0.8rem 1rem;
+    }
+    .chip-preview-title {
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+    .chip-preview-desc {
+      font-size: 0.75rem;
+      line-height: 1.55;
+      color: var(--light-muted);
+    }
+
+    /* Ensure edge chips don't overflow viewport */
+    .chip:first-child .chip-preview { left: 0; transform: none; }
+    .chip:first-child .chip-preview::after { left: 20px; transform: none; }
+    .chip:last-child .chip-preview { left: auto; right: 0; transform: none; }
+    .chip:last-child .chip-preview::after { left: auto; right: 20px; transform: none; }
+
+    /* Size chips - tighter grid */
     .chip-grid--sizes {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
       gap: 0.5rem;
     }
     .chip-grid--sizes .chip {
-      text-align: center; padding: 0.55rem 0.6rem;
+      text-align: center; padding: 0.55rem 0.4rem;
       font-size: 0.78rem;
     }
 
-    /* Submit button */
+    /* Submit */
     .print-form button[type="submit"] {
       align-self: flex-start;
       padding: 0.9rem 2.8rem;
@@ -233,6 +287,7 @@
       .nav-links { display: none; }
       .form-row { grid-template-columns: 1fr; }
       .chip-grid--sizes { grid-template-columns: repeat(3, 1fr); }
+      .chip-preview { display: none !important; }
       .footer-inner { grid-template-columns: 1fr; text-align: center; gap: 1rem; }
       .footer-social { justify-content: center; }
     }
@@ -266,17 +321,15 @@
     </p>
 
     <div class="print-note">
-      Pricing depends on print size, paper, print type and framing. Fill out the enquiry below and I'll get back to you with a personalised quote, usually within 24&ndash;48 hours.
+      Pricing depends on print size, paper, print type and framing. Fill out the enquiry below and I&#x27;ll get back to you with a personalised quote, usually within 24&ndash;48 hours.
     </div>
 
     <h3 class="print-form-heading">Print Enquiry</h3>
 
     <form class="print-form" id="printForm" action="https://formsubmit.co/crispyscapes@outlook.com" method="POST">
-      <!-- Formsubmit config -->
       <input type="text" name="_honey" style="display:none">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_subject" value="Print Enquiry from crispyscapes.com">
-      <!-- Hidden inputs for chip selections -->
       <input type="hidden" name="print_type" id="hiddenType" value="">
       <input type="hidden" name="paper" id="hiddenPaper" value="">
       <input type="hidden" name="size" id="hiddenSize" value="">
@@ -289,7 +342,7 @@
         <input type="text" id="printImage" name="image" placeholder="e.g. Milky Way over Pigeon House" required />
       </div>
 
-      <!-- Contact details -->
+      <!-- Contact -->
       <div class="form-row">
         <div class="form-group">
           <label class="form-label" for="printName">Your Name</label>
@@ -303,7 +356,7 @@
 
       <div class="form-group">
         <label class="form-label" for="printLocation">Location</label>
-        <input type="text" id="printLocation" name="location" placeholder="City, State, Country — for shipping quote" required />
+        <input type="text" id="printLocation" name="location" placeholder="City, State, Country &#x2014; for shipping quote" required />
       </div>
 
       <hr class="form-divider">
@@ -312,12 +365,67 @@
       <div class="form-group">
         <label class="form-label">Print Type <span class="form-label-value" id="labelType"></span></label>
         <div class="chip-grid" data-group="type" data-hidden="hiddenType" data-label="labelType">
-          <div class="chip" data-value="Fine art paper print">Fine Art Paper</div>
-          <div class="chip" data-value="Mounted print">Mounted Print</div>
-          <div class="chip" data-value="Torn edge matted print">Torn Edge Matted</div>
-          <div class="chip" data-value="Woodland block">Woodland Block</div>
-          <div class="chip" data-value="Trinity frame">Trinity Frame</div>
-          <div class="chip" data-value="Bagged print">Bagged Print</div>
+
+          <div class="chip" data-value="Fine art paper print">Fine Art Paper
+            <div class="chip-preview">
+              <img src="https://photomart.com.au/wp-content/uploads/2022/09/PRINT.jpg" alt="Fine Art Paper Print" loading="lazy">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Fine Art Paper Print</p>
+                <p class="chip-preview-desc">High-quality print on your choice of premium papers. Every image is treated individually, checked multiple times during processing for a flawless result.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chip" data-value="Mounted print">Mounted Print
+            <div class="chip-preview">
+              <img src="https://photomart.com.au/wp-content/uploads/2022/09/MOUNTED-PRINT.jpg" alt="Mounted Print" loading="lazy">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Mounted Print</p>
+                <p class="chip-preview-desc">Your print dry-mounted to a rigid 3mm or 5mm backing board and cut flush to the edge. A clean, simple option for display or exhibition.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chip" data-value="Torn edge matted print">Torn Edge Matted
+            <div class="chip-preview">
+              <img src="https://photomart.com.au/wp-content/uploads/2022/09/TORN-EDGE-MATTED-PRINTS.jpg" alt="Torn Edge Matted Print" loading="lazy">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Torn Edge Matted Print</p>
+                <p class="chip-preview-desc">Hand-deckled edges highlighted within an oversized aperture. Acid-free mat with crisp white bevel edge, ready to frame. A beautiful fine art presentation.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chip" data-value="Woodland block">Woodland Block
+            <div class="chip-preview">
+              <img src="https://photomart.com.au/wp-content/uploads/2022/09/WOODLAND-BLOCK.jpg" alt="Woodland Block" loading="lazy">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Woodland Block</p>
+                <p class="chip-preview-desc">Printed on Hahnem&#xFC;hle Photo Rag 308 and mounted on 20mm Australian Hoop Pine ply. Edges hand-sanded for a rustic finish, then sealed for protection. Ready to display.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chip" data-value="Trinity frame">Trinity Frame
+            <div class="chip-preview">
+              <img src="https://photomart.com.au/wp-content/uploads/2022/09/TRINITY-FRAME.jpg" alt="Trinity Frame" loading="lazy">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Trinity Frame</p>
+                <p class="chip-preview-desc">Printed on Hahnem&#xFC;hle Photo Rag 308 cotton paper with hand-deckled torn edges. Mounted on acid-free backing with a shadow mat to highlight the print edge. A premium float-frame presentation.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chip" data-value="Bagged print">Bagged Print
+            <div class="chip-preview">
+              <img src="https://photomart.com.au/wp-content/uploads/2022/09/BAGGED-PRINT-1.jpg" alt="Bagged Print" loading="lazy">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Bagged Print</p>
+                <p class="chip-preview-desc">Print coupled with a backing board and sealed in a recyclable cello bag. Ideal for display, protection, or retail. Ready to frame at home.</p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -325,12 +433,61 @@
       <div class="form-group">
         <label class="form-label">Paper Type <span class="form-label-value" id="labelPaper"></span></label>
         <div class="chip-grid" data-group="paper" data-hidden="hiddenPaper" data-label="labelPaper">
-          <div class="chip" data-value="Satin">Satin</div>
-          <div class="chip" data-value="Matte Art Paper">Matte Art Paper</div>
-          <div class="chip" data-value="Hahnemuhle Photo Rag 308">Photo Rag 308</div>
-          <div class="chip" data-value="Hahnemuhle Bright White">Bright White</div>
-          <div class="chip" data-value="Hahnemuhle Metallic Pearl">Metallic Pearl</div>
-          <div class="chip" data-value="Cotton Fibre Velvet">Cotton Fibre Velvet</div>
+
+          <div class="chip" data-value="Satin">Satin
+            <div class="chip-preview">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Satin</p>
+                <p class="chip-preview-desc">A subtle lustre finish that sits between gloss and matte. Rich colour saturation with fine detail and minimal glare. Great all-rounder for landscapes.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chip" data-value="Matte Art Paper">Matte Art Paper
+            <div class="chip-preview">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Matte Art Paper</p>
+                <p class="chip-preview-desc">Smooth, non-reflective fine art surface. Produces deep blacks and soft tonal transitions. Ideal for moody or low-key images that benefit from zero glare.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chip" data-value="Hahnemuhle Photo Rag 308">Photo Rag 308
+            <div class="chip-preview">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Hahnem&#xFC;hle Photo Rag 308</p>
+                <p class="chip-preview-desc">100% cotton, 308gsm. A velvety matte texture with outstanding detail and colour depth. One of the world&#x27;s finest gicl&#xE9;e papers, used by galleries and museums worldwide.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chip" data-value="Hahnemuhle Bright White">Bright White
+            <div class="chip-preview">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Hahnem&#xFC;hle Bright White</p>
+                <p class="chip-preview-desc">A bright-white cotton rag base that delivers vivid, punchy colour reproduction. Perfect for vibrant landscapes, sunsets, and images where you want maximum pop.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chip" data-value="Hahnemuhle Metallic Pearl">Metallic Pearl
+            <div class="chip-preview">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Hahnem&#xFC;hle Metallic Pearl</p>
+                <p class="chip-preview-desc">A pearlescent sheen that adds striking three-dimensional depth to images. Colours shift subtly with viewing angle. Stunning for aurora, night sky, and water reflections.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chip" data-value="Cotton Fibre Velvet">Cotton Fibre Velvet
+            <div class="chip-preview">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Cotton Fibre Velvet</p>
+                <p class="chip-preview-desc">A warm-toned, tactile cotton rag with a soft velvety feel. Slightly warmer whites than Photo Rag, giving images a classic, timeless quality. Excellent for earthy tones.</p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -343,13 +500,13 @@
           <div class="chip" data-value="A2 (42x59cm / 16.5x23.4in)">A2</div>
           <div class="chip" data-value="A1 (59x84cm / 23.4x33.1in)">A1</div>
           <div class="chip" data-value="A0 (84x119cm / 33.1x46.8in)">A0</div>
-          <div class="chip" data-value="8x12in">8&times;12&Prime;</div>
-          <div class="chip" data-value="12x18in">12&times;18&Prime;</div>
-          <div class="chip" data-value="16x24in">16&times;24&Prime;</div>
-          <div class="chip" data-value="20x30in">20&times;30&Prime;</div>
-          <div class="chip" data-value="24x36in">24&times;36&Prime;</div>
-          <div class="chip" data-value="30x45in">30&times;45&Prime;</div>
-          <div class="chip" data-value="40x60in">40&times;60&Prime;</div>
+          <div class="chip" data-value="8x12in">8&#xD7;12&#x2033;</div>
+          <div class="chip" data-value="12x18in">12&#xD7;18&#x2033;</div>
+          <div class="chip" data-value="16x24in">16&#xD7;24&#x2033;</div>
+          <div class="chip" data-value="20x30in">20&#xD7;30&#x2033;</div>
+          <div class="chip" data-value="24x36in">24&#xD7;36&#x2033;</div>
+          <div class="chip" data-value="30x45in">30&#xD7;45&#x2033;</div>
+          <div class="chip" data-value="40x60in">40&#xD7;60&#x2033;</div>
           <div class="chip" data-value="Custom">Custom</div>
         </div>
       </div>
@@ -358,14 +515,47 @@
       <div class="form-group">
         <label class="form-label">Framing <span class="form-label-value" id="labelFrame"></span></label>
         <div class="chip-grid" data-group="frame" data-hidden="hiddenFrame" data-label="labelFrame">
-          <div class="chip" data-value="Unframed (print only)">Unframed</div>
-          <div class="chip" data-value="Float framed glass">Float Framed Glass</div>
-          <div class="chip" data-value="Standard frame">Standard Frame</div>
-          <div class="chip" data-value="Custom framing">Custom</div>
+
+          <div class="chip" data-value="Unframed (print only)">Unframed
+            <div class="chip-preview">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Unframed</p>
+                <p class="chip-preview-desc">Print only, shipped flat in rigid protective packaging. Frame it yourself or take it to your local framer for a custom job.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chip" data-value="Float framed glass">Float Framed Glass
+            <div class="chip-preview">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Float Framed Glass</p>
+                <p class="chip-preview-desc">Print is raised off the backing with a visible gap between the image and frame, creating a floating effect behind glass. A premium, gallery-style presentation.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chip" data-value="Standard frame">Standard Frame
+            <div class="chip-preview">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Standard Frame</p>
+                <p class="chip-preview-desc">Traditional frame with mat board surround and glass. A classic, clean presentation suitable for any room.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chip" data-value="Custom framing">Custom
+            <div class="chip-preview">
+              <div class="chip-preview-body">
+                <p class="chip-preview-title">Custom Framing</p>
+                <p class="chip-preview-desc">Specify your preferred frame style, mat colour, and glass type in the comments. I&#x27;ll source options and include them in your quote.</p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      <!-- FRAME COLOUR (shown when framing is selected, not "Unframed") -->
+      <!-- FRAME COLOUR -->
       <div class="form-group" id="frameColourGroup" style="display:none;">
         <label class="form-label">Frame Colour <span class="form-label-value" id="labelFrameColour"></span></label>
         <div class="chip-grid" data-group="frameColour" data-hidden="hiddenFrameColour" data-label="labelFrameColour">
@@ -387,7 +577,7 @@
 
       <button type="submit" id="printBtn">Send Enquiry</button>
     </form>
-    <p class="print-success" id="printSuccess">Enquiry sent! I'll be in touch with a quote shortly.</p>
+    <p class="print-success" id="printSuccess">Enquiry sent! I&#x27;ll be in touch with a quote shortly.</p>
 
   </main>
 
@@ -398,7 +588,7 @@
         Crispy Scapes
         <small>Photography by Chris Wiewiora</small>
       </div>
-      <p class="footer-copy">&copy; 2026 Crispy Scapes. All rights reserved.</p>
+      <p class="footer-copy">&#xA9; 2026 Crispy Scapes. All rights reserved.</p>
       <div class="footer-social">
         <a href="https://www.instagram.com/crispy_scapes/" target="_blank" rel="noopener noreferrer">Instagram</a>
         <a href="http://www.youtube.com/channel/UCAt33G6NOyTp7pJW9eZUW2Q" target="_blank" rel="noopener noreferrer">YouTube</a>
@@ -433,9 +623,7 @@
 
         chips.forEach(function (chip) {
           chip.addEventListener('click', function () {
-            /* Toggle: clicking the same chip deselects it */
             var wasSelected = chip.classList.contains('selected');
-
             chips.forEach(function (c) { c.classList.remove('selected'); });
 
             if (wasSelected) {
@@ -444,17 +632,16 @@
             } else {
               chip.classList.add('selected');
               hidden.value = chip.getAttribute('data-value');
-              label.textContent = chip.textContent;
+              /* Use the chip text minus the preview content */
+              label.textContent = chip.childNodes[0].textContent.trim();
             }
 
-            /* Show/hide frame colour based on framing selection */
             if (grid.getAttribute('data-group') === 'frame') {
               var val = hidden.value;
               if (val && val !== 'Unframed (print only)') {
                 frameColourGroup.style.display = '';
               } else {
                 frameColourGroup.style.display = 'none';
-                /* Clear frame colour if framing is unset/unframed */
                 document.getElementById('hiddenFrameColour').value = '';
                 document.getElementById('labelFrameColour').textContent = '';
                 frameColourGroup.querySelectorAll('.chip').forEach(function (c) {
@@ -467,7 +654,7 @@
       });
     })();
 
-    /* AJAX form submission — stay on page */
+    /* AJAX form submission */
     (function () {
       var form    = document.getElementById('printForm');
       var btn     = document.getElementById('printBtn');
@@ -489,12 +676,12 @@
           } else {
             btn.textContent = 'Send Enquiry';
             btn.disabled    = false;
-            alert('Something went wrong — please try again or email crispyscapes@outlook.com directly.');
+            alert('Something went wrong. Please try again or email crispyscapes@outlook.com directly.');
           }
         }).catch(function () {
           btn.textContent = 'Send Enquiry';
           btn.disabled    = false;
-          alert('Network error — please check your connection and try again.');
+          alert('Network error. Please check your connection and try again.');
         });
       });
     })();
