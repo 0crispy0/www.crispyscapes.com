@@ -163,8 +163,11 @@
       background: rgba(200,169,110,0.12);
     }
 
-    /* Chip tooltip / preview popover – uses position:fixed via JS to escape overflow:hidden */
-    .chip-preview {
+    /* Chip tooltip data-source – hidden, used only as content template */
+    .chip-preview { display: none !important; }
+
+    /* Floating tooltip – single instance appended to body by JS */
+    #floating-preview {
       display: none;
       position: fixed;
       width: 280px;
@@ -176,25 +179,16 @@
       overflow: hidden;
       pointer-events: none;
     }
-    .chip-preview::after {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 8px solid transparent;
-      border-top-color: var(--dark-mid);
-    }
-
-    .chip-preview img {
+    #floating-preview img {
       width: 100%;
       height: 140px;
       object-fit: cover;
+      display: block;
     }
-    .chip-preview-body {
+    #floating-preview .chip-preview-body {
       padding: 0.8rem 1rem;
     }
-    .chip-preview-title {
+    #floating-preview .chip-preview-title {
       font-family: var(--font-head);
       font-size: 0.72rem;
       font-weight: 600;
@@ -202,11 +196,13 @@
       color: var(--white);
       margin-bottom: 0.4rem;
     }
-    .chip-preview-desc {
+    #floating-preview .chip-preview-desc {
       font-size: 0.75rem;
       line-height: 1.55;
       color: var(--light-muted);
     }
+
+    /* chip-preview inner styles moved to #floating-preview */
 
     /* Edge-chip overflow handled by JS */
 
@@ -711,45 +707,46 @@
       });
     })();
   
-  // ── Chip preview: smart fixed-position popup ──────────────────────────────
+  // ── Chip preview: single floating tooltip appended to body ──────────────
   (function () {
     var PREVIEW_W = 280;
-    var MARGIN    = 10;
+    var MARGIN    = 12;
+
+    // Create one shared floating div at body level — escapes all overflow/transform contexts
+    var fp = document.createElement('div');
+    fp.id  = 'floating-preview';
+    document.body.appendChild(fp);
+
+    function position (chipRect) {
+      fp.style.display = 'block';
+      var ph = fp.offsetHeight;
+      var vw = window.innerWidth;
+
+      var left = chipRect.left + chipRect.width / 2 - PREVIEW_W / 2;
+      var top  = chipRect.top  - ph - MARGIN;
+
+      // Clamp horizontal
+      if (left + PREVIEW_W > vw - MARGIN) left = vw - PREVIEW_W - MARGIN;
+      if (left < MARGIN)                  left = MARGIN;
+
+      // Flip below if not enough room above
+      if (top < MARGIN) top = chipRect.bottom + MARGIN;
+
+      fp.style.left = left + 'px';
+      fp.style.top  = top  + 'px';
+    }
 
     document.querySelectorAll('.chip').forEach(function (chip) {
-      var preview = chip.querySelector('.chip-preview');
-      if (!preview) return;
+      var src = chip.querySelector('.chip-preview');
+      if (!src) return;
 
       chip.addEventListener('mouseenter', function () {
-        var r   = chip.getBoundingClientRect();
-        var vw  = window.innerWidth;
-        var vh  = window.innerHeight;
-
-        // Temporarily show off-screen to measure real height
-        preview.style.visibility = 'hidden';
-        preview.style.display    = 'block';
-        var ph = preview.offsetHeight;
-        preview.style.display    = 'none';
-        preview.style.visibility = '';
-
-        // Preferred: centered above chip
-        var left = r.left + r.width / 2 - PREVIEW_W / 2;
-        var top  = r.top - ph - MARGIN;
-
-        // Clamp horizontal to viewport
-        if (left + PREVIEW_W > vw - MARGIN) left = vw - PREVIEW_W - MARGIN;
-        if (left < MARGIN)                  left = MARGIN;
-
-        // If not enough room above, flip below
-        if (top < MARGIN) top = r.bottom + MARGIN;
-
-        preview.style.left    = left + 'px';
-        preview.style.top     = top  + 'px';
-        preview.style.display = 'block';
+        fp.innerHTML = src.innerHTML;
+        position(chip.getBoundingClientRect());
       });
 
       chip.addEventListener('mouseleave', function () {
-        preview.style.display = 'none';
+        fp.style.display = 'none';
       });
     });
   })();
