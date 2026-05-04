@@ -523,29 +523,31 @@
 
     /* Video */
     #video { background: var(--dark); }
-    .video-grid {
-      display: flex;
-      gap: 1.5rem;
-      overflow-x: auto;
-      overflow-y: hidden;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 1rem;
-      scrollbar-width: thin;
-      scrollbar-color: var(--mid) transparent;
+    .video-scroll-outer {
+      position: relative;
     }
-    .video-grid::-webkit-scrollbar { height: 4px; }
-    .video-grid::-webkit-scrollbar-track { background: transparent; }
-    .video-grid::-webkit-scrollbar-thumb { background: var(--mid); border-radius: 2px; }
+    .video-scroll-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 320px);
+      grid-auto-flow: column;
+      grid-template-rows: repeat(2, auto);
+      gap: 1.5rem;
+      will-change: transform;
+    }
     .video-card {
       background: transparent;
       border-radius: 6px;
       overflow: hidden;
       position: relative;
       transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-      min-width: 320px;
-      flex: 0 0 320px;
-      scroll-snap-align: start;
     }
     .video-card:hover {
       transform: translateY(-3px);
@@ -618,7 +620,7 @@
       text-align: center;
     }
     @media (max-width: 768px) {
-      .video-card { min-width: 280px; flex: 0 0 280px; }
+      .video-grid { grid-template-columns: repeat(2, 260px); }
     }
 
     /* About */
@@ -1579,7 +1581,7 @@
     <div class="section-inner">
       <h2 class="section-heading reveal">Videography</h2>
       <div class="section-rule reveal reveal-delay-1"></div>
-      <div class="video-grid reveal reveal-delay-2">
+      <div class="video-scroll-outer" id="videoScrollOuter"><div class="video-scroll-sticky"><div class="video-grid" id="videoGrid">
         <div class="video-card">
           <div class="video-wrapper" data-id="zOI-i0CGrLQ">
             <img class="video-thumb" src="https://i.ytimg.com/vi/zOI-i0CGrLQ/hqdefault.jpg" alt="Showreel" loading="lazy">
@@ -1699,6 +1701,8 @@
           </div>
           <h3 class="video-card-title">Oilies</h3>
         </div>
+      </div>
+      </div>
       </div>
     </div>
   </section>
@@ -2064,6 +2068,76 @@
       });
     })();
 
+
+    /* Horizontal scroll-linked video section */
+    (function () {
+      var outer = document.getElementById('videoScrollOuter');
+      var grid = document.getElementById('videoGrid');
+      if (!outer || !grid) return;
+
+      function setOuterHeight() {
+        var scrollWidth = grid.scrollWidth - window.innerWidth + 200;
+        outer.style.height = (scrollWidth + window.innerHeight) + 'px';
+      }
+      setOuterHeight();
+      window.addEventListener('resize', setOuterHeight);
+
+      window.addEventListener('scroll', function () {
+        var rect = outer.getBoundingClientRect();
+        if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
+          var progress = -rect.top / (rect.height - window.innerHeight);
+          var maxShift = grid.scrollWidth - window.innerWidth + 200;
+          grid.style.transform = 'translateX(' + (-progress * maxShift) + 'px)';
+        }
+      }, { passive: true });
+    })();
+
+
+
+    /* Parallax — blog cards depth shift */
+    (function () {
+      var cards = document.querySelectorAll('.blog-card');
+      window.addEventListener('scroll', function () {
+        cards.forEach(function (card, i) {
+          var rect = card.getBoundingClientRect();
+          if (rect.bottom > 0 && rect.top < window.innerHeight) {
+            var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+            var shift = (progress - 0.5) * (10 + (i % 3) * 4);
+            card.style.transform = 'translateY(' + shift + 'px)';
+          }
+        });
+      }, { passive: true });
+    })();
+
+    /* Parallax — magazine cards staggered float */
+    (function () {
+      var mags = document.querySelectorAll('.mag-card');
+      window.addEventListener('scroll', function () {
+        mags.forEach(function (card, i) {
+          var rect = card.getBoundingClientRect();
+          if (rect.bottom > 0 && rect.top < window.innerHeight) {
+            var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+            var shift = (progress - 0.5) * (8 + (i % 3) * 5);
+            card.style.transform = 'translateY(' + shift + 'px)';
+          }
+        });
+      }, { passive: true });
+    })();
+
+    /* Parallax — section rules widen on scroll */
+    (function () {
+      var rules = document.querySelectorAll('.section-rule');
+      window.addEventListener('scroll', function () {
+        rules.forEach(function (rule) {
+          var rect = rule.getBoundingClientRect();
+          if (rect.bottom > 0 && rect.top < window.innerHeight) {
+            var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+            var w = Math.min(progress * 120, 80);
+            rule.style.width = w + 'px';
+          }
+        });
+      }, { passive: true });
+    })();
 
     /* Headings shift horizontally on scroll */
     (function () {
