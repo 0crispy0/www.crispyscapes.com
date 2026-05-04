@@ -561,7 +561,7 @@
       position: sticky;
       top: 0;
       height: 100vh;
-      overflow: visible;
+      overflow: hidden;
       box-sizing: border-box;
     }
     .video-sticky-content {
@@ -2203,11 +2203,12 @@
       }, { passive: true });
     })();
 
-    /* Headings shift horizontally on scroll */
+    /* Headings shift horizontally on scroll (skip video section — it has its own scroll) */
     (function () {
       var headings = document.querySelectorAll('.section-heading');
       window.addEventListener('scroll', function () {
         headings.forEach(function (h) {
+          if (h.closest('#video')) return;
           var rect = h.getBoundingClientRect();
           if (rect.bottom > 0 && rect.top < window.innerHeight) {
             var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
