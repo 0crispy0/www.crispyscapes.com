@@ -527,6 +527,22 @@
       color: var(--muted);
     }
 
+    .lb-print {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.7rem;
+      font-family: var(--font-head);
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color var(--transition);
+      cursor: pointer;
+    }
+    .lb-print:hover { color: var(--accent); }
+    .lb-print svg { width: 14px; height: 14px; stroke: currentColor; }
+
     /* Video */
     #video { background: var(--dark); }
     .video-scroll-outer {
@@ -1601,6 +1617,11 @@
       <div class="lb-caption">
         <p class="lb-caption-title" id="lbTitle"></p>
         <p class="lb-caption-cat"   id="lbCat"></p>
+
+        <a class="lb-print" id="lbPrint" href="#" target="_self">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="1"/><path d="M6 2h12M6 22h12M2 6v12M22 6v12"/></svg>
+          Purchase Print
+        </a>
       </div>
     </div>
     <div class="lb-counter" id="lbCounter" aria-live="polite"></div>
@@ -2041,6 +2062,8 @@
         };
         preload.src = src;
         idx = i;
+        var printLink = document.getElementById('lbPrint');
+        if (printLink) printLink.href = 'prints.html?image=' + encodeURIComponent(title);
       }
 
       function open(item) {
