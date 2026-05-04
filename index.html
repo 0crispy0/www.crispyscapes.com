@@ -584,8 +584,10 @@
     .video-grid {
       display: grid;
       grid-template-columns: repeat(9, 38vw);
-      grid-template-rows: auto auto;
+      grid-template-rows: 1fr 1fr;
       gap: 1.2rem;
+      flex: 1;
+      min-height: 0;
       will-change: transform;
       padding: 0 3rem;
     }
@@ -604,7 +606,8 @@
     }
     .video-wrapper {
       position: relative;
-      aspect-ratio: 16 / 9;
+      flex: 1;
+      min-height: 0;
       overflow: hidden;
       background: var(--black);
       border-radius: 6px;
