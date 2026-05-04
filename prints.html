@@ -163,19 +163,16 @@
       background: rgba(200,169,110,0.12);
     }
 
-    /* Chip tooltip / preview popover */
+    /* Chip tooltip / preview popover – uses position:fixed via JS to escape overflow:hidden */
     .chip-preview {
       display: none;
-      position: absolute;
-      bottom: calc(100% + 10px);
-      left: 50%;
-      transform: translateX(-50%);
+      position: fixed;
       width: 280px;
       background: var(--dark-mid);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 8px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-      z-index: 100;
+      z-index: 9999;
       overflow: hidden;
       pointer-events: none;
     }
@@ -188,7 +185,6 @@
       border: 8px solid transparent;
       border-top-color: var(--dark-mid);
     }
-    .chip:hover .chip-preview { display: block; }
 
     .chip-preview img {
       width: 100%;
@@ -212,11 +208,7 @@
       color: var(--light-muted);
     }
 
-    /* Ensure edge chips don't overflow viewport */
-    .chip:first-child .chip-preview { left: 0; transform: none; }
-    .chip:first-child .chip-preview::after { left: 20px; transform: none; }
-    .chip:last-child .chip-preview { left: auto; right: 0; transform: none; }
-    .chip:last-child .chip-preview::after { left: auto; right: 20px; transform: none; }
+    /* Edge-chip overflow handled by JS */
 
     /* Size chips - tighter grid */
     .chip-grid--sizes {
@@ -562,7 +554,7 @@
 
           <div class="chip" data-value="Black">Black
             <div class="chip-preview">
-              <img src="images/frames/Black.png" alt="Black Frame" loading="lazy">
+              <img src="images/frames/Black.png" alt="Black Frame">
               <div class="chip-preview-body">
                 <p class="chip-preview-title">Black</p>
                 <p class="chip-preview-desc">A bold, modern frame finish. Clean lines that draw the eye straight to the image. Suits dramatic landscapes, night skies, and high-contrast work.</p>
@@ -572,7 +564,7 @@
 
           <div class="chip" data-value="White">White
             <div class="chip-preview">
-              <img src="images/frames/White.png" alt="White Frame" loading="lazy">
+              <img src="images/frames/White.png" alt="White Frame">
               <div class="chip-preview-body">
                 <p class="chip-preview-title">White</p>
                 <p class="chip-preview-desc">A bright, clean frame that opens up the image and adds a sense of light and space. Ideal for coastal scenes, snow, and minimalist compositions.</p>
@@ -582,7 +574,7 @@
 
           <div class="chip" data-value="Oak">Oak
             <div class="chip-preview">
-              <img src="images/frames/Oak.png" alt="Oak Frame" loading="lazy">
+              <img src="images/frames/Oak.png" alt="Oak Frame">
               <div class="chip-preview-body">
                 <p class="chip-preview-title">Oak</p>
                 <p class="chip-preview-desc">A warm, natural timber with visible grain. Brings an organic, earthy warmth that complements golden-hour landscapes and outback tones beautifully.</p>
@@ -592,7 +584,7 @@
 
           <div class="chip" data-value="Dark Oak">Dark Oak
             <div class="chip-preview">
-              <img src="images/frames/Dark Oak.png" alt="Dark Oak Frame" loading="lazy">
+              <img src="images/frames/Dark Oak.png" alt="Dark Oak Frame">
               <div class="chip-preview-body">
                 <p class="chip-preview-title">Dark Oak</p>
                 <p class="chip-preview-desc">Rich, deep-toned timber with pronounced grain. A premium, sophisticated finish that adds depth and weight. Pairs well with moody and cinematic images.</p>
@@ -721,6 +713,50 @@
         });
       });
     })();
+  
+  // ── Chip preview: smart fixed-position popup ──────────────────────────────
+  (function () {
+    var PREVIEW_W = 280;
+    var MARGIN    = 10;
+
+    document.querySelectorAll('.chip').forEach(function (chip) {
+      var preview = chip.querySelector('.chip-preview');
+      if (!preview) return;
+
+      chip.addEventListener('mouseenter', function () {
+        var r   = chip.getBoundingClientRect();
+        var vw  = window.innerWidth;
+        var vh  = window.innerHeight;
+
+        // Temporarily show off-screen to measure real height
+        preview.style.visibility = 'hidden';
+        preview.style.display    = 'block';
+        var ph = preview.offsetHeight;
+        preview.style.display    = 'none';
+        preview.style.visibility = '';
+
+        // Preferred: centered above chip
+        var left = r.left + r.width / 2 - PREVIEW_W / 2;
+        var top  = r.top - ph - MARGIN;
+
+        // Clamp horizontal to viewport
+        if (left + PREVIEW_W > vw - MARGIN) left = vw - PREVIEW_W - MARGIN;
+        if (left < MARGIN)                  left = MARGIN;
+
+        // If not enough room above, flip below
+        if (top < MARGIN) top = r.bottom + MARGIN;
+
+        preview.style.left    = left + 'px';
+        preview.style.top     = top  + 'px';
+        preview.style.display = 'block';
+      });
+
+      chip.addEventListener('mouseleave', function () {
+        preview.style.display = 'none';
+      });
+    });
+  })();
+
   </script>
 </body>
 </html>
