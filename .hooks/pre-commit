@@ -1,0 +1,5 @@
+#!/bin/sh
+# CrispyScapes — auto-rebuild gallery manifest before every commit
+echo "Rebuilding gallery manifest..."
+python3 build-gallery.py 2>/dev/null || python build-gallery.py
+git add gallery-manifest.js
