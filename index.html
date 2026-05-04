@@ -293,11 +293,16 @@
     .section-inner { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
     .section-heading {
       font-family: var(--font-head);
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      color: var(--white);
-      margin-bottom: 0.5rem;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.08);
+      margin-bottom: -0.8rem;
+      position: relative;
+      z-index: 0;
+      transition: transform 0.1s linear;
+      will-change: transform;
+      pointer-events: none;
     }
     .section-rule { width: 48px; height: 2px; background: var(--accent); margin-bottom: 3rem; }
 
@@ -519,16 +524,28 @@
     /* Video */
     #video { background: var(--dark); }
     .video-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--mid) transparent;
     }
+    .video-grid::-webkit-scrollbar { height: 4px; }
+    .video-grid::-webkit-scrollbar-track { background: transparent; }
+    .video-grid::-webkit-scrollbar-thumb { background: var(--mid); border-radius: 2px; }
     .video-card {
       background: transparent;
       border-radius: 6px;
       overflow: hidden;
       position: relative;
       transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      min-width: 320px;
+      flex: 0 0 320px;
+      scroll-snap-align: start;
     }
     .video-card:hover {
       transform: translateY(-3px);
@@ -596,16 +613,12 @@
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.85);
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 2.5rem 1rem 0.8rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
-      pointer-events: none;
+      color: var(--light-muted);
+      padding: 0.7rem 0.2rem 0;
       text-align: center;
     }
     @media (max-width: 768px) {
-      .video-grid { grid-template-columns: 1fr; }
+      .video-card { min-width: 280px; flex: 0 0 280px; }
     }
 
     /* About */
@@ -787,7 +800,7 @@
     .blog-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 1.2rem;
     }
     @media (max-width: 1024px) {
       .blog-grid { grid-template-columns: repeat(2, 1fr); }
@@ -813,10 +826,10 @@
     }
     .blog-card-thumb {
       width: 100%;
-      height: 200px;
+      height: 150px;
       object-fit: contain;
       display: block;
-      padding: 2rem;
+      padding: 1.5rem;
       box-sizing: border-box;
       background: rgba(255,255,255,0.03);
       transition: transform 0.55s ease, filter 0.55s ease;
@@ -824,7 +837,7 @@
     }
     .blog-card:hover .blog-card-thumb { transform: scale(1.08); filter: brightness(1); }
     .blog-card-body {
-      padding: 1.4rem 1.5rem 1.6rem;
+      padding: 1rem 1.2rem 1.2rem;
       position: relative;
     }
     .blog-card-body::after {
@@ -846,13 +859,13 @@
     }
     .blog-card-title {
       font-family: var(--font-head);
-      font-size: 1rem;
+      font-size: 0.88rem;
       font-weight: 500;
       color: var(--white);
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.5rem;
       line-height: 1.4;
     }
-    .blog-card-text { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+    .blog-card-text { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
 
     /* Footer */
     footer {
@@ -1509,10 +1522,6 @@
   <img src="images/other-bungle-bungle-2.jpg" alt="Bungle Bungle II" loading="lazy" />
   <div class="gallery-overlay"><span class="gallery-title">Bungle Bungle II</span><span class="gallery-cat">Other States</span></div>
 </div>
-<div class="gallery-item reveal reveal-delay-2" data-categories="other" data-title="Bungle Bungle III" data-src="images/other-bungle-bungle-3.jpg" role="listitem" tabindex="0" aria-label="Bungle Bungle III">
-  <img src="images/other-bungle-bungle-3.jpg" alt="Bungle Bungle III" loading="lazy" />
-  <div class="gallery-overlay"><span class="gallery-title">Bungle Bungle III</span><span class="gallery-cat">Other States</span></div>
-</div>
 <div class="gallery-item reveal reveal-delay-3" data-categories="other" data-title="Bungle Bungle IV" data-src="images/other-bungle-bungle-4.jpg" role="listitem" tabindex="0" aria-label="Bungle Bungle IV">
   <img src="images/other-bungle-bungle-4.jpg" alt="Bungle Bungle IV" loading="lazy" />
   <div class="gallery-overlay"><span class="gallery-title">Bungle Bungle IV</span><span class="gallery-cat">Other States</span></div>
@@ -1575,120 +1584,120 @@
           <div class="video-wrapper" data-id="zOI-i0CGrLQ">
             <img class="video-thumb" src="https://i.ytimg.com/vi/zOI-i0CGrLQ/hqdefault.jpg" alt="Showreel" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Showreel</h3>
           </div>
+          <h3 class="video-card-title">Showreel</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="yKh_yMbwEyY">
             <img class="video-thumb" src="https://i.ytimg.com/vi/yKh_yMbwEyY/hqdefault.jpg" alt="Lofoten Islands &amp; Dolomites" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Lofoten Islands &amp; Dolomites</h3>
           </div>
+          <h3 class="video-card-title">Lofoten Islands &amp; Dolomites</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="ckTAWPozbM8">
             <img class="video-thumb" src="https://i.ytimg.com/vi/ckTAWPozbM8/hqdefault.jpg" alt="New Zealand" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">New Zealand</h3>
           </div>
+          <h3 class="video-card-title">New Zealand</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="jjugcGTJTk0">
             <img class="video-thumb" src="https://i.ytimg.com/vi/jjugcGTJTk0/hqdefault.jpg" alt="Tasmania (feat. Pumba)" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Tasmania (feat. Pumba)</h3>
           </div>
+          <h3 class="video-card-title">Tasmania (feat. Pumba)</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="AebH3G9KTOg">
             <img class="video-thumb" src="https://i.ytimg.com/vi/AebH3G9KTOg/hqdefault.jpg" alt="Australian Alps" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Australian Alps</h3>
           </div>
+          <h3 class="video-card-title">Australian Alps</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="mNx1SErSjNQ">
             <img class="video-thumb" src="https://i.ytimg.com/vi/mNx1SErSjNQ/hqdefault.jpg" alt="Blue Mountains" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Blue Mountains</h3>
           </div>
+          <h3 class="video-card-title">Blue Mountains</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="Vxh8KON4ci4">
             <img class="video-thumb" src="https://i.ytimg.com/vi/Vxh8KON4ci4/hqdefault.jpg" alt="Yorke Peninsula" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Yorke Peninsula</h3>
           </div>
+          <h3 class="video-card-title">Yorke Peninsula</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="yFYe-XiSJB4" data-start="90">
             <img class="video-thumb" src="https://i.ytimg.com/vi/yFYe-XiSJB4/hqdefault.jpg" alt="Moreton Island" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Moreton Island</h3>
           </div>
+          <h3 class="video-card-title">Moreton Island</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="lCECgEG_LPk">
             <img class="video-thumb" src="https://i.ytimg.com/vi/lCECgEG_LPk/hqdefault.jpg" alt="Western Faces" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Western Faces</h3>
           </div>
+          <h3 class="video-card-title">Western Faces</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="sCR6UrYEDO8">
             <img class="video-thumb" src="https://i.ytimg.com/vi/sCR6UrYEDO8/hqdefault.jpg" alt="Hanging Rock" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Hanging Rock</h3>
           </div>
+          <h3 class="video-card-title">Hanging Rock</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="6VLSGgHTWr8">
             <img class="video-thumb" src="https://i.ytimg.com/vi/6VLSGgHTWr8/hqdefault.jpg" alt="Penrose" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Penrose</h3>
           </div>
+          <h3 class="video-card-title">Penrose</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="ZbFJnE3L_pc">
             <img class="video-thumb" src="https://i.ytimg.com/vi/ZbFJnE3L_pc/hqdefault.jpg" alt="Radiant Kiama" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Radiant Kiama</h3>
           </div>
+          <h3 class="video-card-title">Radiant Kiama</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="tWxfJYycIZQ">
             <img class="video-thumb" src="https://i.ytimg.com/vi/tWxfJYycIZQ/hqdefault.jpg" alt="Kiama" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Kiama</h3>
           </div>
+          <h3 class="video-card-title">Kiama</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="wBpNqXH8nH8">
             <img class="video-thumb" src="https://i.ytimg.com/vi/wBpNqXH8nH8/hqdefault.jpg" alt="Bombo" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Bombo</h3>
           </div>
+          <h3 class="video-card-title">Bombo</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="jcDmk18o6O0">
             <img class="video-thumb" src="https://i.ytimg.com/vi/jcDmk18o6O0/hqdefault.jpg" alt="Wollongong" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Wollongong</h3>
           </div>
+          <h3 class="video-card-title">Wollongong</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="VBsnPVcpy4g">
             <img class="video-thumb" src="https://i.ytimg.com/vi/VBsnPVcpy4g/hqdefault.jpg" alt="Sea Cliff Bridge" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Sea Cliff Bridge</h3>
           </div>
+          <h3 class="video-card-title">Sea Cliff Bridge</h3>
         </div>
         <div class="video-card">
           <div class="video-wrapper" data-id="Ni7P30WxjMM">
             <img class="video-thumb" src="https://i.ytimg.com/vi/Ni7P30WxjMM/hqdefault.jpg" alt="Oilies" loading="lazy">
             <div class="video-play"></div>
-            <h3 class="video-card-title">Oilies</h3>
           </div>
+          <h3 class="video-card-title">Oilies</h3>
         </div>
       </div>
     </div>
@@ -1705,14 +1714,10 @@
           <h2 class="section-heading reveal">About</h2>
           <div class="section-rule reveal reveal-delay-1"></div>
           <p class="reveal reveal-delay-2">
-            Chris is a landscape photographer based in Wollongong, on the South Coast of New South Wales, Australia.
-            His thirst for adventure, combined with his passion for capturing nature's artistry, leads him to explore
-            the remote corners of Australia and indeed the globe, in search of the perfect frame.
+            Chris is the Wollongong-based landscape photographer and Civil Engineer behind Crispy Scapes. While his engineering career demands precision and structure, his photography is fueled by a spirit of raw, rugged exploration. Combining his deep love for hiking, 4WDing, and alpine touring, he actively seeks out the remote, untamed corners of Australia and the globe.
           </p>
           <p class="reveal reveal-delay-3">
-            He is driven to capture scenes experienced by very few people. By combining his many loves of hiking,
-            4WDing, alpine touring and photography, he aims to bring something unique to the photographic community.
-            When he is not out capturing new images, he works as a Civil Engineer.
+            Driven to document nature's fleeting artistry and frame untouched scenes experienced by very few, Chris's work offers a uniquely adventurous perspective of the natural world. Through his curated print collection, he invites you to bring the raw beauty and quiet isolation of these remote destinations directly into your home.
           </p>
         </div>
         <div class="about-awards reveal reveal-delay-2">
@@ -1733,23 +1738,23 @@
       <div class="about-magazines reveal">
         <h3 class="about-mag-heading">Featured In</h3>
         <div class="magazine-grid">
-          <div class="mag-card">
+          <div class="mag-card reveal">
             <img src="images/mag-aus-geographic.jpg" alt="Australian Geographic #132 Cover" loading="lazy" />
             <span class="mag-label">Australian Geographic</span>
           </div>
-          <div class="mag-card">
+          <div class="mag-card reveal reveal-delay-1">
             <img src="images/mag-aus-photo-jan17.jpg" alt="Australian Photography July 2017 Cover" loading="lazy" />
             <span class="mag-label">Australian Photography</span>
           </div>
-          <div class="mag-card">
+          <div class="mag-card reveal reveal-delay-2">
             <img src="images/mag-aus-photo-march.jpg" alt="Australian Photography March Cover" loading="lazy" />
             <span class="mag-label">Australian Photography</span>
           </div>
-          <div class="mag-card">
+          <div class="mag-card reveal reveal-delay-3">
             <img src="images/mag-nat-geo-extra.jpg" alt="Viajes National Geographic Extra 15" loading="lazy" />
             <span class="mag-label">Viajes National Geographic</span>
           </div>
-          <div class="mag-card">
+          <div class="mag-card reveal">
             <img src="images/mag-nat-geo-225.jpg" alt="Viajes National Geographic 225" loading="lazy" />
             <span class="mag-label">Viajes National Geographic</span>
           </div>
@@ -2057,6 +2062,22 @@
           window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - navH, behavior: 'smooth' });
         });
       });
+    })();
+
+
+    /* Headings shift horizontally on scroll */
+    (function () {
+      var headings = document.querySelectorAll('.section-heading');
+      window.addEventListener('scroll', function () {
+        headings.forEach(function (h) {
+          var rect = h.getBoundingClientRect();
+          if (rect.bottom > 0 && rect.top < window.innerHeight) {
+            var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+            var shift = (progress - 0.5) * 60;
+            h.style.transform = 'translateX(' + shift + 'px)';
+          }
+        });
+      }, { passive: true });
     })();
 
     /* Parallax — hero video scrolls slower */
