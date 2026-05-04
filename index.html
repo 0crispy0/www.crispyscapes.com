@@ -531,25 +531,44 @@
     #video { background: var(--dark); }
     .video-scroll-outer {
       position: relative;
-      min-height: 300vh;
+      min-height: 400vh;
     }
     .video-scroll-sticky {
       position: sticky;
       top: 0;
       height: 100vh;
-      display: flex;
-      align-items: center;
-      overflow: visible;
-      padding: 2rem 0;
+      overflow: hidden;
       box-sizing: border-box;
+    }
+    .video-sticky-content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 5rem 2rem 1.5rem;
+      box-sizing: border-box;
+    }
+    .video-sticky-content .section-heading {
+      flex-shrink: 0;
+    }
+    .video-sticky-content .section-rule {
+      flex-shrink: 0;
+      margin-bottom: 1.5rem;
     }
     .video-grid {
       display: grid;
-      grid-template-columns: repeat(9, 42vw);
-      grid-template-rows: repeat(2, auto);
-      gap: 1.5rem;
+      grid-template-columns: repeat(9, 40vw);
+      grid-template-rows: 1fr 1fr;
+      gap: 1rem;
+      flex: 1;
+      min-height: 0;
       will-change: transform;
-      padding-left: 2rem;
+    }
+    .video-wrapper {
+      padding-bottom: 0;
+      height: 100%;
+    }
+    .video-card {
+      min-height: 0;
     }
     .video-card {
       background: transparent;
@@ -557,14 +576,17 @@
       overflow: hidden;
       position: relative;
       transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
     }
     .video-card:hover {
       transform: translateY(-3px);
     }
     .video-wrapper {
       position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
+      flex: 1;
+      min-height: 0;
       overflow: hidden;
       background: var(--black);
       border-radius: 6px;
@@ -577,11 +599,10 @@
       border: none;
     }
     .video-thumb {
-      position: absolute;
-      top: 0; left: 0;
       width: 100%; height: 100%;
       object-fit: cover;
       transition: filter 0.4s ease;
+      display: block;
     }
     .video-wrapper:hover .video-thumb {
       filter: brightness(0.6);
@@ -629,7 +650,7 @@
       text-align: center;
     }
     @media (max-width: 768px) {
-      .video-grid { grid-template-columns: repeat(9, 75vw); grid-template-rows: 1fr; }
+      .video-grid { grid-template-columns: repeat(17, 80vw); grid-template-rows: 1fr; }
     }
 
     /* About */
@@ -1588,9 +1609,11 @@
   <!-- VIDEOGRAPHY -->
   <section id="video" aria-label="Videography">
     <div class="section-inner">
-      <h2 class="section-heading reveal">Videography</h2>
-      <div class="section-rule reveal reveal-delay-1"></div>
-      <div class="video-scroll-outer" id="videoScrollOuter"><div class="video-scroll-sticky"><div class="video-grid" id="videoGrid">
+      <div class="video-scroll-outer" id="videoScrollOuter"><div class="video-scroll-sticky">
+        <div class="video-sticky-content">
+          <h2 class="section-heading reveal">Videography</h2>
+          <div class="section-rule reveal reveal-delay-1"></div>
+          <div class="video-grid" id="videoGrid">
         <div class="video-card">
           <div class="video-wrapper" data-id="zOI-i0CGrLQ">
             <img class="video-thumb" src="https://i.ytimg.com/vi/zOI-i0CGrLQ/hqdefault.jpg" alt="Showreel" loading="lazy">
@@ -1710,7 +1733,8 @@
           </div>
           <h3 class="video-card-title">Oilies</h3>
         </div>
-      </div>
+          </div>
+        </div>
       </div>
       </div>
     </div>
