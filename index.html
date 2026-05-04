@@ -2210,7 +2210,7 @@
           var rect = h.getBoundingClientRect();
           if (rect.bottom > 0 && rect.top < window.innerHeight) {
             var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-            var shift = (progress - 0.5) * 150;
+            var shift = (progress - 0.5) * 250;
             h.style.transform = 'translateX(' + shift + 'px)';
           }
         });
