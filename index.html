@@ -519,8 +519,7 @@
 
     .lb-counter {
       position: fixed;
-      bottom: 1.5rem; left: 50%;
-      transform: translateX(-50%);
+      top: 1.5rem; left: 1.8rem;
       font-family: var(--font-head);
       font-size: 0.72rem;
       letter-spacing: 0.16em;
@@ -574,12 +573,17 @@
     }
     .video-sticky-content .section-heading {
       flex-shrink: 0;
-      padding-left: 2rem;
     }
     .video-sticky-content .section-rule {
       flex-shrink: 0;
       margin-bottom: 1rem;
-      margin-left: 2rem;
+    }
+    .video-heading-wrap {
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 2rem;
+      box-sizing: border-box;
     }
     .video-grid {
       display: grid;
@@ -1637,8 +1641,10 @@
     <div class="section-inner">
       <div class="video-scroll-outer" id="videoScrollOuter"><div class="video-scroll-sticky">
         <div class="video-sticky-content">
-          <h2 class="section-heading reveal">Videography</h2>
-          <div class="section-rule reveal reveal-delay-1"></div>
+          <div class="video-heading-wrap">
+            <h2 class="section-heading reveal">Videography</h2>
+            <div class="section-rule reveal reveal-delay-1"></div>
+          </div>
           <div class="video-grid" id="videoGrid">
         <div class="video-card">
           <div class="video-wrapper" data-id="zOI-i0CGrLQ">
