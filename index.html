@@ -592,11 +592,12 @@
     }
     .video-grid {
       display: grid;
-      grid-template-columns: repeat(9, 38vw);
-      grid-template-rows: 1fr 1fr;
+      --row-h: calc((100vh - 13rem - 1.2rem) / 2);
+      grid-template-rows: repeat(2, var(--row-h));
+      grid-template-columns: repeat(9, calc(var(--row-h) * 16 / 9));
       gap: 1.2rem;
-      flex: 1;
-      min-height: 0;
+      flex: none;
+      align-self: center;
       will-change: transform;
       padding: 0 3rem;
     }
