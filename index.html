@@ -986,12 +986,15 @@
       .footer-social          { justify-content: center; }
     }
     @media (max-width: 768px) {
-      html                    { overflow-x: hidden; }
       :root                   { --nav-h: 60px; }
       section                 { padding: 4.5rem 0; }
       .masonry-grid           { columns: 2 160px; }
       .nav-links              { display: none; }
       .hamburger              { display: flex; }
+      .video-scroll-outer     { min-height: auto; }
+      .video-scroll-sticky    { position: static; height: auto; overflow: visible; }
+      .video-sticky-content   { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .video-sticky-content::-webkit-scrollbar { display: none; }
       .hero-logo              { max-width: 320px; }
       .contact-grid           { grid-template-columns: 1fr; gap: 2rem; }
     }
@@ -1628,6 +1631,7 @@
       var outer = document.getElementById('videoScrollOuter');
       var grid = document.getElementById('videoGrid');
       if (!outer || !grid) return;
+      if (window.innerWidth <= 768) return; /* mobile uses native horizontal scroll */
 
       var videoHeading = document.querySelector('.video-heading-wrap .section-heading');
       window.addEventListener('scroll', function () {
