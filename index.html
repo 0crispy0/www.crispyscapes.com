@@ -593,11 +593,13 @@
     }
     .video-grid {
       display: grid;
-      grid-template-columns: repeat(6, 46vw);
-      grid-template-rows: repeat(3, 1fr);
+      /* Row height derived from available viewport; column width locks 16:9 */
+      --row-h: calc((100vh - 15rem - 2.4rem) / 3);
+      grid-template-rows: repeat(3, var(--row-h));
+      grid-template-columns: repeat(6, calc(var(--row-h) * 16 / 9));
       gap: 1.2rem;
-      flex: 1;
-      min-height: 0;
+      flex: none;
+      align-self: center;
       will-change: transform;
       padding: 0 3rem;
     }
