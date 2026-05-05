@@ -299,7 +299,8 @@
       font-size: clamp(2.5rem, 6vw, 4.5rem);
       font-weight: 700;
       letter-spacing: -0.02em;
-      color: rgba(255,255,255,0.08);
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.25);
       margin-bottom: -0.8rem;
       position: relative;
       z-index: 0;
@@ -590,8 +591,8 @@
     }
     .video-grid {
       display: grid;
-      grid-template-columns: repeat(9, 38vw);
-      grid-template-rows: 1fr 1fr;
+      grid-template-columns: repeat(6, 46vw);
+      grid-template-rows: repeat(3, 1fr);
       gap: 1.2rem;
       flex: 1;
       min-height: 0;
