@@ -37,7 +37,7 @@
       --transition:  0.35s ease;
     }
 
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
 
     body {
       background: var(--black);
@@ -194,6 +194,7 @@
       transform: translate(-50%, -50%);
       border: 0;
       pointer-events: none;
+      max-width: none; /* contained by parent overflow:hidden */
     }
 
     .hero-overlay {
