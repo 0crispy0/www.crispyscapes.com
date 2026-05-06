@@ -157,13 +157,6 @@ var GALLERY_DATA = [
     "title": "Phantom Cave"
   },
   {
-    "src": "images/nsw/sea-cliff-aerial.webp",
-    "categories": [
-      "nsw"
-    ],
-    "title": "Sea Cliff Aerial"
-  },
-  {
     "src": "images/nsw/sea-cliff-bridge.webp",
     "categories": [
       "nsw"
