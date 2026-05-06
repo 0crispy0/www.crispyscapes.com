@@ -19,7 +19,7 @@
   <meta property="og:description" content="Fine art landscape photography from Australia's NSW South Coast and beyond. Prints available." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.crispyscapes.com/" />
-  <meta property="og:image" content="https://crispyscapes.com/images/nsw/cathedral-cave-sunrise.webp" />
+  <meta property="og:image" content="https://www.crispyscapes.com/images/site/crispy%20scapes.jpg" />
   <meta property="og:image:alt" content="Cathedral Cave Sunrise — landscape photography by Chris Wiewiora" />
   <meta property="og:site_name" content="Crispy Scapes" />
   <meta property="og:locale" content="en_AU" />
@@ -32,7 +32,7 @@
     "name": "Crispy Scapes",
     "description": "Fine art landscape photography by Chris Wiewiora, based in Wollongong, NSW. Prints available for purchase.",
     "url": "https://www.crispyscapes.com",
-    "image": "https://crispyscapes.com/images/nsw/cathedral-cave-sunrise.webp",
+    "image": "https://www.crispyscapes.com/images/site/crispy%20scapes.jpg",
     "founder": {
       "@type": "Person",
       "name": "Chris Wiewiora"
@@ -464,6 +464,16 @@
       margin-top: 3px;
     }
     .gallery-item.hidden { display: none; }
+
+    /* Image protection overlay */
+    .gallery-protect {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+    }
 
     /* Lightbox */
     #lightbox {
@@ -1467,7 +1477,8 @@
         div.setAttribute('aria-label', title);
         var altText = title + ' — landscape photography by Chris Wiewiora' + (REGION_LABELS[region] ? ', ' + REGION_LABELS[region] : '');
         div.innerHTML =
-          '<img src="' + item.src + '" alt="' + altText + '" loading="lazy" />' +
+          '<img src="' + item.src + '" alt="' + altText + '" loading="lazy" draggable="false" />' +
+          '<div class="gallery-protect"></div>' +
           '<div class="gallery-overlay">' +
             '<span class="gallery-title">' + title + '</span>' +
             '<span class="gallery-cat">' + catLabel + '</span>' +
@@ -1784,6 +1795,14 @@
           img.style.transform = 'translateY(' + ((progress - 0.5) * 30) + 'px) scale(1.05)';
         }
       }, { passive: true });
+    })();
+
+    /* Image protection */
+    (function () {
+      var gallery = document.getElementById('gallery');
+      if (!gallery) return;
+      gallery.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+      gallery.addEventListener('dragstart',   function (e) { e.preventDefault(); });
     })();
 
     /* Cursor glow tracking on gallery */
