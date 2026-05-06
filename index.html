@@ -90,6 +90,7 @@
     img { display: block; max-width: 100%; height: auto; }
     a   { color: inherit; text-decoration: none; }
     ::selection { background: var(--accent); color: var(--black); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
     /* Smooth scroll */
     html { scroll-behavior: smooth; }
@@ -1078,6 +1079,7 @@
 
   <!-- HERO -->
   <section id="hero" aria-label="Hero">
+    <h1 class="sr-only">Landscape Photography by Chris Wiewiora — Wollongong, NSW | Fine Art Prints</h1>
     <div class="hero-video" id="heroVideoContainer"></div>
     <div class="hero-overlay"></div>
     <div class="scroll-indicator" aria-hidden="true">
