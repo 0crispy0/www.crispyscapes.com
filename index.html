@@ -50,6 +50,7 @@
     ]
   }
   </script>
+  <link rel="preload" as="image" href="images/site/showreel-poster.webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -1462,8 +1463,9 @@
         div.setAttribute('role', 'listitem');
         div.setAttribute('tabindex', '0');
         div.setAttribute('aria-label', title);
+        var altText = title + ' — landscape photography by Chris Wiewiora' + (REGION_LABELS[region] ? ', ' + REGION_LABELS[region] : '');
         div.innerHTML =
-          '<img src="' + item.src + '" alt="' + title + '" loading="lazy" />' +
+          '<img src="' + item.src + '" alt="' + altText + '" loading="lazy" />' +
           '<div class="gallery-overlay">' +
             '<span class="gallery-title">' + title + '</span>' +
             '<span class="gallery-cat">' + catLabel + '</span>' +
