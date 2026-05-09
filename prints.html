@@ -611,14 +611,9 @@
 
     var price = tbl ? tbl[sz] : null;
     priceDisplay.classList.add('visible');
-    /* If a frame (non-unframed) is selected, framing cost can't be shown — enquire */
-    if (state.frame && state.frame !== 'Unframed (print only)'){
-      priceMain.textContent = 'Enquire for pricing';
-      priceNote.textContent = 'Print price + framing cost confirmed in your quote.';
-      hiddenPrice.value = 'Enquire (with framing)';
-    } else if (price){
+    if (price){
       priceMain.textContent = 'AUD $' + price.toLocaleString();
-      priceNote.textContent = 'Indicative price — excludes postage. Confirmed in your quote.';
+      priceNote.textContent = 'Indicative price — excludes postage. Framing cost confirmed in your quote.';
       hiddenPrice.value = 'AUD $' + price;
     } else {
       priceMain.textContent = 'Enquire for pricing';
@@ -645,7 +640,12 @@
       var val = chip.getAttribute('data-value');
       state.type = val; hiddenType.value = val;
       document.getElementById('labelType').textContent = chip.childNodes[0].textContent.trim();
-      if(val==='Fine Art Paper'){ show(groupPaper); show(groupFrame); }
+      if(val==='Fine Art Paper'){
+        show(groupPaper); show(groupFrame);
+        /* Auto-select Unframed */
+        var unframedChip = groupFrame.querySelector('.chip[data-value="Unframed (print only)"]');
+        if(unframedChip){ unframedChip.classList.add('selected'); state.frame='Unframed (print only)'; hiddenFrame.value='Unframed (print only)'; document.getElementById('labelFrame').textContent='Unframed'; }
+      }
       if(val==='Canvas')        { show(groupCanvas); }
       if(val==='Metal Print')   { show(groupMetal); }
       var key = val==='Fine Art Paper'?'paper': val==='Canvas'?'canvas': val==='Metal Print'?'metal':'glass';
