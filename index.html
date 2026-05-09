@@ -337,14 +337,15 @@
     .section-inner { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
     .section-heading {
       font-family: var(--font-head);
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-size: clamp(4.5rem, 11vw, 9rem);
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      line-height: 1;
       color: transparent;
-      background: linear-gradient(90deg, rgba(200,169,110,0.45), rgba(255,255,255,0.45));
+      background: linear-gradient(90deg, rgba(200,169,110,0.35), rgba(255,255,255,0.3));
       -webkit-background-clip: text;
       background-clip: text;
-      margin-bottom: -0.8rem;
+      margin-bottom: -3.5rem;
       position: relative;
       z-index: 0;
       will-change: transform;
@@ -357,6 +358,12 @@
       opacity: 1;
       transform: translateX(0);
     }
+    /* Watermark headings sit behind section content */
+    .filter-bar      { position: relative; z-index: 1; }
+    .masonry-grid    { position: relative; z-index: 1; }
+    .video-scroll-outer { position: relative; z-index: 1; }
+    .blog-grid       { position: relative; z-index: 1; }
+
     .section-rule { width: 48px; height: 2px; background: var(--accent); margin-bottom: 3rem; }
 
     /* Portfolio */
@@ -738,14 +745,37 @@
     }
 
     /* About */
-    #about { background: var(--dark-mid); position: relative; overflow: hidden; }
-    .about-hero { margin-bottom: 3rem; border-radius: 6px; overflow: hidden; }
-    .about-hero-img { width: 100%; max-height: 450px; object-fit: cover; border-radius: 6px; will-change: transform; }
+    #about { background: var(--dark-mid); position: relative; }
+    .about-hero {
+      margin-bottom: 0;
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    /* Gradient fade pulls the image into the text below */
+    .about-hero::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 240px;
+      background: linear-gradient(to bottom, transparent 0%, var(--dark-mid) 100%);
+      pointer-events: none;
+    }
+    .about-hero-img { width: 100%; max-height: 520px; object-fit: cover; border-radius: 6px; will-change: transform; }
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
       align-items: start;
+      position: relative;
+      z-index: 2;
+      margin-top: -110px;
+    }
+    /* Scale the watermark heading back inside the narrow about column */
+    .about-text .section-heading {
+      font-size: clamp(3rem, 7vw, 6rem);
+      margin-bottom: -2rem;
     }
     .about-text p {
       font-size: 1.05rem;
