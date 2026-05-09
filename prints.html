@@ -537,7 +537,9 @@
       {g:'Custom',s:[['custom','Custom Size — note dimensions in comments']]}
     ],
     glass: [
-      {g:'A-Series',s:[['A4','A4  (210 \xd7 297mm)'],['A3','A3  (297 \xd7 420mm)'],['A2','A2  (420 \xd7 594mm)'],['A1','A1  (594 \xd7 841mm)'],['A0','A0  (841 \xd7 1189mm)']]},
+      {g:'Standard',s:[['8x10','8 \xd7 10″'],['8x12','8 \xd7 12″'],['11x14','11 \xd7 14″'],['12x16','12 \xd7 16″'],['16x20','16 \xd7 20″'],['16x24','16 \xd7 24″'],['20x24','20 \xd7 24″'],['20x30','20 \xd7 30″'],['24x36','24 \xd7 36″'],['30x40','30 \xd7 40″'],['30x45','30 \xd7 45″'],['36x48','36 \xd7 48″']]},
+      {g:'Square',s:[['8x8','8 \xd7 8″'],['10x10','10 \xd7 10″'],['12x12','12 \xd7 12″'],['16x16','16 \xd7 16″'],['20x20','20 \xd7 20″'],['24x24','24 \xd7 24″'],['30x30','30 \xd7 30″']]},
+      {g:'Panoramic',s:[['10x20','10 \xd7 20″'],['10x30','10 \xd7 30″'],['12x24','12 \xd7 24″'],['15x30','15 \xd7 30″'],['20x40','20 \xd7 40″'],['20x60','20 \xd7 60″'],['24x48','24 \xd7 48″'],['30x60','30 \xd7 60″']]},
       {g:'Custom',s:[['custom','Custom Size — note dimensions in comments']]}
     ]
   };
@@ -564,7 +566,7 @@
   function hide(el){ el.classList.remove('visible'); }
   function resetChips(el){ el.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('selected'); }); }
 
-  var state = {type:'', sub:'', size:''};
+  var state = {type:'', sub:'', size:'', frame:''};
 
   function buildSizes(key){
     var groups = SIZES[key] || [];
@@ -609,7 +611,12 @@
 
     var price = tbl ? tbl[sz] : null;
     priceDisplay.classList.add('visible');
-    if (price){
+    /* If a frame (non-unframed) is selected, framing cost can't be shown — enquire */
+    if (state.frame && state.frame !== 'Unframed (print only)'){
+      priceMain.textContent = 'Enquire for pricing';
+      priceNote.textContent = 'Print price + framing cost confirmed in your quote.';
+      hiddenPrice.value = 'Enquire (with framing)';
+    } else if (price){
       priceMain.textContent = 'AUD $' + price.toLocaleString();
       priceNote.textContent = 'Indicative price — excludes postage. Confirmed in your quote.';
       hiddenPrice.value = 'AUD $' + price;
@@ -630,7 +637,7 @@
       resetChips(groupPaper); resetChips(groupCanvas); resetChips(groupMetal);
       resetChips(groupFrame); resetChips(groupFrameColour);
       hiddenSubOption.value=''; hiddenFrame.value=''; hiddenFrameColour.value='';
-      state.type=''; state.sub=''; state.size='';
+      state.type=''; state.sub=''; state.size=''; state.frame='';
       hiddenType.value='';
       document.getElementById('labelType').textContent='';
       if(was) return;
@@ -676,14 +683,17 @@
       resetChips(frameGrid);
       hide(groupFrameColour); resetChips(groupFrameColour);
       hiddenFrame.value=''; hiddenFrameColour.value='';
+      state.frame='';
       document.getElementById('labelFrame').textContent='';
       document.getElementById('labelFrameColour').textContent='';
-      if(was) return;
+      if(was){ updatePrice(); return; }
       chip.classList.add('selected');
       var val = chip.getAttribute('data-value');
       hiddenFrame.value = val;
+      state.frame = val;
       document.getElementById('labelFrame').textContent = chip.childNodes[0].textContent.trim();
       if(val!=='Unframed (print only)') show(groupFrameColour);
+      updatePrice();
     });
   });
 
