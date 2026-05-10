@@ -892,8 +892,8 @@
       letter-spacing: 0.04em;
     }
     .contact-form textarea { resize: vertical; min-height: 140px; }
+    .contact-form-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
     .contact-form button {
-      align-self: flex-start;
       padding: 0.8rem 2.4rem;
       font-family: var(--font-head);
       font-size: 0.7rem;
@@ -906,6 +906,20 @@
       cursor: pointer;
       transition: background var(--transition), color var(--transition);
     }
+    .contact-prints-btn {
+      display: inline-block;
+      padding: 0.8rem 2.4rem;
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: transparent;
+      border: 2px solid var(--accent);
+      border-radius: 4px;
+      transition: background var(--transition), color var(--transition);
+    }
+    .contact-prints-btn:hover { background: var(--accent); color: var(--black); }
     .contact-success {
       font-family: var(--font-head);
       font-size: 1.1rem;
@@ -1379,7 +1393,10 @@
             <input type="text" name="name" placeholder="Name" required>
             <input type="email" name="email" placeholder="Email" required>
             <textarea name="message" placeholder="Message" required></textarea>
-            <button type="submit" id="contactBtn">Send Message</button>
+            <div class="contact-form-actions">
+              <button type="submit" id="contactBtn">Send Message</button>
+              <a href="prints.html" class="contact-prints-btn">Buy a Print</a>
+            </div>
           </form>
           <p class="contact-success" id="contactSuccess" style="display:none;">Message sent — thanks for reaching out!</p>
         </div>
