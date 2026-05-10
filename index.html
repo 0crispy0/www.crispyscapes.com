@@ -650,10 +650,11 @@
     }
     .video-grid {
       display: grid;
-      --row-h: calc((100vh - var(--nav-h) - clamp(3rem, 6.5vw, 5.5rem) - 3.325rem) / 2);
+      --row-h: calc((100vh - var(--nav-h) - clamp(3rem, 6.5vw, 5.5rem) - 4rem) / 2);
+      --title-h: 1.6rem;
       grid-template-rows: repeat(2, var(--row-h));
       grid-auto-flow: column;
-      grid-auto-columns: calc(var(--row-h) * 16 / 9);
+      grid-auto-columns: calc((var(--row-h) - var(--title-h)) * 16 / 9);
       gap: 1.2rem;
       flex: none;
       margin: auto 0;
