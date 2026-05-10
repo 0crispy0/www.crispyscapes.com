@@ -577,7 +577,7 @@
   function hide(el){ el.classList.remove('visible'); }
   function resetChips(el){ el.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('selected'); }); }
 
-  var state = {type:'', sub:'', size:'', frame:''};
+  var state = {type:'', sub:'', size:'', frame:'', frameColour:''};
 
   function buildSizes(key){
     var groups = SIZES[key] || [];
@@ -594,12 +594,12 @@
   }
 
   function updatePrice(){
-    var t = state.type, sub = state.sub, sz = state.size, frame = state.frame;
+    var t = state.type, sub = state.sub, sz = state.size, frame = state.frame, fc = state.frameColour;
     priceDisplay.classList.remove('visible');
     hiddenPrice.value = '';
     if (!t || !sz) return;
 
-    /* Glass — always enquire, no further checks needed */
+    /* Glass — always enquire */
     if (t === 'Glass Print'){
       priceDisplay.classList.add('visible');
       priceMain.textContent = 'Enquire for pricing';
@@ -608,21 +608,34 @@
       return;
     }
 
-    /* Fine Art Paper requires a frame selection before showing price */
-    if (t === 'Fine Art Paper' && !frame) return;
+    /* Fine Art Paper: needs frame; if framed also needs a frame colour */
+    if (t === 'Fine Art Paper'){
+      if (!frame) return;
+      if (frame !== 'Unframed (print only)' && !fc) return;
+    }
 
-    /* All types require a sub-option (finish / style) */
+    /* All types need a sub-option */
     if (!sub) return;
 
-    /* Custom size */
+    /* Custom size — always enquire */
     if (sz === 'custom'){
       priceDisplay.classList.add('visible');
-      priceMain.textContent = 'Custom Size — Enquire';
-      priceNote.textContent = 'Include your preferred dimensions in the comments below — I\'ll quote accordingly.';
-      hiddenPrice.value = 'Custom';
+      priceMain.textContent = 'Enquire for pricing';
+      priceNote.textContent = 'Include your preferred dimensions in the comments — I\'ll quote accordingly.';
+      hiddenPrice.value = 'Enquire (custom size)';
       return;
     }
 
+    /* Fine Art Paper framed options — enquire (framing cost is variable) */
+    if (t === 'Fine Art Paper' && frame !== 'Unframed (print only)'){
+      priceDisplay.classList.add('visible');
+      priceMain.textContent = 'Enquire for pricing';
+      priceNote.textContent = 'Print + framing cost confirmed in your quote.';
+      hiddenPrice.value = 'Enquire (framed)';
+      return;
+    }
+
+    /* Look up base print price */
     var tbl = null;
     if (t === 'Fine Art Paper') tbl = PRICES.paper[sub];
     else if (t === 'Canvas')    tbl = PRICES.canvas[sub];
@@ -632,9 +645,7 @@
     priceDisplay.classList.add('visible');
     if (price){
       priceMain.textContent = 'AUD $' + price.toLocaleString();
-      var note = 'Indicative price — excludes postage. Confirmed in your quote.';
-      if (frame && frame !== 'Unframed (print only)') note = 'Print price — framing cost added in your quote.';
-      priceNote.textContent = note;
+      priceNote.textContent = 'Indicative price — excludes postage. Confirmed in your quote.';
       hiddenPrice.value = 'AUD $' + price;
     } else {
       priceMain.textContent = 'Enquire for pricing';
@@ -653,7 +664,7 @@
       resetChips(groupPaper); resetChips(groupCanvas); resetChips(groupMetal);
       resetChips(groupFrame); resetChips(groupFrameColour);
       hiddenSubOption.value=''; hiddenFrame.value=''; hiddenFrameColour.value='';
-      state.type=''; state.sub=''; state.size=''; state.frame='';
+      state.type=''; state.sub=''; state.size=''; state.frame=''; state.frameColour='';
       hiddenType.value='';
       document.getElementById('labelType').textContent='';
       if(was) return;
@@ -699,7 +710,7 @@
       resetChips(frameGrid);
       hide(groupFrameColour); resetChips(groupFrameColour);
       hiddenFrame.value=''; hiddenFrameColour.value='';
-      state.frame='';
+      state.frame=''; state.frameColour='';
       document.getElementById('labelFrame').textContent='';
       document.getElementById('labelFrameColour').textContent='';
       if(was){ updatePrice(); return; }
@@ -719,11 +730,15 @@
     chip.addEventListener('click', function(){
       var was = chip.classList.contains('selected');
       resetChips(fcGrid);
-      hiddenFrameColour.value=''; document.getElementById('labelFrameColour').textContent='';
-      if(was) return;
+      hiddenFrameColour.value=''; state.frameColour='';
+      document.getElementById('labelFrameColour').textContent='';
+      if(was){ updatePrice(); return; }
       chip.classList.add('selected');
-      hiddenFrameColour.value = chip.getAttribute('data-value');
+      var val = chip.getAttribute('data-value');
+      hiddenFrameColour.value = val;
+      state.frameColour = val;
       document.getElementById('labelFrameColour').textContent = chip.childNodes[0].textContent.trim();
+      updatePrice();
     });
   });
 
